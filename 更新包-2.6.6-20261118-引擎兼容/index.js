@@ -9,7 +9,7 @@
  * 规则: require 参数必须是 ./ 或 / 开头的相对路径字面量, 打包期静态解析;
  *       不能是裸文件名, 也不能是变量/包在函数里(静态扫描建不出模块图)。
  * index.js 是唯一回调入口, 且不能被其他文件 import。 */
-console.log('[搜打撤] init 开始');
+console.log('[搜打撤] ini开始');
 const config = require("./config.js");
 const CONST = config.CONST;
 const db = require("./db.js");

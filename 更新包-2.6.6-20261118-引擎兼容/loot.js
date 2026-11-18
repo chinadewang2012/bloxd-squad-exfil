@@ -783,6 +783,26 @@ const sellAllLoot = (pId) => {
   return totalEarned;
 };
 
+/* 【对外接口】按玩家名变卖: 返回 { success: bool, earned: number, reason?: string, playerId?: number }
+ * 找不到玩家 → { success:false, reason:'玩家不存在' }
+ * 变卖0件  → { success:true, earned:0, reason:'背包无可变卖物品' }
+ * 变卖成功 → { success:true, earned:XXX, playerId:pId } */
+const sellByName = (playerName) => {
+  let pId;
+  try { pId = api.getPlayerId(String(playerName).trim()); } catch(e) {
+    return { success: false, earned: 0, reason: '无法查询玩家: ' + (e && e.message) };
+  }
+  if (!pId) return { success: false, earned: 0, reason: '玩家不存在' };
+  let earned;
+  try { earned = sellAllLoot(pId); } catch(e) {
+    return { success: false, earned: 0, reason: '变卖执行异常: ' + (e && e.message), playerId: pId };
+  }
+  return earned > 0
+    ? { success: true, earned, playerId: pId }
+    : { success: true, earned: 0, reason: '背包无可变卖物品', playerId: pId };
+};
+globalThis.sellByName = sellByName;  /* 全局暴露, 方便 admin 指令 / 外部脚本调用 */
+
 /* 变卖面板数据: 按三角洲分类汇总背包(11-45,跳保险格)中可变卖的物品
  * 返回 { total, byCat: Map(分类 -> [{display,tier,value,amount}]) } */
 const sellPanel = (pId) => {
@@ -814,7 +834,7 @@ module.exports = {
   openChestFlow, pruneExpiredChests,
   startChestQTE, resolveChestQTE, cancelChestQTE,
   initStarterInsurance,
-  calculateLootValue, calculateSellValue, sellAllLoot, clearBagKeepInsured, clearAllKeepInsured,
+  calculateLootValue, calculateSellValue, sellAllLoot, sellByName, clearBagKeepInsured, clearAllKeepInsured,
   insuredSlotsOf, largeInsureSlotsOf, smallInsureSlotsOf,
   saveLootToWarehouse, loadLootFromWarehouse, WAREHOUSE_MAX_SLOTS,
   SELL_INFO, sellPanel,

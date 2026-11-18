@@ -152,7 +152,6 @@ const initMapMenu = () => {
       });
     }
     /* 购买类 / 服务类入口 —— 初始就可见, 不要求先选图; 战斗中由 handleMapSelect 里的 blockIfRaiding 拦截 */
-    api.createShopItem(CAT.MAP, 'sell', { image: 'Block of Iron', customTitle: '💰 变卖商人', description: '一键变卖背包战利品换金币(保险格物品不受影响)', buyButtonText: '打开', canBuy: true, cost: 0, sortPriority: 90 });
     api.createShopItem(CAT.MAP, 'insure', { image: 'Gold Coin', customTitle: '🛡 保险商人', description: '购买保险套餐,死亡保留对应格装备', buyButtonText: '打开', canBuy: true, cost: 0, sortPriority: 89 });
     api.createShopItem(CAT.MAP, 'knife', { image: 'Moonstone Dagger', customTitle: '🗡 刀皮商店', description: '购买主武器刀皮肤', buyButtonText: '打开', canBuy: true, cost: 0, sortPriority: 88 });
     api.createShopItem(CAT.MAP, 'checkin', { image: 'Gold Coin', customTitle: '📅 每日签到', description: '连签奖励递增,7天一循环', buyButtonText: '签到', canBuy: true, cost: 0, sortPriority: 87 });
@@ -526,7 +525,21 @@ const refreshAdminEntry = (pId) => {
   }
 };
 
+/* v2.6→v2.6.6 shop 残留清理: 旧版本(2.5/2.4)遗留的 category/item 键名不同,
+ * Bloxd 没有 deleteShopCategory API, 只能 configureShopCategory 覆盖标题 + 尝试 deleteShopItem。
+ * 这些键名来自之前被删除的 CAT.MAIN / CAT.STATUS / CAT.INVITE / CAT.HOME 等旧分类 */
+const HIDE_OLD_CATS = () => {
+  const oldKeys = ['main', 'home', 'status', 'invite', 'raid_lobby', 'v2_main', 'menu_v1'];
+  oldKeys.forEach((k) => {
+    try { api.configureShopCategory(k, { customTitle: ' ', description: ' ', sortPriority: -9999 }); } catch(e) {}
+  });
+};
+const DEL_OLD_ITEMS = (catKey, itemKeys) => {
+  itemKeys.forEach((k) => { try { api.deleteShopItem(catKey, k); } catch(e) {} });
+};
+
 const initMenus = () => {
+  try { HIDE_OLD_CATS(); } catch(e) {}
   initAdminMenu();
   initMapMenu();
   initOperatorMenu();
@@ -536,6 +549,7 @@ const initMenus = () => {
   initKnifeShopMenu();
   initSellShopMenu();
   /* 已删除: initInviteMenu / initStatusMenu —— 邀请走 TEAM 页 invite 按钮, 完整状态用 /status 指令 */
+  try { console.log('[搜打撤] 菜单初始化完成 (8 categories)'); } catch(e) {}
 };
 
 /* ===== 菜单打开入口 ===== */
