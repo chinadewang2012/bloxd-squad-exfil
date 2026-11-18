@@ -6,7 +6,7 @@
 // [融合说明] 以维护版 config 为基底, 合入小怪系统(SMALL_MOB)、
 //            各地图 MobStrong、扩充变卖物; 见文件内标注。
 /* 版本戳(游戏内 /ver 查询;启动时控制台打印) */
-const VERSION = 'v2.6.6-20261114';
+const VERSION = 'v2.6.6-20261118+engine-fix';
 /* ===== 零号大坝: 实际内容已写死(锚点 1000,0,1000) ===== */
 const MAPS_REAL_ANCHOR = [1000, 0, 1000];
 const MAPS = {
