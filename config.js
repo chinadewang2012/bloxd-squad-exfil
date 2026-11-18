@@ -250,83 +250,61 @@ const RARITY = {
     6: { name: '红', color: '#FF4444' },
 };
 const SELL_CATALOG = [
-    /* ===== 三角洲行动「危险行动」变卖物目录 (纯装饰版 2026-11-14 收口) =====
-     * 【硬规则】变卖物只能是"纯装饰方块"——不能是任何功能物品:
-     *   禁止载体: 工具/武器/护甲/食物/药水/弹药/钥匙/信标/灯/漏斗/代码块/书架/地图/炸药等机关或交互物
-     *   禁止载体: 全部羊毛(撤离点 & 箱子样式触发块) + Red Concrete(AWP 子弹)
-     *   允许载体: 各类混凝土/玻璃/地毯/木板/陶瓦(Baked Clay)/矿石/宝石块/金属锭(纯装饰, 不可交互)
-     * display 用三角洲收集品原名; 稀有度: 红(6) > 金(5) > 紫(4) > 蓝(3) > 绿(2) > 白(1)
-     * 摸金池按 SELL_TIER_CAP 自动取用; 箱子产出同步: CHEST_STYLES 里的变卖物行与本表同名同价同 display */
-    /* 贵重物品 */
-    { item: 'Block of Moonstone', display: '海洋之泪', cat: '贵重物品', tier: 6, value: 6500000 },
-    { item: 'Block of Diamond', display: '非洲之心', cat: '贵重物品', tier: 6, value: 5000000 },
-    { item: 'Yellow Baked Clay', display: '曼德尔砖', cat: '贵重物品', tier: 6, value: 2600000 },
-    { item: 'Block of Emerald', display: '翡翠王座', cat: '贵重物品', tier: 6, value: 1800000 },
-    { item: 'Block of Gold', display: '黄金瞪羚', cat: '贵重物品', tier: 6, value: 1500000 },
-    { item: 'Block of Quartz', display: '克劳狄乌斯半身像', cat: '贵重物品', tier: 6, value: 1200000 },
-    { item: 'Block of Lapis Lazuli', display: '鱼月徽权杖首', cat: '贵重物品', tier: 6, value: 900000 },
-    { item: 'Block of Coal', display: '深渊之核', cat: '贵重物品', tier: 6, value: 800000 },
-    { item: 'Golden Decoration', display: '万金泪冠', cat: '贵重物品', tier: 6, value: 700000 },
-    { item: 'Block of Iron', display: '装甲车电池', cat: '贵重物品', tier: 6, value: 620000 },
-    { item: 'Blue Concrete', display: '绝密服务器', cat: '贵重物品', tier: 5, value: 380000 },
-    { item: 'White Concrete', display: '复苏呼吸机', cat: '贵重物品', tier: 5, value: 320000 },
-    { item: 'Black Concrete', display: '飞行记录仪', cat: '贵重物品', tier: 5, value: 280000 },
-    { item: 'White Baked Clay', display: '微型反应炉', cat: '贵重物品', tier: 5, value: 240000 },
-    { item: 'Crystal Block', display: '高速磁盘阵列', cat: '贵重物品', tier: 5, value: 210000 },
-    { item: 'Ice Bricks', display: '云存储阵列', cat: '贵重物品', tier: 5, value: 180000 },
-    { item: 'Magenta Baked Clay', display: '曼德尔超算单元', cat: '贵重物品', tier: 5, value: 160000 },
-    { item: 'Gray Baked Clay', display: '便携军用雷达', cat: '贵重物品', tier: 5, value: 150000 },
-    { item: 'Obsidian', display: '强化碳纤维板', cat: '贵重物品', tier: 5, value: 120000 },
-    { item: 'Gold Bar', display: '金条', cat: '贵重物品', tier: 5, value: 100000 },
-    { item: 'Copper Bar', display: '主战坦克模型', cat: '贵重物品', tier: 4, value: 42000 },
-    { item: 'Magenta Concrete', display: '陨石切片标本', cat: '贵重物品', tier: 4, value: 33000 },
-    { item: 'Lime Concrete', display: '天然红珊瑚雕件', cat: '贵重物品', tier: 4, value: 12000 },
-    { item: 'Pink Concrete', display: '钻石项链', cat: '贵重物品', tier: 3, value: 7000 },
-    { item: 'Light Gray Concrete', display: '铂金戒指', cat: '贵重物品', tier: 3, value: 6000 },
-    { item: 'Gray Carpet', display: '金表', cat: '贵重物品', tier: 3, value: 5000 },
-    { item: 'White Planks', display: '古董钟', cat: '贵重物品', tier: 3, value: 4200 },
-    /* 电子产品 */
-    { item: 'Gray Concrete', display: '笔记本电脑', cat: '电子产品', tier: 4, value: 68000 },
-    { item: 'Green Concrete', display: '显卡', cat: '电子产品', tier: 4, value: 28000 },
-    { item: 'Brown Concrete', display: '相机', cat: '电子产品', tier: 4, value: 24000 },
-    { item: 'Cyan Concrete', display: '电子脚镣', cat: '电子产品', tier: 3, value: 9000 },
-    { item: 'Light Blue Concrete', display: '刀片服务器', cat: '电子产品', tier: 3, value: 8000 },
-    /* 情报文件 */
-    { item: 'Brown Baked Clay', display: '加密数据芯片', cat: '情报文件', tier: 4, value: 52000 },
-    { item: 'Orange Carpet', display: '印象派名画', cat: '情报文件', tier: 4, value: 45000 },
+    /* ===== 三角洲行动「危险行动」变卖物目录 (2026-11-18 修正版 — 全部用 ITEM_NAMES.txt 真实物品) =====
+     * 旧版大量物品名在 Bloxd 里不存在 (Block of XXX / Concrete / Planks / Carpet 都是方块, 不可拾取)
+     * 本版全部替换为 ITEM_NAMES.txt 里真实存在的可拾取物品
+     * tier 稀有度: 红(6) > 金(5) > 紫(4) > 蓝(3) > 绿(2) > 白(1) */
+    /* 稀有矿石碎片 (贵重物品) */
+    { item: 'Moonstone Fragment', display: '月光精华碎片', cat: '贵重物品', tier: 6, value: 350000 },
+    { item: 'Diamond Fragment', display: '钻石碎晶', cat: '贵重物品', tier: 5, value: 180000 },
+    { item: 'Gold Fragment', display: '黄金碎屑', cat: '贵重物品', tier: 4, value: 60000 },
+    { item: 'Iron Fragment', display: '精密零件', cat: '贵重物品', tier: 3, value: 12000 },
+    /* 金属锭 */
+    { item: 'Gold Bar', display: '金条', cat: '贵重物品', tier: 5, value: 95000 },
+    { item: 'Iron Bar', display: '铁锭', cat: '工业材料', tier: 2, value: 1200 },
+    /* 原矿/原材料 */
+    { item: 'Raw Gold', display: '金矿石', cat: '工业材料', tier: 3, value: 38000 },
+    { item: 'Raw Iron', display: '铁矿石', cat: '工业材料', tier: 1, value: 420 },
+    { item: 'Coal', display: '煤炭', cat: '工业材料', tier: 1, value: 80 },
+    { item: 'Stick', display: '木棍', cat: '工业材料', tier: 1, value: 25 },
+    { item: 'Leather', display: '皮革', cat: '工业材料', tier: 1, value: 180 },
+    { item: 'Bone', display: '兽骨', cat: '工业材料', tier: 1, value: 120 },
+    { item: 'Bone Meal', display: '骨粉', cat: '工业材料', tier: 1, value: 60 },
+    { item: 'Fertiliser', display: '肥料', cat: '工业材料', tier: 1, value: 45 },
+    /* 金币类 */
+    { item: 'Gold Coin', display: '金币', cat: '货币', tier: 1, value: 1 },
+    /* 食物/稀有食材 */
+    { item: 'Truffle', display: '松露', cat: '稀有食材', tier: 5, value: 160000 },
+    { item: 'Truffle Oil', display: '松露油', cat: '稀有食材', tier: 5, value: 220000 },
+    { item: 'Acorn', display: '橡果', cat: '稀有食材', tier: 2, value: 280 },
+    { item: 'Acorn Jelly', display: '橡果冻', cat: '稀有食材', tier: 2, value: 450 },
+    { item: 'Cow\'s Milk', display: '牛奶', cat: '日用品', tier: 1, value: 90 },
+    { item: 'Cheese', display: '奶酪', cat: '日用品', tier: 2, value: 320 },
+    { item: 'Sheep\'s Milk', display: '羊奶', cat: '日用品', tier: 2, value: 180 },
+    { item: 'Yoghurt Pot', display: '酸奶杯', cat: '日用品', tier: 1, value: 120 },
+    { item: 'Oats', display: '燕麦', cat: '日用品', tier: 1, value: 35 },
+    { item: 'Porridge', display: '粥', cat: '日用品', tier: 1, value: 55 },
     /* 医疗物资 */
-    { item: 'Purple Concrete', display: 'ECMO', cat: '医疗物资', tier: 4, value: 38000 },
-    { item: 'Red Baked Clay', display: '自动体外除颤器', cat: '医疗物资', tier: 4, value: 20000 },
-    { item: 'Red Planks', display: '手术包', cat: '医疗物资', tier: 3, value: 2800 },
-    { item: 'Light Gray Planks', display: '医疗包', cat: '医疗物资', tier: 3, value: 2400 },
-    /* 工业材料 */
-    { item: 'Orange Concrete', display: '等离子切割机', cat: '工业材料', tier: 4, value: 16000 },
-    { item: 'Iron Fragment', display: '螺丝', cat: '工业材料', tier: 1, value: 80 },
-    { item: 'Gold Fragment', display: '硬币', cat: '工业材料', tier: 1, value: 100 },
-    { item: 'Iron Ore', display: '铁矿石', cat: '工业材料', tier: 1, value: 100 },
-    { item: 'Coal Ore', display: '煤矿脉', cat: '工业材料', tier: 1, value: 80 },
-    { item: 'Lapis Lazuli Ore', display: '青金石矿脉', cat: '工业材料', tier: 2, value: 1200 },
-    { item: 'Pure Coal Ore', display: '红石矿脉', cat: '工业材料', tier: 2, value: 1500 },
-    { item: 'Gold Ore', display: '金矿脉', cat: '工业材料', tier: 3, value: 12000 },
-    { item: 'Diamond Ore', display: '金伯利岩', cat: '工业材料', tier: 4, value: 58000 },
-    { item: 'Emerald Ore', display: '祖母绿矿脉', cat: '工业材料', tier: 4, value: 82000 },
-    /* 生活用品 */
-    { item: 'Yellow Concrete', display: '扫拖一体机器人', cat: '生活用品', tier: 4, value: 14000 },
-    { item: 'Brown Planks', display: '咖啡', cat: '生活用品', tier: 2, value: 900 },
-    { item: 'Brown Carpet', display: '巧克力', cat: '生活用品', tier: 2, value: 800 },
-    { item: 'White Glass', display: '香烟', cat: '生活用品', tier: 2, value: 700 },
-    { item: 'Green Glass', display: '酒', cat: '生活用品', tier: 2, value: 600 },
-    { item: 'Yellow Planks', display: '罐头', cat: '生活用品', tier: 2, value: 500 },
-    { item: 'Lime Planks', display: '牙膏', cat: '生活用品', tier: 2, value: 420 },
-    { item: 'Cyan Planks', display: '钢笔', cat: '生活用品', tier: 2, value: 350 },
-    { item: 'Pink Planks', display: '肥皂', cat: '生活用品', tier: 2, value: 300 },
-    { item: 'Purple Planks', display: '打火机', cat: '生活用品', tier: 2, value: 260 },
-    { item: 'Magenta Planks', display: '灯泡', cat: '生活用品', tier: 2, value: 220 },
-    { item: 'Black Carpet', display: '钥匙扣', cat: '生活用品', tier: 1, value: 150 },
-    { item: 'White Carpet', display: '邮票', cat: '生活用品', tier: 1, value: 120 },
-    /* 军用物资 */
-    { item: 'Black Planks', display: '防弹插板', cat: '军用物资', tier: 3, value: 3200 },
-    { item: 'Green Planks', display: '战术背包', cat: '军用物资', tier: 3, value: 2000 },
+    { item: 'Medkit', display: '医疗包', cat: '医疗物资', tier: 3, value: 1200 },
+    /* 装饰类 (气球/烟花 — 多颜色, 按稀有度分) */
+    { item: 'Black Balloon', display: '黑色气球', cat: '装饰品', tier: 1, value: 150 },
+    { item: 'Gray Balloon', display: '灰色气球', cat: '装饰品', tier: 1, value: 150 },
+    { item: 'White Balloon', display: '白色气球', cat: '装饰品', tier: 1, value: 150 },
+    { item: 'Red Balloon', display: '红色气球', cat: '装饰品', tier: 2, value: 380 },
+    { item: 'Blue Balloon', display: '蓝色气球', cat: '装饰品', tier: 2, value: 380 },
+    { item: 'Green Balloon', display: '绿色气球', cat: '装饰品', tier: 2, value: 380 },
+    { item: 'Purple Balloon', display: '紫色气球', cat: '装饰品', tier: 3, value: 780 },
+    { item: 'Pink Balloon', display: '粉色气球', cat: '装饰品', tier: 3, value: 780 },
+    { item: 'Magenta Balloon', display: '品红气球', cat: '装饰品', tier: 4, value: 1500 },
+    { item: 'Orange Balloon', display: '橙色气球', cat: '装饰品', tier: 4, value: 1500 },
+    { item: 'Yellow Balloon', display: '金色气球', cat: '装饰品', tier: 5, value: 3000 },
+    /* 烟花 (高价值装饰) */
+    { item: 'Firecracker', display: '鞭炮', cat: '烟花', tier: 3, value: 520 },
+    { item: 'Rainbow Firecracker', display: '彩虹烟花', cat: '烟花', tier: 6, value: 28000 },
+    { item: 'Black Firecracker', display: '黑色烟花', cat: '烟花', tier: 2, value: 220 },
+    { item: 'Red Firecracker', display: '红色烟花', cat: '烟花', tier: 4, value: 1200 },
+    { item: 'Blue Firecracker', display: '蓝色烟花', cat: '烟花', tier: 4, value: 1200 },
+    { item: 'Yellow Firecracker', display: '金色烟花', cat: '烟花', tier: 5, value: 2800 },
 ];
 /* 各图摸金分区的稀有度上限(越大越可能出高级变卖物) */
 const SELL_TIER_CAP = { gt: 3, jianyu: 6, dam: 6 };   // 键必须与 MAPS 一致(已移除停用的 farm/mine/city)
@@ -655,19 +633,7 @@ const GEAR = {
     armorSlots: [47, 48, 49, 50, 51],
     /* 大保险槽固定 2 格(三角洲行动语义: 开 Blue Wool 大保险箱 → 物品自动进这两格) */
     largeInsureSlots: [12, 13],
-    /* outfit/套装槽位: slot 52 = 头部套装, slot 53 = 身体套装
-     * 穿进这两格的套装有负重/速度加成, 由 updateWeight 读取 */
-    outfitSlots: [52, 53],
-    /* 三角洲风格 outfit 套装表: item = 放在 outfit 槽的物品名, 穿上去有加成
-     * maxLoadBonus = 增加最大载重(kg), speedBonus = 增加移速倍率 */
-    outfits: {
-        /* 键必须是官方真实物品名(原 Outfit: * 在世界里不存在, 套装加成永远不会触发) */
-        'Military Chestplate':   { maxLoadBonus: 20, speedBonus: 0.00, display: '战术背心' },
-        'Geo Chestplate':        { maxLoadBonus: 40, speedBonus: -0.05, display: '城市装甲板' },
-        'Fur Chestplate':        { maxLoadBonus: 10, speedBonus: 0.05, display: '轻型战术背带' },
-        'Magmasteel Chestplate': { maxLoadBonus: 60, speedBonus: -0.08, display: '重型装甲板' },
-        'Spectral Chestplate':   { maxLoadBonus:  0, speedBonus: 0.10, display: '流线套装' },
-    },
+    /* outfit 槽位已删除 — 玩家确认 Bloxd 没有 slot 52-53, 循环上限到 51(armorSlots 最大值) */
     tierScores: {
         'Iron Sword': 2, 'Gold Sword': 2, 'Knight Sword': 3, 'Diamond Sword': 5, 'Moonstone Dagger': 7,
         'Iron Helmet': 1, 'Iron Chestplate': 3, 'Iron Leggings': 2, 'Iron Boots': 1,

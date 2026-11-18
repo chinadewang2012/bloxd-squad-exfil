@@ -601,8 +601,8 @@ const dropBackpackOnDeath = (pId, pos) => {
   const by = Array.isArray(pos) && pos.length >= 3 ? Number(pos[1]) || 0 : 0;
   const bz = Array.isArray(pos) && pos.length >= 3 ? Number(pos[2]) || 0 : 0;
   let dropped = 0, lost = 0, idx = 0;
-  /* 循环上限 55: 覆盖 0-45 背包 + 47-55 护甲/outfit + 保险格 */
-  for (let i = 0; i <= 55; i++) {
+  /* 循环上限 51: 覆盖 0-45 背包 + 47-51 护甲 (Bloxd 无 52-53 outfit 槽) */
+  for (let i = 0; i <= 51; i++) {
     if (skip.has(i) || insured.includes(i)) continue;
     let it = null;
     try { it = api.getItemSlot(pId, i); } catch(e) { it = null; }

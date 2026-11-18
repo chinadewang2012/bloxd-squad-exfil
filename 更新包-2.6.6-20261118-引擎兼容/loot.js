@@ -750,11 +750,13 @@ const clearAllKeepInsured = (pId) => {
 /* ===== 变卖 ===== */
 
 /* ===== 变卖/估值(公共迭代器,四处去重) =====
- * 遍历背包11-45格中"SELL_VALUE_MAP里有价"的非保险物品,cb用于卖出时移除 */
+ * 遍历 0-51 格中"SELL_VALUE_MAP里有价"的非保险非主武器物品,cb用于卖出时移除
+ * slot 0/2/3/4 快捷栏 + 5-45 背包 + 47-51 护甲 — 全部参与变卖 */
 const eachSellable = (pId, cb) => {
   const insured = insuredSlotsOf(pId);
   let total = 0;
-  for (let i = 11; i <= 45; i++) {
+  for (let i = 0; i <= 51; i++) {
+    if (i === GEAR.weaponSlot) continue;   /* 主武器不卖 */
     if (insured.includes(i)) continue;
     try {
       const item = api.getItemSlot(pId, i);
