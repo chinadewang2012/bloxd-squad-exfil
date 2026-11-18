@@ -23,8 +23,31 @@ const getMapList = () => {
 };
 
 const isInZone = (pos, zoneName, map) => {
-  if (!map || !map.zones[zoneName]) return false;
-  try { return api.isInsideRect(pos, map.zones[zoneName].min, map.zones[zoneName].max, true); } catch(e) { return false; }
+  if (!map) return false;
+  /* search 区域: 优先 pois.search, fallback zones.search */
+  if (zoneName === 'search') {
+    const z = getSearchZone(map);
+    if (!z) return false;
+    try { return api.isInsideRect(pos, z.min, z.max, true); } catch(e) { return false; }
+  }
+  /* extract 区域: 优先第一个 exfil.zone, fallback zones.extract */
+  if (zoneName === 'extract') {
+    if (Array.isArray(map.exfils) && map.exfils.length > 0) {
+      try { return api.isInsideRect(pos, map.exfils[0].zone.min, map.exfils[0].zone.max, true); } catch(e) {}
+    }
+    if (map.zones && map.zones.extract) {
+      try { return api.isInsideRect(pos, map.zones.extract.min, map.zones.extract.max, true); } catch(e) {}
+    }
+    return false;
+  }
+  /* 其他 zoneName: 直接读 pois[zoneName] */
+  if (map.pois && map.pois[zoneName]) {
+    try { return api.isInsideRect(pos, map.pois[zoneName].min, map.pois[zoneName].max, true); } catch(e) {}
+  }
+  if (map.zones && map.zones[zoneName]) {
+    try { return api.isInsideRect(pos, map.zones[zoneName].min, map.zones[zoneName].max, true); } catch(e) {}
+  }
+  return false;
 };
 
 const isInBox = (pos, box) => {
@@ -70,22 +93,46 @@ const teleport = (pId, x, y, z, dir = null) => {
   try { api.setPosition(pId, x, y, z); if (dir) api.setCameraDirection(pId, dir); } catch(e) {}
 };
 
-/* 出生点固定 + 落地修正
- * 地图配置 spawn 统一为 [0,0,0]; 但原点可能是实心方块(大厅蓝图从(0,0,0)起铺),
- * 直接传送会卡在方块里。这里从配置点向上/向下找第一个"脚下有方块、身位和头顶是空气"的位置,
- * 只修正 y, x/z 仍严格固定在配置坐标(不引入随机)。
- * 死亡复活(onRespawn)、撤离/超时/退出(exitRaid)、重进(onJoin)三条路径共用本函数。 */
+/* 出生点随机抽取 + 落地修正
+ * config.js 地图可配 spawnPoints: [[x,y,z], [x,y,z], ...]
+ * 没配 spawnPoints 或只有 1 个, fallback 到 spawn (单 [x,y,z])
+ * 选好坐标后从该点向上/向下找第一个"脚下有方块、身位和头顶是空气"的安全落地位置 */
 const AIR_BLOCK = new Set(['', 'air', 'empty', 'none']);
 const isAirBlock = (nm) => { const s = String(nm == null ? '' : nm).toLowerCase(); return AIR_BLOCK.has(s); };
 const blockAt = (x, y, z) => { try { return api.getBlock(Math.floor(x), Math.floor(y), Math.floor(z)); } catch(e) { return 'Air'; } };
 const standableAt = (x, y, z) =>
   isAirBlock(blockAt(x, y, z)) && isAirBlock(blockAt(x, y + 1, z)) && !isAirBlock(blockAt(x, y - 1, z));
 
+/* 从地图配置里拿 search 区域: 优先 pois.search, fallback 到 zones.search, 再 fallback 到 pois[第一个大区域] */
+const getSearchZone = (map) => {
+  if (!map) return null;
+  if (map.pois && map.pois.search) return map.pois.search;
+  if (map.zones && map.zones.search) return map.zones.search;
+  /* 都没有: 用 pois 里面积最大的区域当 search */
+  if (map.pois) {
+    let best = null, bestArea = 0;
+    const keys = Object.keys(map.pois);
+    for (let i = 0; i < keys.length; i++) {
+      const z = map.pois[keys[i]];
+      const area = (z.max[0] - z.min[0]) * (z.max[2] - z.min[2]);
+      if (area > bestArea) { bestArea = area; best = z; }
+    }
+    return best;
+  }
+  return null;
+};
+
 const getSpawnPos = (map) => {
-  const sp = (map && Array.isArray(map.spawn)) ? map.spawn : [0, 0, 0];
-  const x = Number(sp[0]) || 0;
-  const y0 = Number(sp[1]) || 0;
-  const z = Number(sp[2]) || 0;
+  let rawPoint;
+  /* 优先多进图点 spawnPoints[]: 随机抽一个 */
+  if (map && Array.isArray(map.spawnPoints) && map.spawnPoints.length > 0) {
+    rawPoint = map.spawnPoints[Math.floor(Math.random() * map.spawnPoints.length)];
+  } else {
+    rawPoint = (map && Array.isArray(map.spawn)) ? map.spawn : [0, 0, 0];
+  }
+  const x = Number(rawPoint[0]) || 0;
+  const y0 = Number(rawPoint[1]) || 0;
+  const z = Number(rawPoint[2]) || 0;
   const bx = Math.floor(x), bz = Math.floor(z), sy = Math.floor(y0);
   /* 优先向上找(出生点在实心方块内/脚下被埋) */
   for (let dy = 0; dy <= 24; dy++) {
@@ -95,7 +142,7 @@ const getSpawnPos = (map) => {
   for (let dy = 1; dy <= 12; dy++) {
     if (standableAt(bx, sy - dy, bz)) return [x, sy - dy, z];
   }
-  /* 整列都不适合站立(如虚空/纯水): 保持在固定坐标,由引擎重力处理,绝不悄悄改回随机点 */
+  /* 整列都不适合站立: 保持在原始坐标,由引擎重力处理 */
   return [x, y0, z];
 };
 
@@ -107,18 +154,26 @@ const teleportToSpawn = (pId, map) => {
 
 const teleportToSearch = (pId, map) => {
   if (!map) return;
-  const z = map.zones.search;
+  const z = getSearchZone(map);
+  if (!z) return;
   const x = (z.min[0] + z.max[0]) / 2;
   const y = z.min[1] + 5;
   const zz = (z.min[2] + z.max[2]) / 2;
   teleport(pId, x, y, zz);
 };
 
-/* 撤离区中心(用于导航箭头) */
+/* 撤离区中心(用于导航箭头): 优先第一个 exfil.zone 中心, 否则 fallback 到 zones.extract */
 const getExtractCenter = (map) => {
   if (!map) return null;
-  const z = map.zones.extract;
-  return [ (z.min[0] + z.max[0]) / 2, (z.min[1] + z.max[1]) / 2, (z.min[2] + z.max[2]) / 2 ];
+  if (Array.isArray(map.exfils) && map.exfils.length > 0) {
+    const z = map.exfils[0].zone;
+    return [ (z.min[0] + z.max[0]) / 2, (z.min[1] + z.max[1]) / 2, (z.min[2] + z.max[2]) / 2 ];
+  }
+  if (map.zones && map.zones.extract) {
+    const z = map.zones.extract;
+    return [ (z.min[0] + z.max[0]) / 2, (z.min[1] + z.max[1]) / 2, (z.min[2] + z.max[2]) / 2 ];
+  }
+  return null;
 };
 
 /* ===== 撤离点光点(mesh entity,常驻悬浮绿点,多撤离点每点一个) =====
@@ -184,13 +239,14 @@ const clearPlayerZone = (pId) => { playerZones.delete(pId); activeExfils.delete(
 /* 刷怪: 按地图独立计数,activeMapKeys = Set<mapKey>(当前有玩家行动中的地图) */
 const trySpawnMobs = (activeMapKeys) => {
   if (!activeMapKeys || activeMapKeys.size === 0) return;
-  for (const mapKey of activeMapKeys) {
+  activeMapKeys.forEach((mapKey) => {
     const map = MAPS[mapKey];
-    if (!map) continue;
+    if (!map) return;
     let counter = (mobTickCounters.get(mapKey) || 0) + 1;
-    if (counter < map.mobInterval) { mobTickCounters.set(mapKey, counter); continue; }
+    if (counter < map.mobInterval) { mobTickCounters.set(mapKey, counter); return; }
     mobTickCounters.set(mapKey, 0);
-    const z = map.zones.search;
+    const z = getSearchZone(map);
+    if (!z) return;
     for (let i = 0; i < 3; i++) {
       const x = z.min[0] + Math.random() * (z.max[0] - z.min[0]);
       const y = z.min[1] + 5;
@@ -198,7 +254,7 @@ const trySpawnMobs = (activeMapKeys) => {
       const mobType = map.mobTypes[Math.floor(Math.random() * map.mobTypes.length)];
       try { mobs.spawnSmallMob(mobType, x, y, zz, map.MobStrong || 1); } catch(e) {}
     }
-  }
+  });
 };
 
 const spawnGuard = (x, y, z, mobType = 'Draugr Knight') => {

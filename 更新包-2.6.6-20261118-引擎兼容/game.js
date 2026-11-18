@@ -593,12 +593,20 @@ const enterRaid = (pId) => {
  * - 多件物品按 0.55 格小范围散开,避免全部堆在同一格;引擎掉落实体上限满时该件丢失 */
 const dropBackpackOnDeath = (pId, pos) => {
   const insured = insuredSlotsOf(pId) || [];
-  const skip = new Set([GEAR.weaponSlot, 2, 3, 4]);
+  /* 保留槽位: 主武器(死亡补刀) + 护甲(outfit已由循环上限覆盖)
+   * —— 不硬编码 2/3/4! 快捷栏物品跟背包一起掉落(三角洲行动语义) */
+  const skip = new Set();
+  skip.add(GEAR.weaponSlot);
+  const armorSlots = GEAR.armorSlots || [];
+  for (let a = 0; a < armorSlots.length; a++) skip.add(armorSlots[a]);
+  const outfitSlots = GEAR.outfitSlots || [];
+  for (let a = 0; a < outfitSlots.length; a++) skip.add(outfitSlots[a]);
   const bx = Array.isArray(pos) && pos.length >= 3 ? Number(pos[0]) || 0 : 0;
   const by = Array.isArray(pos) && pos.length >= 3 ? Number(pos[1]) || 0 : 0;
   const bz = Array.isArray(pos) && pos.length >= 3 ? Number(pos[2]) || 0 : 0;
   let dropped = 0, lost = 0, idx = 0;
-  for (let i = 0; i <= 45; i++) {
+  /* 循环上限 55: 覆盖 0-45 背包 + 47-55 护甲/outfit + 保险格 */
+  for (let i = 0; i <= 55; i++) {
     if (skip.has(i) || insured.includes(i)) continue;
     let it = null;
     try { it = api.getItemSlot(pId, i); } catch(e) { it = null; }
@@ -608,7 +616,7 @@ const dropBackpackOnDeath = (pId, pos) => {
     const dy = 0.35 + (Math.floor(idx / 25) % 2) * 0.45;
     let ok = false;
     try {
-      ok = !!api.createItemDrop(bx + dx, by + dy, bz + dz, it.name, it.amount || 1, false, it.attributes, 300000, pId);   /* 300000 ms = 5 分钟保留,三角洲行动语义 */
+      ok = !!api.createItemDrop(bx + dx, by + dy, bz + dz, it.name, it.amount || 1, false, it.attributes, 300000, pId);
     } catch(e) { ok = false; }
     if (ok) dropped++; else lost++;
     /* 掉落成功与否都清空该格: 死亡不应保留原件(防复制) */

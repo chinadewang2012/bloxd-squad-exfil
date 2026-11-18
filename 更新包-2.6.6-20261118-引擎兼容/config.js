@@ -15,6 +15,12 @@ const MAPS = {
         searchTime: 600,
         gearReq: 4,
         spawn: [0, 0, 0],
+        /* 多进图点: search 区域内抽 3 个 */
+        spawnPoints: [
+            [1455, 52, 490],
+            [1470, 52, 500],
+            [1480, 52, 505],
+        ],
         zones: {
             search: { min: [1443, 49, 482], max: [1485, 61, 512] },
             extract: { min: [1471, 26, 498], max: [1472, 26, 499] },
@@ -127,10 +133,15 @@ const MAPS = {
         searchTime: 420,
         gearReq: 12,
         spawn: [0, 0, 0],
-        zones: {
-            search: { min: [1014, 0, 1016], max: [1386, 31, 1118] },
-            extract: { min: [1002, 4, 1062], max: [1006, 8, 1066] },
-        },
+        /* 多进图点: 从 POI 中心抽取 5 个真实坐标, 进图时随机选一个 */
+        spawnPoints: [
+            [1050, 5, 1040],   // camp 兵营
+            [1070, 5, 1090],   // powerhouse 厂房
+            [1132, 5, 1097],   // cement 水泥厂
+            [1260, 5, 1076],   // visitor 游客中心
+            [1263, 5, 1102],   // substation 变电所
+        ],
+        /* zones 已废弃: dam 用 pois 做 search 区域, exfils 做 extract; 旧 zones 不再读 */
         exfils: [
             { key: 'west', name: '西侧隧道', type: '固定', time: 10, zone: { min: [1002, 4, 1062], max: [1006, 8, 1066] } },
             { key: 'east', name: '东侧隧道', type: '固定', time: 10, zone: { min: [1393, 4, 1062], max: [1397, 8, 1066] } },
