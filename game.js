@@ -21,6 +21,8 @@ const STATUS = config.STATUS;
 const GEAR = config.GEAR;
 const RANKS = config.RANKS;
 const EXTRACT = config.EXTRACT;
+const MEDKITS = config.MEDKITS || [];
+const INJECTOR_EFFECTS = config.INJECTOR_EFFECTS || [];
 const maps = require("./maps.js");
 const mobs = require("./mobs.js");   // 小怪生成/掉落台账
 const customweapons = require("./customweapons.js");
@@ -1995,6 +1997,103 @@ const selfCheck = () => {
   return missing;
 };
 
+/* ===== 医疗系统 — Medkit 使用拦截 =====
+ * Bloxd Potion 客户端内建直接饮用无回调 → 只有 Medkit 有蓄力时间(3.5秒)
+ * 方案: 玩家统一用 Medkit, 代码块根据当前血量决定是打药(回血)还是打针(给效果)
+ * 流程:
+ *   onPlayerStartChargingItem(pId, 'Medkit') → 给 Slowness 减移速 + 记录开始时间
+ *   onPlayerFinishChargingItem(pId, 'Medkit') → 判断血量 → 回血 或 给干员效果 → 扣减物品
+ * 未选干员 → 默认用 'random' 效果表 */
+const _medkitStartTs = new Map();   /* pId -> Date.now() 开始时间戳 */
+const _medkitCfg = (MEDKITS && MEDKITS.length > 0) ? MEDKITS[0] : null;   /* 取第一个(目前只有一个) */
+
+const onPlayerStartChargingItem = (pId, itemName) => {
+  try {
+    if (!_medkitCfg) return;
+    if (itemName !== _medkitCfg.item) return;
+    const d = getState(pId);
+    if (!d || !d.inRaid || !d.alive) return;  /* 只有在行动中才能打药 */
+    if (_medkitStartTs.has(pId)) return;       /* 已经在使用中 */
+    _medkitStartTs.set(pId, Date.now());
+    /* 打针期间给 Slowness 效果(减 70% 移速) — 模拟三角洲打药不能跑 */
+    try { api.applyEffect(pId, 'Slowness', _medkitCfg.useTimeMs || 3500, { icon: 'Medkit', displayName: '正在打药...' }); } catch(e) {}
+  } catch(e) {}
+};
+
+const onPlayerFinishChargingItem = (pId, itemName) => {
+  try {
+    if (!_medkitCfg) return;
+    if (itemName !== _medkitCfg.item) return;
+    _medkitStartTs.delete(pId);   /* 清理 */
+    const d = getState(pId);
+    if (!d || !d.inRaid || !d.alive) return;
+    const curHp = api.getHealth(pId);
+    const maxHp = api.getMaxHealth(pId) || 100;
+    const hpRatio = curHp / maxHp;
+    const lowHp = (hpRatio <= (_medkitCfg.lowHpThreshold || 0.3));
+
+    /* ==== 扣减物品: 从主背包随机找一个 Medkit 格, 数量 -1 ====
+     * 注意: Bloxd 客户端使用物品会自动扣减, 但代码块层拦截后可能需要手动扣减
+     *       保险起见手动处理一次(如果物品还在就 -1, 否则说明客户端已经扣了) */
+    let consumed = false;
+    for (let s = 0; s < 55; s++) {
+      try {
+        const inv = api.getInventoryItem(pId, s);
+        if (inv && inv.name === _medkitCfg.item && inv.amount > 0) {
+          api.setInventoryItem(pId, s, _medkitCfg.item, inv.amount - 1);
+          consumed = true;
+          break;
+        }
+      } catch(e) {}
+    }
+
+    /* ==== 打药 vs 打针 ==== */
+    if (lowHp || hpRatio < 0.5) {
+      /* 低血量 — 强制回血 */
+      const healAmt = Math.min(_medkitCfg.lowHpHeal || _medkitCfg.healAmount || 60, maxHp - curHp);
+      if (healAmt > 0) {
+        try { api.applyHealthChange(pId, healAmt); } catch(e) {}
+      }
+      try {
+        api.sendFlyingMiddleMessage(pId, [
+          { str: `💉 紧急医疗! +${Math.round(healAmt)} HP`, style: { color: '#00FF88', fontWeight: 'bold', fontSize: '1.3rem' } }
+        ], 5, 1500);
+      } catch(e) {}
+    } else {
+      /* 血量充足 — 触发干员技能效果 + 小额回血 */
+      const healAmt = Math.min(_medkitCfg.healAmount || 0, maxHp - curHp);
+      if (healAmt > 0) {
+        try { api.applyHealthChange(pId, healAmt); } catch(e) {}
+      }
+      /* 找当前干员对应的效果表 */
+      let effSet = null;
+      try {
+        const opKey = d.operatorKey || d.operator || 'random';
+        effSet = INJECTOR_EFFECTS.find(e => e.operatorKey === opKey);
+      } catch(e) {}
+      if (!effSet) effSet = INJECTOR_EFFECTS.find(e => e.operatorKey === 'random') || INJECTOR_EFFECTS[0];
+      if (effSet && Array.isArray(effSet.effects)) {
+        for (let ei = 0; ei < effSet.effects.length; ei++) {
+          const eff = effSet.effects[ei];
+          if (!eff || !eff.effect) continue;
+          try {
+            api.applyEffect(pId, eff.effect, eff.durationMs || 5000, {
+              icon: 'Medkit', displayName: effSet.display || '注射器' + (ei > 0 ? '(副)' : ''),
+            });
+          } catch(e) {}
+        }
+      }
+      try {
+        const msg = (effSet && effSet.display) || '医疗注射器';
+        const healStr = healAmt > 0 ? `+${Math.round(healAmt)} HP ` : '';
+        api.sendFlyingMiddleMessage(pId, [
+          { str: `💉 ${msg}! ${healStr}效果触发!`, style: { color: '#FFAA00', fontWeight: 'bold', fontSize: '1.3rem' } }
+        ], 5, 1500);
+      } catch(e) {}
+    }
+  } catch(e) { try { console.error('[MEDKIT]', e); } catch(_) {} }
+};
+
 module.exports = {
   onTick,
   onJoin, onLeave, onRespawn,
@@ -2002,6 +2101,7 @@ module.exports = {
   onPlayerAttemptOpenChest, onDropItem, onWorldSpawnMob, onPlayerFinishQTE, onPlayerKilledMob, onMobDespawned,
   onPlayerCommand, onBought,
   onPlayerMoveInvenItem, onPlayerMoveItemOutOfInventory, onPlayerToggledShopMenu, onPlayerClick, updateWeight,
+  onPlayerStartChargingItem, onPlayerFinishChargingItem,   /* ⚕️ 医疗系统 — Medkit 打药/打针 */
   selfCheck, moneyEntry, doCheckin, questInterface, applyMobNerf, checkMoney, mojin,
   adminAction, isMuted, mutePlayer, unmutePlayer, unmuteByName, getMutedList, isAdmin, isInvisible, findOnlinePlayer,
   pullLever,

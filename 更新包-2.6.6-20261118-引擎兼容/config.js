@@ -32,36 +32,95 @@ const MAPS = {
         MobStrong: 1,   // [融合] 小怪强度倍率(1=最普通图基准, 两三枪能打死)
         mobInterval: 300,
         lootTable: [
-            ['Iron Sword', 'gear', 50, 10], ['Iron Bow', 'gear', 45, 8], ['Iron Pickaxe', 'gear', 30, 12],
-            ['Iron Helmet', 'gear', 20, 10], ['Iron Chestplate', 'gear', 40, 8], ['Iron Leggings', 'gear', 35, 8], ['Iron Boots', 'gear', 20, 10],
-            ['Bread', 'item', 5, 25], ['Apple', 'item', 3, 30], ['Steak', 'item', 8, 15], ['Arrow', 'item', 2, 35],
-            ['Diamond Sword', 'gear', 120, 2], ['Knight Sword', 'gear', 80, 5],
-        ],
+            /* dam 零号大坝 — 特色=电子情报 Concrete 全色 + 黄金珍品 Baked Clay/Quartz */
+            ['Medkit', 'medical', 0, 35],
+            ['Black Concrete', 'sell', 280000, 10],
+            ['Gray Concrete', 'sell', 380000, 8],
+            ['Light Gray Concrete', 'sell', 180000, 10],
+            ['Brown Concrete', 'sell', 260000, 8],
+            ['Cyan Concrete', 'sell', 320000, 6],
+            ['Light Blue Concrete', 'sell', 420000, 5],
+            ['Blue Concrete', 'sell', 680000, 3],
+            ['Green Concrete', 'sell', 220000, 9],
+            ['Lime Concrete', 'sell', 120000, 10],
+            ['Magenta Concrete', 'sell', 420000, 4],
+            ['Orange Concrete', 'sell', 160000, 9],
+            ['Pink Concrete', 'sell', 70000, 12],
+            ['Purple Concrete', 'sell', 380000, 4],
+            ['White Concrete', 'sell', 320000, 5],
+            ['Yellow Concrete', 'sell', 140000, 8],
+            ['Yellow Baked Clay', 'sell', 2600000, 1],
+            ['Chiseled Block of Quartz', 'sell', 1200000, 1],
+            ['Obsidian', 'sell', 120000, 6],
+            ['Ice Bricks', 'sell', 180000, 4],
+        ],  /* dam 特色: Concrete ×15 + 黄金珍品 ×4 + Medkit */
   
     },
     jianyu: {
         name: "极西监狱",
-        disabled: true,   /* 坐标仍是 [0,0,0] 占位, 暂不开放: getMapList/onDeployRequest 已过滤 */
+        disabled: true,
         searchTime: 1000,
         gearReq: 15,
         spawn:[0,0,0],
-        /* TODO: 以下 search/extract/cld 仍为 [0,0,0] 占位坐标, 需填真机实测值后才能启用该图 */
-        zones:{   // [融合] 原为 zone(笔误, 代码读 map.zones 会崩), 已改为 zones
+        zones:{
             search:{min:[0,0,0],max:[0,0,0]},
             extract:{min:[0,0,0],max:[0,0,0]}
         },
         cld:{"1":[0,0,0]},
-        
         mobTypes: ['Draugr Zombie', 'Draugr Skeleton', 'Wildcat'],
-        MobStrong: 3.2,   // [融合] 高难度图(gearReq15/搜索1000s), 小怪更强
+        MobStrong: 3.2,
         mobInterval: 300,
         lootTable: [
-            ['Iron Sword', 'gear', 50, 10], ['Iron Bow', 'gear', 45, 8], ['Iron Pickaxe', 'gear', 30, 12],
-            ['Iron Helmet', 'gear', 20, 10], ['Iron Chestplate', 'gear', 40, 8], ['Iron Leggings', 'gear', 35, 8], ['Iron Boots', 'gear', 20, 10],
-            ['Bread', 'item', 5, 25], ['Apple', 'item', 3, 30], ['Steak', 'item', 8, 15], ['Arrow', 'item', 2, 35],
-            ['Diamond Sword', 'gear', 120, 2], ['Knight Sword', 'gear', 80, 5],
+            /* jianyu 监狱 — 特色=黄金珍品 Baked Clay/Quartz/Glass + Medkit */
+            ['Medkit', 'medical', 0, 35],
+            ['Yellow Baked Clay', 'sell', 2600000, 3],
+            ['White Baked Clay', 'sell', 240000, 8],
+            ['Magenta Baked Clay', 'sell', 160000, 10],
+            ['Purple Baked Clay', 'sell', 220000, 8],
+            ['Black Baked Clay', 'sell', 120000, 12],
+            ['Chiseled Block of Quartz', 'sell', 1200000, 3],
+            ['Block of Quartz', 'sell', 800000, 4],
+            ['Yellow Glass', 'sell', 6800, 10],
+            ['Black Glass', 'sell', 800, 30],
+            ['Obsidian', 'sell', 120000, 15],
+            ['Ice Bricks', 'sell', 180000, 10],
         ],
-  
+    },
+    gt: {
+        name: "钻井平台",
+        searchTime: 800,
+        gearReq: 10,
+        spawn:[1008, 52, 1008],
+        spawnPoints: [
+            [1008, 52, 1008], [1020, 52, 1005], [995, 52, 1020],
+        ],
+        zones:{
+            search:{min:[990,50,990],max:[1030,58,1030]},
+            extract:{min:[1015,51,1035],max:[1020,51,1040]}
+        },
+        cld:{"1":[1017, 51, 1037]},
+        mobTypes: ['Draugr Zombie', 'Draugr Skeleton', 'Wildcat'],
+        MobStrong: 1.0,
+        mobInterval: 300,
+        lootTable: [
+            /* gt 钻井平台 — 特色=建材 Stones/Sandstone/Bricks + Medkit */
+            ['Medkit', 'medical', 0, 35],
+            ['Bricks', 'sell', 200, 25],
+            ['Stone Bricks', 'sell', 180, 28],
+            ['Mossy Stone Bricks', 'sell', 320, 16],
+            ['Cracked Stone Bricks', 'sell', 280, 16],
+            ['Granite', 'sell', 150, 28],
+            ['Smooth Granite', 'sell', 320, 16],
+            ['Granite Bricks', 'sell', 420, 14],
+            ['Andesite', 'sell', 140, 28],
+            ['Diorite', 'sell', 130, 28],
+            ['Sandstone', 'sell', 120, 26],
+            ['Sandstone Bricks', 'sell', 380, 15],
+            ['Engraved Sandstone', 'sell', 650, 11],
+            ['Red Sandstone', 'sell', 200, 20],
+            ['Clay', 'sell', 50, 32],
+            ['Rocky Dirt', 'sell', 40, 35],
+        ],
     },
     /* [融合] farm/mine/city 已注释停用; 重新启用时建议补 MobStrong(farm=1, mine=1.5, city=2.3)
     farm: {
@@ -193,10 +252,27 @@ const MAPS = {
         MobStrong: 2.3,   // [融合] 大坝为高难度图
         mobInterval: 300,
         lootTable: [
-            ['Knight Sword', 'gear', 80, 8], ['Diamond Sword', 'gear', 120, 4], ['Moonstone Dagger', 'gear', 150, 2],
-            ['Diamond Helmet', 'gear', 60, 5], ['Diamond Chestplate', 'gear', 100, 4], ['Diamond Leggings', 'gear', 90, 4], ['Diamond Boots', 'gear', 50, 5],
-            ['Diamond Bow', 'gear', 100, 4],
-            ['Bread', 'item', 5, 20], ['Steak', 'item', 8, 15], ['Arrow', 'item', 2, 30],
+            /* dam 特色 lootTable — 只留电子情报(三角洲核心收集品) + Medkit */
+            ['Medkit', 'medical', 0, 35],
+            ['Black Concrete', 'sell', 280000, 10],
+            ['Gray Concrete', 'sell', 380000, 8],
+            ['Light Gray Concrete', 'sell', 180000, 10],
+            ['Brown Concrete', 'sell', 260000, 8],
+            ['Cyan Concrete', 'sell', 320000, 6],
+            ['Light Blue Concrete', 'sell', 420000, 5],
+            ['Blue Concrete', 'sell', 680000, 3],
+            ['Green Concrete', 'sell', 220000, 9],
+            ['Lime Concrete', 'sell', 120000, 10],
+            ['Magenta Concrete', 'sell', 420000, 4],
+            ['Orange Concrete', 'sell', 160000, 9],
+            ['Pink Concrete', 'sell', 70000, 12],
+            ['Purple Concrete', 'sell', 380000, 4],
+            ['White Concrete', 'sell', 320000, 5],
+            ['Yellow Concrete', 'sell', 140000, 8],
+            ['Yellow Baked Clay', 'sell', 2600000, 1],
+            ['Chiseled Block of Quartz', 'sell', 1200000, 1],
+            ['Obsidian', 'sell', 120000, 6],
+            ['Ice Bricks', 'sell', 180000, 4],
         ],
     },
 };
@@ -214,91 +290,92 @@ const RARITY = {
     6: { name: '红', color: '#FF4444' },
 };
 const SELL_CATALOG = [
-    /* ===== 三角洲行动「危险行动」变卖物目录 (2026-11-18 v4 — 三角洲官方命名) =====
+    /* ===== 三角洲行动「危险行动」变卖物目录 (2026-11-18 v5 — 三角洲官方收集品真名) =====
      * 全部来自 BLOCK_NAMES.txt 真实纯装饰方块 + 不被 loot.js FUNCTIONAL_ITEM_PATTERNS 拦截
-     * 稀有度: 红(6)>金(5)>紫(4)>蓝(3)>绿(2)>白(1), 颜色越稀有越贵 */
+     * 稀有度 tier 6=红(最稀有)>5=金>4=紫>3=蓝>2=绿>1=白; 颜色越鲜艳越稀有越贵
+     * display 名 = 三角洲官网 nss.seoml.com 收集品分类的正式名称 */
+    /* ===== 1. 电子情报 (Concrete) — 三角洲官方收集品 tier 5-6 =====
+     * 颜色越深/越鲜艳 = 越稀有 = 对应官方 tier 6 贵重收集品 */
+    { item: 'Black Concrete', display: '飞行记录仪', cat: '电子情报', tier: 6, value: 280000 },
+    { item: 'Gray Concrete', display: '笔记本电脑', cat: '电子情报', tier: 6, value: 380000 },
+    { item: 'Light Gray Concrete', display: '电子画板', cat: '电子情报', tier: 4, value: 180000 },
+    { item: 'Brown Concrete', display: '摄影机', cat: '电子情报', tier: 6, value: 260000 },
+    { item: 'Cyan Concrete', display: '军用控制终端', cat: '电子情报', tier: 6, value: 320000 },
+    { item: 'Light Blue Concrete', display: '刀片服务器', cat: '电子情报', tier: 6, value: 420000 },
+    { item: 'Blue Concrete', display: '绝密服务器', cat: '电子情报', tier: 6, value: 680000 },
+    { item: 'Green Concrete', display: '显卡', cat: '电子情报', tier: 6, value: 220000 },
+    { item: 'Lime Concrete', display: 'CPU', cat: '电子情报', tier: 5, value: 120000 },
+    { item: 'Magenta Concrete', display: '曼德尔超算单元', cat: '电子情报', tier: 6, value: 420000 },
+    { item: 'Orange Concrete', display: '军用炸药', cat: '电子情报', tier: 5, value: 160000 },
+    { item: 'Pink Concrete', display: '手机', cat: '电子情报', tier: 5, value: 70000 },
+    { item: 'Purple Concrete', display: 'ECMO', cat: '电子情报', tier: 6, value: 380000 },
+    { item: 'White Concrete', display: '复苏呼吸机', cat: '电子情报', tier: 6, value: 320000 },
+    { item: 'Yellow Concrete', display: '扫拖一体机器人', cat: '电子情报', tier: 6, value: 140000 },
 
-    /* ===== 1. 电子/情报类 (混凝土 Concrete) — 三角洲情报文件/服务器模块 ===== */
-    { item: 'Black Concrete', display: '飞行记录仪', cat: '电子情报', tier: 2, value: 280000 },
-    { item: 'Gray Concrete', display: '笔记本电脑', cat: '电子情报', tier: 3, value: 380000 },
-    { item: 'Light Gray Concrete', display: '战术平板', cat: '电子情报', tier: 2, value: 180000 },
-    { item: 'Brown Concrete', display: '相机', cat: '电子情报', tier: 3, value: 260000 },
-    { item: 'Cyan Concrete', display: '电子脚镣', cat: '电子情报', tier: 3, value: 320000 },
-    { item: 'Light Blue Concrete', display: '刀片服务器', cat: '电子情报', tier: 3, value: 420000 },
-    { item: 'Blue Concrete', display: '绝密服务器', cat: '电子情报', tier: 4, value: 680000 },
-    { item: 'Green Concrete', display: '显卡', cat: '电子情报', tier: 3, value: 220000 },
-    { item: 'Lime Concrete', display: '绿色电路板', cat: '电子情报', tier: 4, value: 120000 },
-    { item: 'Magenta Concrete', display: '超算单元', cat: '电子情报', tier: 4, value: 420000 },
-    { item: 'Orange Concrete', display: '等离子切割机', cat: '电子情报', tier: 4, value: 160000 },
-    { item: 'Pink Concrete', display: '粉色芯片', cat: '电子情报', tier: 3, value: 70000 },
-    { item: 'Purple Concrete', display: 'ECMO 模块', cat: '电子情报', tier: 4, value: 380000 },
-    { item: 'White Concrete', display: '复苏呼吸机', cat: '电子情报', tier: 4, value: 320000 },
-    { item: 'Yellow Concrete', display: '扫拖一体机器人', cat: '电子情报', tier: 4, value: 140000 },
+    /* ===== 2. 黄金珍品 (Baked Clay) — 三角洲官方贵重收集品 tier 6 ===== */
+    { item: 'Yellow Baked Clay', display: '万足金条', cat: '黄金珍品', tier: 6, value: 2600000 },
+    { item: 'White Baked Clay', display: '微型反应炉', cat: '黄金珍品', tier: 6, value: 240000 },
+    { item: 'Magenta Baked Clay', display: '量子存储', cat: '黄金珍品', tier: 6, value: 160000 },
+    { item: 'Purple Baked Clay', display: '万金泪冠', cat: '黄金珍品', tier: 6, value: 220000 },
+    { item: 'Red Baked Clay', display: '棘龙爪化石', cat: '黄金珍品', tier: 6, value: 200000 },
+    { item: 'Blue Baked Clay', display: '"钻石"鱼子酱', cat: '黄金珍品', tier: 6, value: 280000 },
+    { item: 'Cyan Baked Clay', display: '雷斯的留声机', cat: '黄金珍品', tier: 6, value: 220000 },
+    { item: 'Brown Baked Clay', display: '奥莉薇娅香槟', cat: '黄金珍品', tier: 6, value: 180000 },
+    { item: 'Black Baked Clay', display: '非洲之心', cat: '黄金珍品', tier: 6, value: 120000 },
 
-    /* ===== 2. 贵重/黄金类 (陶瓦 Baked Clay) — 三角洲珍品 ===== */
-    { item: 'Yellow Baked Clay', display: '曼德尔砖', cat: '黄金珍品', tier: 6, value: 2600000 },
-    { item: 'White Baked Clay', display: '微型反应炉', cat: '黄金珍品', tier: 5, value: 240000 },
-    { item: 'Magenta Baked Clay', display: '超算核心', cat: '黄金珍品', tier: 4, value: 160000 },
-    { item: 'Purple Baked Clay', display: '紫晶陶瓷', cat: '黄金珍品', tier: 4, value: 220000 },
-    { item: 'Red Baked Clay', display: '丹砂陶板', cat: '黄金珍品', tier: 3, value: 200000 },
-    { item: 'Blue Baked Clay', display: '钴蓝陶板', cat: '黄金珍品', tier: 3, value: 280000 },
-    { item: 'Cyan Baked Clay', display: '青蓝陶板', cat: '黄金珍品', tier: 3, value: 220000 },
-    { item: 'Brown Baked Clay', display: '紫檀陶板', cat: '黄金珍品', tier: 3, value: 180000 },
-    { item: 'Black Baked Clay', display: '黑曜陶板', cat: '黄金珍品', tier: 2, value: 120000 },
+    /* ===== 3. 精密器件 (Glass) — 三角洲官方 tier 5-6 ===== */
+    { item: 'Yellow Glass', display: '黄金瞪羚', cat: '精密器件', tier: 6, value: 6800 },
+    { item: 'Purple Glass', display: '便携军用雷达', cat: '精密器件', tier: 6, value: 4200 },
+    { item: 'Magenta Glass', display: '名贵机械表', cat: '精密器件', tier: 6, value: 3800 },
+    { item: 'Orange Glass', display: '主战坦克模型', cat: '精密器件', tier: 6, value: 3500 },
+    { item: 'Lime Glass', display: '步战车模型', cat: '精密器件', tier: 6, value: 3200 },
+    { item: 'Blue Glass', display: '高速磁盘阵列', cat: '精密器件', tier: 6, value: 2500 },
+    { item: 'Red Glass', display: '云存储阵列', cat: '精密器件', tier: 6, value: 2800 },
+    { item: 'Light Blue Glass', display: '实验数据', cat: '精密器件', tier: 6, value: 2200 },
+    { item: 'Pink Glass', display: 'E型滤毒罐', cat: '精密器件', tier: 5, value: 2600 },
+    { item: 'Brown Glass', display: '燃料电池', cat: '精密器件', tier: 5, value: 1400 },
+    { item: 'Cyan Glass', display: '镜头', cat: '精密器件', tier: 5, value: 1600 },
+    { item: 'Gray Glass', display: '数码相机', cat: '精密器件', tier: 5, value: 1200 },
+    { item: 'White Glass', display: '可编程处理器', cat: '精密器件', tier: 5, value: 700 },
+    { item: 'Black Glass', display: '自动体外除颤器', cat: '精密器件', tier: 6, value: 800 },
 
-    /* ===== 3. 玻璃/面板类 (Glass) — 三角洲精密器件 ===== */
-    { item: 'Yellow Glass', display: '金色滤镜', cat: '精密器件', tier: 5, value: 6800 },
-    { item: 'Purple Glass', display: '紫晶透镜', cat: '精密器件', tier: 4, value: 4200 },
-    { item: 'Magenta Glass', display: '品红透镜', cat: '精密器件', tier: 4, value: 3800 },
-    { item: 'Orange Glass', display: '琥珀透镜', cat: '精密器件', tier: 4, value: 3500 },
-    { item: 'Lime Glass', display: '青柠滤镜', cat: '精密器件', tier: 4, value: 3200 },
-    { item: 'Blue Glass', display: '钴蓝滤镜', cat: '精密器件', tier: 3, value: 2500 },
-    { item: 'Red Glass', display: '红色滤镜', cat: '精密器件', tier: 3, value: 2800 },
-    { item: 'Light Blue Glass', display: '冰蓝滤镜', cat: '精密器件', tier: 3, value: 2200 },
-    { item: 'Pink Glass', display: '粉色滤镜', cat: '精密器件', tier: 3, value: 2600 },
-    { item: 'Brown Glass', display: '棕色滤镜', cat: '精密器件', tier: 2, value: 1400 },
-    { item: 'Cyan Glass', display: '青色滤镜', cat: '精密器件', tier: 2, value: 1600 },
-    { item: 'Gray Glass', display: '灰色滤镜', cat: '精密器件', tier: 2, value: 1200 },
-    { item: 'White Glass', display: 'UV 滤镜', cat: '精密器件', tier: 2, value: 700 },
-    { item: 'Black Glass', display: '暗色滤镜', cat: '精密器件', tier: 1, value: 800 },
-
-    /* ===== 4. 石英/黑曜石/砖类 (Quartz/Obsidian/Bricks) — 三角洲核心战利品 ===== */
-    { item: 'Chiseled Block of Quartz', display: '克劳狄乌斯半身像', cat: '核心战利品', tier: 6, value: 1200000 },
-    { item: 'Block of Quartz', display: '石英面板', cat: '核心战利品', tier: 4, value: 800000 },
-    { item: 'Obsidian', display: '强化碳纤维板', cat: '核心战利品', tier: 5, value: 120000 },
-    { item: 'Ice Bricks', display: '冰晶石砖', cat: '核心战利品', tier: 5, value: 180000 },
-    { item: 'Green Bricks', display: '青砖瓦', cat: '核心战利品', tier: 3, value: 380 },
+    /* ===== 4. 核心战利品 (Quartz/Obsidian/Bricks) — 三角洲官方 tier 5-6 ===== */
+    { item: 'Chiseled Block of Quartz', display: '克劳迪乌斯半身像', cat: '核心战利品', tier: 6, value: 1200000 },
+    { item: 'Block of Quartz', display: '赛伊德的怀表', cat: '核心战利品', tier: 6, value: 800000 },
+    { item: 'Obsidian', display: '强化碳纤维板', cat: '核心战利品', tier: 6, value: 120000 },
+    { item: 'Ice Bricks', display: '医疗机械人', cat: '核心战利品', tier: 6, value: 180000 },
+    { item: 'Green Bricks', display: '移动电缆', cat: '核心战利品', tier: 5, value: 380 },
     { item: 'Bricks', display: '红砖', cat: '核心战利品', tier: 1, value: 200 },
     { item: 'Dark Red Brick', display: '暗红砖块', cat: '核心战利品', tier: 2, value: 350 },
     { item: 'Stone Bricks', display: '石砖', cat: '核心战利品', tier: 1, value: 180 },
     { item: 'Mossy Stone Bricks', display: '苔藓石砖', cat: '核心战利品', tier: 2, value: 320 },
     { item: 'Cracked Stone Bricks', display: '裂纹石砖', cat: '核心战利品', tier: 2, value: 280 },
 
-    /* ===== 5. 石材/花岗岩/安山岩/闪长岩 — 三角洲地质标本 ===== */
-    { item: 'Smooth Stone', display: '抛光石板', cat: '地质标本', tier: 1, value: 100 },
-    { item: 'Granite', display: '花岗岩标本', cat: '地质标本', tier: 1, value: 150 },
-    { item: 'Smooth Granite', display: '抛光花岗岩', cat: '地质标本', tier: 2, value: 320 },
-    { item: 'Granite Bricks', display: '花岗岩砖', cat: '地质标本', tier: 3, value: 420 },
-    { item: 'Engraved Granite', display: '雕花花岗岩', cat: '地质标本', tier: 4, value: 680 },
-    { item: 'Andesite', display: '安山岩标本', cat: '地质标本', tier: 1, value: 140 },
-    { item: 'Smooth Andesite', display: '抛光安山岩', cat: '地质标本', tier: 2, value: 300 },
-    { item: 'Andesite Bricks', display: '安山岩砖', cat: '地质标本', tier: 3, value: 400 },
-    { item: 'Diorite', display: '闪长岩标本', cat: '地质标本', tier: 1, value: 130 },
-    { item: 'Smooth Diorite', display: '抛光闪长岩', cat: '地质标本', tier: 2, value: 280 },
-    { item: 'Diorite Bricks', display: '闪长岩砖', cat: '地质标本', tier: 3, value: 380 },
+    /* ===== 5. 地质标本 — 三角洲无对应官方收集品, 保留石材原名 ===== */
+    { item: 'Smooth Stone', display: '抛光石板', cat: '建材', tier: 1, value: 100 },
+    { item: 'Granite', display: '花岗岩', cat: '建材', tier: 1, value: 150 },
+    { item: 'Smooth Granite', display: '抛光花岗岩', cat: '建材', tier: 2, value: 320 },
+    { item: 'Granite Bricks', display: '花岗岩砖', cat: '建材', tier: 3, value: 420 },
+    { item: 'Engraved Granite', display: '雕花花岗岩', cat: '建材', tier: 4, value: 680 },
+    { item: 'Andesite', display: '安山岩', cat: '建材', tier: 1, value: 140 },
+    { item: 'Smooth Andesite', display: '抛光安山岩', cat: '建材', tier: 2, value: 300 },
+    { item: 'Andesite Bricks', display: '安山岩砖', cat: '建材', tier: 3, value: 400 },
+    { item: 'Diorite', display: '闪长岩', cat: '建材', tier: 1, value: 130 },
+    { item: 'Smooth Diorite', display: '抛光闪长岩', cat: '建材', tier: 2, value: 280 },
+    { item: 'Diorite Bricks', display: '闪长岩砖', cat: '建材', tier: 3, value: 380 },
 
-    /* ===== 6. 砂岩/红砂岩 — 三角洲沙漠战区建材 ===== */
-    { item: 'Sandstone', display: '砂岩标本', cat: '沙漠建材', tier: 1, value: 120 },
+    /* ===== 6. 沙漠建材 — 三角洲无对应官方收集品, 保留砂岩原名 ===== */
+    { item: 'Sandstone', display: '砂岩', cat: '沙漠建材', tier: 1, value: 120 },
     { item: 'Smooth Sandstone', display: '抛光砂岩', cat: '沙漠建材', tier: 2, value: 260 },
     { item: 'Sandstone Bricks', display: '砂岩砖', cat: '沙漠建材', tier: 3, value: 380 },
     { item: 'Engraved Sandstone', display: '雕花砂岩', cat: '沙漠建材', tier: 3, value: 650 },
     { item: 'Marked Sandstone', display: '标记砂岩', cat: '沙漠建材', tier: 2, value: 300 },
-    { item: 'Red Sandstone', display: '红砂岩标本', cat: '沙漠建材', tier: 2, value: 200 },
+    { item: 'Red Sandstone', display: '红砂岩', cat: '沙漠建材', tier: 2, value: 200 },
     { item: 'Red Sandstone Bricks', display: '红砂岩砖', cat: '沙漠建材', tier: 3, value: 400 },
     { item: 'Red Sand', display: '红色沙砾', cat: '沙漠建材', tier: 1, value: 80 },
 
-    /* ===== 7. 黏土/粗泥 — 三角洲战区土壤标本 ===== */
-    { item: 'Clay', display: '黏土标本', cat: '土壤标本', tier: 1, value: 50 },
+    /* ===== 7. 土壤标本 — 保留原名 ===== */
+    { item: 'Clay', display: '黏土', cat: '土壤标本', tier: 1, value: 50 },
     { item: 'Rocky Dirt', display: '岩石土壤', cat: '土壤标本', tier: 1, value: 40 },
     { item: 'Packed Snow', display: '压实积雪', cat: '土壤标本', tier: 1, value: 60 },
     { item: 'Mossy Messy Stone', display: '苔藓石块', cat: '土壤标本', tier: 2, value: 220 },
@@ -314,38 +391,27 @@ const CHEST_STYLES = {
         name: '高级箱', openMsg: '高级箱!!',
         spawnGuard: true,
         items: [
-            { name: 'Knight Sword', chance: 0.3, value: 80, tier: 3, display: '骑士剑' },
-            { name: 'Diamond Sword', chance: 0.15, value: 120, tier: 5, display: '钻石剑' },
-            { name: 'Diamond Bow', chance: 0.18, value: 100, tier: 4, display: '钻石弓' },
-            { name: 'Diamond Leggings', chance: 0.2, value: 90, tier: 4, display: '钻石护腿' },
-            { name: 'Diamond Boots', chance: 0.2, value: 50, tier: 3, display: '钻石靴' },
-            { name: 'Pink Concrete', chance: 0.2, value: 7000, tier: 3, display: '钻石项链' },
-            { name: 'Light Gray Concrete', chance: 0.15, value: 6000, tier: 3, display: '铂金戒指' },
-            { name: 'Gray Carpet', chance: 0.12, value: 5000, tier: 3, display: '金表' },
-            { name: 'White Planks', chance: 0.1, value: 4200, tier: 3, display: '古董钟' },
-            { name: 'Blue Concrete', chance: 0.01, value: 380000, tier: 5, display: '绝密服务器' },
-            { name: 'Block of Gold', chance: 0.004, value: 1500000, tier: 6, display: '黄金瞪羚' },
-            { name: 'Block of Moonstone', chance: 0.001, value: 6500000, tier: 6, display: '海洋之泪' },
-            { name: 'Steak', chance: 0.4, value: 8, tier: 1, display: '美味炒面' },
-            { name: 'Gold Carrot', chance: 0.15, value: 60, tier: 1, display: '战地医疗包' },
+            { name: 'Medkit', chance: 0.8, value: 0, tier: 3, display: '战地医疗包' },
+            { name: 'Gray Concrete', chance: 0.25, value: 380000, tier: 6, display: '笔记本电脑' },
+            { name: 'Blue Concrete', chance: 0.12, value: 680000, tier: 6, display: '绝密服务器' },
+            { name: 'Yellow Baked Clay', chance: 0.015, value: 2600000, tier: 6, display: '万足金条' },
+            { name: 'Chiseled Block of Quartz', chance: 0.01, value: 1200000, tier: 6, display: '克劳迪乌斯半身像' },
+            { name: 'Obsidian', chance: 0.15, value: 120000, tier: 6, display: '强化碳纤维板' },
+            { name: 'Ice Bricks', chance: 0.1, value: 180000, tier: 6, display: '医疗机械人' },
         ],
     },
     'Block of Diamond': {
         name: 'BOSS箱', openMsg: 'BOSS 级物资!!',
-        spawnGuard: true, guardMob: 'Draugr Knight', bigInsurance: true,   // [融合] 大保险→点圈圈QTE
+        spawnGuard: true, guardMob: 'Draugr Knight', bigInsurance: true,
         items: [
-            { name: 'Diamond Sword', chance: 0.5, value: 120, tier: 5, display: '钻石剑' },
-            { name: 'Moonstone Dagger', chance: 0.2, value: 150, tier: 7, display: '月光石匕首' },
-            { name: 'Diamond Bow', chance: 0.4, value: 100, tier: 4, display: '复合弓' },
-            { name: 'Diamond Leggings', chance: 0.4, value: 90, tier: 4, display: '钻石护腿' },
-            { name: 'Diamond Boots', chance: 0.4, value: 50, tier: 3, display: '钻石靴' },
-            { name: 'Diamond Helmet', chance: 0.4, value: 60, tier: 3, display: '钻石盔' },
-            { name: 'Block of Diamond', chance: 0.005, value: 5000000, tier: 6, display: '非洲之心' },
-            { name: 'Block of Moonstone', chance: 0.003, value: 6500000, tier: 6, display: '海洋之泪' },
-            { name: 'Block of Emerald', chance: 0.008, value: 1800000, tier: 6, display: '翡翠王座' },
-            { name: 'Yellow Baked Clay', chance: 0.006, value: 2600000, tier: 6, display: '曼德尔砖' },
-            { name: 'Golden Decoration', chance: 0.015, value: 700000, tier: 6, display: '万金泪冠' },
-            { name: 'Block of Quartz', chance: 0.01, value: 1200000, tier: 6, display: '克劳狄乌斯半身像' },
+            { name: 'Medkit', chance: 1.0, value: 0, tier: 3, display: '战地医疗包' },
+            { name: 'Medkit', chance: 0.6, value: 0, tier: 3, display: '战地医疗包' },  /* BOSS箱必出至少 2 个 Medkit */
+            { name: 'Yellow Baked Clay', chance: 0.02, value: 2600000, tier: 6, display: '万足金条' },
+            { name: 'Chiseled Block of Quartz', chance: 0.015, value: 1200000, tier: 6, display: '克劳迪乌斯半身像' },
+            { name: 'Block of Quartz', chance: 0.025, value: 800000, tier: 6, display: '赛伊德的怀表' },
+            { name: 'Black Glass', chance: 0.04, value: 800, tier: 6, display: '自动体外除颤器' },
+            { name: 'Purple Concrete', chance: 0.15, value: 380000, tier: 6, display: 'ECMO' },
+            { name: 'Obsidian', chance: 0.25, value: 120000, tier: 6, display: '强化碳纤维板' },
         ],
     },
     /* ===== 主题箱样式 =====
@@ -510,6 +576,76 @@ const CHEST_STYLES = {
         ],
     },
 };
+/* ===== 医疗系统 (2026-11-18 — 拦截 Medkit 使用 + 自定义逻辑) =====
+ * 为什么不用 Potion: Bloxd Potion 客户端内建直接饮用, 代码块层无回调可拦截
+ * 只有 Medkit 客户端使用时有蓄力时间 (3.5 秒读条) → onPlayerStartChargingItem/onPlayerFinishChargingItem 可捕获
+ * 方案: 玩家统一用 Medkit 一个物品, 代码块根据血量/状态决定是"打药"还是"打针"
+ * MEDKITS: 定义 Medkit 使用的三维参数 (useTimeMs 等待时长 | healAmount 回血 | uses 次数)
+ * INJECTOR_EFFECTS: 定义"打针"时给的效果 (干员技能预设) */
+const MEDKITS = [
+    {
+        item: 'Medkit',              /* 唯一医疗物品 — 全游戏只用这个 */
+        display: '战地医疗包',
+        useTimeMs: 3500,             /* 3.5 秒读条, 期间 Slowness 效果减移速 */
+        healAmount: 60,              /* 一次性回 60 HP (半血以上时打针=给效果) */
+        lowHpHeal: 100,              /* 血量 < 30% 时强制满血 */
+        lowHpThreshold: 0.3,         /* 30% 血量以下 = 紧急打药 */
+        slownessDuringUse: 0.7,      /* 打针期间给 Slowness 70% (减 70% 移速) */
+    },
+];
+
+/* 三角洲行动干员技能效果 — 玩家血量 >= 30% 时用 Medkit = 触发当前干员的技能 */
+const INJECTOR_EFFECTS = [
+    /* 每个干员定义一个技能效果表, 玩家选了干员就绑定对应的效果 */
+    {
+        operatorKey: 'medic',         /* 医疗干员 — 战地医生 */
+        display: '战地医生注射',
+        effects: [
+            { effect: 'Health Regen', durationMs: 15000 },
+            { effect: 'Speed', durationMs: 4000 },        /* 第二效果选参 */
+        ],
+    },
+    {
+        operatorKey: 'assault',       /* 突击干员 — 动能注射 */
+        display: '动能注射',
+        effects: [
+            { effect: 'Speed', durationMs: 8000 },
+            { effect: 'Damage', durationMs: 6000 },
+        ],
+    },
+    {
+        operatorKey: 'guard',         /* 防御干员 — 护盾注射 */
+        display: '护盾注射',
+        effects: [
+            { effect: 'Shield', durationMs: 10000 },
+            { effect: 'Damage Reduction', durationMs: 8000 },
+        ],
+    },
+    {
+        operatorKey: 'scout',         /* 侦察干员 — 视野注射 */
+        display: '视野注射',
+        effects: [
+            { effect: 'Night Vision', durationMs: 12000 },
+            { effect: 'Speed', durationMs: 5000 },
+        ],
+    },
+    {
+        operatorKey: 'recon',         /* 狙击干员 — 精准注射 */
+        display: '精准注射',
+        effects: [
+            { effect: 'Damage', durationMs: 10000 },
+            { effect: 'Jump Boost', durationMs: 6000 },
+        ],
+    },
+    {
+        operatorKey: 'random',        /* 随机模式 — 未选干员或选了"随机" */
+        display: '随机注射',
+        effects: [
+            { effect: 'Speed', durationMs: 6000 },
+            { effect: 'Shield', durationMs: 6000 },
+        ],
+    },
+];
 /* ===== 聊天格式化配置 =====
  * 聊天格式 = [kd:X/Y]【段位】【荣誉称号】【身份】【玩家名】:消息
  * 段位从 db stats (kills/deaths/extracts) 自动计算
@@ -788,4 +924,4 @@ const SMALL_MOB = {
         { min: 0,   color: '#D8D8D8', ench: 'Tier 1' },   // 普通   白/灰(最普通图基准)
     ],
 };
-module.exports = { VERSION, MAPS, MAPS_REAL_ANCHOR, OPERATORS, CHEST_STYLES, CHECKIN, INSURANCE, EXTRACT, CONST, THEME, STATUS, GEAR, RANKS, RARITY, SELL_CATALOG, SELL_TIER_CAP, AMMO_SLOT, GUN_AMMO, SMALL_MOB, CHAT_TITLES };
+module.exports = { VERSION, MAPS, MAPS_REAL_ANCHOR, OPERATORS, CHEST_STYLES, CHECKIN, INSURANCE, EXTRACT, CONST, THEME, STATUS, GEAR, RANKS, RARITY, SELL_CATALOG, SELL_TIER_CAP, MEDKITS, INJECTOR_EFFECTS, AMMO_SLOT, GUN_AMMO, SMALL_MOB, CHAT_TITLES };
