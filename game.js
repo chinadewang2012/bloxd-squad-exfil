@@ -1119,10 +1119,10 @@ const onPlayerKilledMob = (playerId, mobId, damageDealt, withItem) => {
   let pos = null; try { pos = api.getPosition(mobId); } catch(e) {}
   if (!pos) { try { pos = api.getPosition(playerId); } catch(e) {} }   // 取不到怪物位置则退化到击杀者位置
   const X = pos ? pos[0] : 0, Y = pos ? pos[1] : 0, Z = pos ? pos[2] : 0;
-  const marker = {}; marker[GEAR.markerEnch] = 1;
   let n = 0;
   for (const it of items) {
-    try { api.createItemDrop(X, Y, Z, it.name, it.amount, false, marker); n++; } catch(e) {}
+    /* it.attributes 已含 sanjiaozhou 认证 + customDisplayName(缴获的 枪名) — 直接传, 别丢 */
+    try { api.createItemDrop(X, Y, Z, it.name, it.amount, false, it.attributes || null, 300000, mobId); n++; } catch(e) {}
   }
   if (n > 0) {
     try { api.sendFlyingMiddleMessage(playerId, [{str:`💀 小怪掉落 ×${n}(掉在原地)`, style:{color:THEME.success, fontWeight:'bold', fontSize:'1.2rem'}}], 5, 1500); } catch(e) {}

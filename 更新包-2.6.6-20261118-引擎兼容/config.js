@@ -30,7 +30,7 @@ const MAPS = {
 
         mobTypes: ['Draugr Zombie', 'Draugr Skeleton', 'Wildcat'],
         MobStrong: 1,   // [融合] 小怪强度倍率(1=最普通图基准, 两三枪能打死)
-        mobInterval: 200,
+        mobInterval: 300,
         lootTable: [
             ['Iron Sword', 'gear', 50, 10], ['Iron Bow', 'gear', 45, 8], ['Iron Pickaxe', 'gear', 30, 12],
             ['Iron Helmet', 'gear', 20, 10], ['Iron Chestplate', 'gear', 40, 8], ['Iron Leggings', 'gear', 35, 8], ['Iron Boots', 'gear', 20, 10],
@@ -54,7 +54,7 @@ const MAPS = {
         
         mobTypes: ['Draugr Zombie', 'Draugr Skeleton', 'Wildcat'],
         MobStrong: 3.2,   // [融合] 高难度图(gearReq15/搜索1000s), 小怪更强
-        mobInterval: 200,
+        mobInterval: 300,
         lootTable: [
             ['Iron Sword', 'gear', 50, 10], ['Iron Bow', 'gear', 45, 8], ['Iron Pickaxe', 'gear', 30, 12],
             ['Iron Helmet', 'gear', 20, 10], ['Iron Chestplate', 'gear', 40, 8], ['Iron Leggings', 'gear', 35, 8], ['Iron Boots', 'gear', 20, 10],
@@ -77,7 +77,7 @@ const MAPS = {
       cld: { '1': [92, 70, 92] },
       mobTypes: ['Draugr Zombie', 'Draugr Skeleton', 'Wildcat'],
       MobStrong: 1,
-      mobInterval: 200,
+      mobInterval: 300,
       lootTable: [
         ['Iron Sword','gear',50,10], ['Iron Bow','gear',45,8], ['Iron Pickaxe','gear',30,12],
         ['Iron Helmet','gear',20,10], ['Iron Chestplate','gear',40,8], ['Iron Leggings','gear',35,8], ['Iron Boots','gear',20,10],
@@ -98,7 +98,7 @@ const MAPS = {
       cld: { '1': [232, 70, 232] },
       mobTypes: ['Draugr Skeleton', 'Cave Golem', 'Wildcat'],
       MobStrong: 1.5,
-      mobInterval: 150,
+      mobInterval: 300,
       lootTable: [
         ['Iron Pickaxe','gear',30,15], ['Diamond Pickaxe','gear',80,5],
         ['Iron Helmet','gear',20,12], ['Iron Chestplate','gear',40,10],
@@ -118,7 +118,7 @@ const MAPS = {
       cld: { '1': [392, 70, 392] },
       mobTypes: ['Draugr Zombie', 'Draugr Knight', 'Wildcat'],
       MobStrong: 2.3,
-      mobInterval: 120,
+      mobInterval: 300,
       lootTable: [
         ['Knight Sword','gear',80,10], ['Diamond Sword','gear',120,5],
         ['Diamond Helmet','gear',60,6], ['Diamond Chestplate','gear',100,4], ['Diamond Leggings','gear',90,5], ['Diamond Boots','gear',50,6],
@@ -227,7 +227,7 @@ const MAPS = {
         dropzones: { west: { min: [1016, 0, 1016], max: [1024, 31, 1024] }, east: { min: [1376, 0, 1016], max: [1384, 31, 1024] } },
         mobTypes: ['Draugr Knight', 'Draugr Zombie', 'Draugr Skeleton'],
         MobStrong: 2.3,   // [融合] 大坝为高难度图
-        mobInterval: 130,
+        mobInterval: 300,
         lootTable: [
             ['Knight Sword', 'gear', 80, 8], ['Diamond Sword', 'gear', 120, 4], ['Moonstone Dagger', 'gear', 150, 2],
             ['Diamond Helmet', 'gear', 60, 5], ['Diamond Chestplate', 'gear', 100, 4], ['Diamond Leggings', 'gear', 90, 4], ['Diamond Boots', 'gear', 50, 5],

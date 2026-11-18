@@ -20,7 +20,7 @@ const tierOf = (strong) => {
   return { color: '#D8D8D8', ench: 'Tier 1' };
 };
 
-/* 配置单只小怪: 称号(按强度配色) / 持枪并设为武器 / 血量×MobStrong / 死亡掉落 */
+/* 配置单只小怪: 本体改名 + 称号气泡(按强度配色) / 持枪并设为武器 / 血量×MobStrong / 死亡掉落 */
 const configureSmallMob = (mobId, mobType, mobStrong) => {
   if (mobId == null) return;
   try {
@@ -29,12 +29,16 @@ const configureSmallMob = (mobId, mobType, mobStrong) => {
     const gun = pick(S.badGuns);
     const tier = tierOf(strong);
 
-    // 头顶称号 + 按强度配色(称号/副标题/血条颜色随强度, 副标题显示强度倍率)
+    // 【关键】把怪物本体名改成称号(否则头顶气泡+本体默认名 = 双名称, 看起来未改名)
+    try { api.setMobSetting(mobId, 'name', title); } catch(e) {}
+
+    // 头顶气泡 + 按强度配色 + **hasPriorityNametag**(让铭牌优先显示/更大更清晰)
     api.setTargetedPlayerSettingForEveryone(mobId, 'nameTagInfo', {
-      backgroundColor: 'rgba(18,18,22,0.55)',
-      content: [{ str: `「${title}」`, style: { color: tier.color, fontWeight: 'bold', fontSize: '1.15rem' } }],
-      subtitle: [{ str: `强度 ×${strong.toFixed(1)}`, style: { color: tier.color, fontSize: '0.85rem' } }],
-      healthbar: { display: 'onDamage', height: '1.1rem', backgroundColour: '#2a0000', foregroundColour: tier.color },
+      backgroundColor: 'rgba(18,18,22,0.72)',
+      hasPriorityNametag: true,
+      content: [{ str: `「${title}」`, style: { color: tier.color, fontWeight: 'bold', fontSize: '1.35rem' } }],
+      subtitle: [{ str: `强度 ×${strong.toFixed(1)}`, style: { color: tier.color, fontSize: '1.0rem' } }],
+      healthbar: { display: 'always', height: '1.3rem', backgroundColour: '#2a0000', foregroundColour: tier.color },
     }, true);
 
     // 手中更换为枪械, 并把该枪设为实际攻击武器(不再空手/爪击); 武器发光档随强度
