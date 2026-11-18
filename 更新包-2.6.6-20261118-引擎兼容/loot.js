@@ -446,9 +446,11 @@ const chestKey = (x, y, z) => `${x},${y},${z}`;
 /* 周期修剪: 已过期的坐标从Map移除,防止长局内存无限增长 */
 const pruneExpiredChests = () => {
   const now = Date.now();
-  for (const [key, t] of chestCooldowns) {
-    if (now - t >= CONST.chestRespawnMs) chestCooldowns.delete(key);
-  }
+  const toDelete = [];
+  chestCooldowns.forEach((t, key) => {
+    if (now - t >= CONST.chestRespawnMs) toDelete.push(key);
+  });
+  toDelete.forEach((k) => chestCooldowns.delete(k));
 };
 const chestCooldownLeft = (x, y, z) => {
   const t = chestCooldowns.get(chestKey(x, y, z));
@@ -634,7 +636,17 @@ const smallInsureSlotsOf = (pId) => {
   return out;
 };
 const insuredSlotsOf = (pId) => {
-  return [...new Set([...largeInsureSlotsOf(), ...smallInsureSlotsOf(pId)])];
+  const combined = [];
+  combined.push(...largeInsureSlotsOf());
+  combined.push(...smallInsureSlotsOf(pId));
+  /* 去重: 不用 [...new Set(arr)] — Bloxd 引擎 Set 不可迭代 */
+  const seen = {};
+  const out = [];
+  for (let i = 0; i < combined.length; i++) {
+    const v = combined[i];
+    if (!seen[v]) { seen[v] = 1; out.push(v); }
+  }
+  return out;
 };
 
 /* ===== 撤离仓库(三角洲行动语义: 撤离成功非保险格物品进仓库) =====

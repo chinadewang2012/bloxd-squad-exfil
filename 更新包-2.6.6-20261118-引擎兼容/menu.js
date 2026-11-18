@@ -137,7 +137,12 @@ const initMapMenu = () => {
     for (const map of getMapList()) {
       const m = MAPS[map.key];
       const exfilLine = m.exfils
-        ? `\n撤离点: ${m.exfils.length}处 (${[...new Set(m.exfils.map(e => e.type))].join('/')})`
+        ? (() => {
+            /* 去重: 不用 [...new Set(arr)] — Bloxd 引擎 Set 不可迭代 */
+            const seen = {}, types = [];
+            m.exfils.forEach(e => { const t = e.type; if (!seen[t]) { seen[t] = 1; types.push(t); } });
+            return `\n撤离点: ${m.exfils.length}处 (${types.join('/')})`;
+          })()
         : '';
       api.createShopItem(CAT.MAP, map.key, {
         image: 'Compass',

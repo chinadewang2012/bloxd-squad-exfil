@@ -17,6 +17,9 @@
 			"@plugins/debug": [
 				"./node_modules/@plugins/debug/index.d.ts"
 			],
+			"@plugins/dialogue": [
+				"./node_modules/@plugins/dialogue/index.d.ts"
+			],
 			"@plugins/helpers": [
 				"./node_modules/@plugins/helpers/index.d.ts"
 			],

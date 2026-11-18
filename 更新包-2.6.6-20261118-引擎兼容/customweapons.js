@@ -114,7 +114,7 @@ const has = (itemName) => registry.has(normalizeItem(itemName).toLowerCase());
 
 const list = () => {
   const out = [];
-  for (const [key, val] of registry) {
+  registry.forEach((val, key) => {
     const buffs = buffRegistry.get(key);
     out.push({
       item: val.display,
@@ -122,7 +122,7 @@ const list = () => {
       handlers: EVENTS.reduce((n, ev) => n + val.def[ev].length, 0),
       buffs: buffs ? buffs.length : 0,
     });
-  }
+  });
   return out;
 };
 
