@@ -593,14 +593,10 @@ const enterRaid = (pId) => {
  * - 多件物品按 0.55 格小范围散开,避免全部堆在同一格;引擎掉落实体上限满时该件丢失 */
 const dropBackpackOnDeath = (pId, pos) => {
   const insured = insuredSlotsOf(pId) || [];
-  /* 保留槽位: 主武器(死亡补刀) + 护甲(outfit已由循环上限覆盖)
-   * —— 不硬编码 2/3/4! 快捷栏物品跟背包一起掉落(三角洲行动语义) */
+  /* 保留槽位: 只有主武器(slot 1, 死亡补刀用) + 保险格
+   * —— 护甲 47-51 / outfit 52-53 / 快捷栏 0,2,3,4 / 背包 5-45 全部一起掉 (三角洲行动全装备掉落语义) */
   const skip = new Set();
   skip.add(GEAR.weaponSlot);
-  const armorSlots = GEAR.armorSlots || [];
-  for (let a = 0; a < armorSlots.length; a++) skip.add(armorSlots[a]);
-  const outfitSlots = GEAR.outfitSlots || [];
-  for (let a = 0; a < outfitSlots.length; a++) skip.add(outfitSlots[a]);
   const bx = Array.isArray(pos) && pos.length >= 3 ? Number(pos[0]) || 0 : 0;
   const by = Array.isArray(pos) && pos.length >= 3 ? Number(pos[1]) || 0 : 0;
   const bz = Array.isArray(pos) && pos.length >= 3 ? Number(pos[2]) || 0 : 0;
