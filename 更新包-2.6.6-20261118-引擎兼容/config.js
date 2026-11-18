@@ -186,43 +186,7 @@ const MAPS = {
             tunnel_e: { min: [1388, 4, 1062], max: [1399, 8, 1066] }
         },
         /* 35 个战利品箱实际位置 [x,y,z,类型] — 头顶标记块已含在蓝图内 */
-        chests: [
-            [1008, 4, 1004, "普通"],
-            [1024, 4, 1028, "物资"],
-            [1050, 4, 1028, "物资"],
-            [1024, 4, 1044, "物资"],
-            [1050, 4, 1044, "物资"],
-            [1070, 4, 1029, "高级"],
-            [1124, 4, 1107, "物资"],
-            [1142, 4, 1107, "物资"],
-            [1132, 4, 1093, "高级"],
-            [1132, 4, 1108, "BOSS"],
-            [1040, 4, 1076, "物资"],
-            [1058, 4, 1076, "物资"],
-            [1076, 4, 1076, "物资"],
-            [1094, 4, 1076, "物资"],
-            [1060, 4, 1104, "高级"],
-            [1094, 4, 1104, "BOSS"],
-            [1185, 4, 1075, "物资"],
-            [1200, 4, 1075, "物资"],
-            [1197, 9, 1080, "高级"],
-            [1190, 17, 1088, "BOSS"],
-            [1250, 4, 1100, "物资"],
-            [1270, 4, 1100, "物资"],
-            [1280, 4, 1110, "高级"],
-            [1250, 4, 1106, "物资"],
-            [1245, 4, 1070, "物资"],
-            [1270, 4, 1070, "物资"],
-            [1260, 4, 1080, "高级"],
-            [1150, 8, 1105, "普通"],
-            [1100, 23, 1129, "物资"],
-            [1300, 23, 1129, "物资"],
-            [1100, 5, 1125, "物资"],
-            [1300, 5, 1125, "物资"],
-            [1198, 6, 1126, "BOSS"],
-            [1003, 4, 1063, "物资"],
-            [1396, 4, 1065, "物资"]
-        ],
+       
         /* 索降区(世界坐标) */
         dropzones: { west: { min: [1016, 0, 1016], max: [1024, 31, 1024] }, east: { min: [1376, 0, 1016], max: [1384, 31, 1024] } },
         mobTypes: ['Draugr Knight', 'Draugr Zombie', 'Draugr Skeleton'],
@@ -250,107 +214,95 @@ const RARITY = {
     6: { name: '红', color: '#FF4444' },
 };
 const SELL_CATALOG = [
-    /* ===== 三角洲行动「危险行动」变卖物目录 (2026-11-18 v3 — 纯装饰方块版) =====
-     * 【硬规则】
-     *  1. 只能是纯装饰方块 — 放地上不发光、不交互、不开关、不存储、不熔炼
-     *  2. 全部来自 BLOCK_NAMES.txt 真实方块名
-     *  3. 不被 loot.js FUNCTIONAL_ITEM_PATTERNS 拦截 (羊毛被拦, Red Concrete 被拦)
-     * 稀有度: 彩虹(6) > 金/黄(5) > 紫/品红/橙(4) > 蓝/绿/粉(3) > 红/青/灰/棕(2) > 黑/白/浅灰(1)
-     * 价值逻辑: 颜色越稀有越贵
-     * ==== 三角洲行动收集品映射 ====
-     * Concrete = 混凝土模块 | Baked Clay = 陶瓦装饰 | Planks = 木板面板
-     * Glass = 玻璃构件 | Carpet = 地毯模块 | Bricks = 砖块
-     * Quartz = 石英石面板 | Obsidian = 黑曜石构件 | Stone = 石材
-     * Sandstone = 砂岩 | Granite = 花岗岩 | Andesite = 安山岩 | Diorite = 闪长岩 */
+    /* ===== 三角洲行动「危险行动」变卖物目录 (2026-11-18 v4 — 三角洲官方命名) =====
+     * 全部来自 BLOCK_NAMES.txt 真实纯装饰方块 + 不被 loot.js FUNCTIONAL_ITEM_PATTERNS 拦截
+     * 稀有度: 红(6)>金(5)>紫(4)>蓝(3)>绿(2)>白(1), 颜色越稀有越贵 */
 
-    /* ===== 混凝土 Concrete (工业零件 — 三角洲情报文件/服务器模块) ===== */
-    { item: 'Black Concrete', display: '飞行记录仪模块', cat: '工业零件', tier: 2, value: 280000 },
-    { item: 'Gray Concrete', display: '笔记本电脑板', cat: '工业零件', tier: 3, value: 380000 },
-    { item: 'Light Gray Concrete', display: '主板组件', cat: '工业零件', tier: 2, value: 180000 },
-    { item: 'Brown Concrete', display: '相机控制板', cat: '工业零件', tier: 3, value: 260000 },
-    { item: 'Cyan Concrete', display: '电子脚镣核心', cat: '工业零件', tier: 3, value: 320000 },
-    { item: 'Light Blue Concrete', display: '刀片服务器', cat: '工业零件', tier: 3, value: 420000 },
-    { item: 'Blue Concrete', display: '绝密服务器', cat: '工业零件', tier: 4, value: 680000 },
-    { item: 'Green Concrete', display: '独立显卡核心', cat: '工业零件', tier: 3, value: 220000 },
-    { item: 'Lime Concrete', display: '天然红珊瑚雕件', cat: '工业零件', tier: 4, value: 120000 },
-    { item: 'Magenta Concrete', display: '陨石切片标本', cat: '工业零件', tier: 4, value: 420000 },
-    { item: 'Orange Concrete', display: '等离子切割机', cat: '工业零件', tier: 4, value: 160000 },
-    { item: 'Pink Concrete', display: '钻石项链元件', cat: '工业零件', tier: 3, value: 70000 },
-    { item: 'Purple Concrete', display: 'ECMO 核心模块', cat: '工业零件', tier: 4, value: 380000 },
-    { item: 'White Concrete', display: '复苏呼吸机', cat: '工业零件', tier: 4, value: 320000 },
-    { item: 'Yellow Concrete', display: '扫拖一体机器人', cat: '工业零件', tier: 4, value: 140000 },
-    /* Red Concrete 不可变卖 (用作 AWP 子弹标记, FUNCTIONAL_ITEM_PATTERNS 虽然不拦但代码里有硬编码) */
+    /* ===== 1. 电子/情报类 (混凝土 Concrete) — 三角洲情报文件/服务器模块 ===== */
+    { item: 'Black Concrete', display: '飞行记录仪', cat: '电子情报', tier: 2, value: 280000 },
+    { item: 'Gray Concrete', display: '笔记本电脑', cat: '电子情报', tier: 3, value: 380000 },
+    { item: 'Light Gray Concrete', display: '战术平板', cat: '电子情报', tier: 2, value: 180000 },
+    { item: 'Brown Concrete', display: '相机', cat: '电子情报', tier: 3, value: 260000 },
+    { item: 'Cyan Concrete', display: '电子脚镣', cat: '电子情报', tier: 3, value: 320000 },
+    { item: 'Light Blue Concrete', display: '刀片服务器', cat: '电子情报', tier: 3, value: 420000 },
+    { item: 'Blue Concrete', display: '绝密服务器', cat: '电子情报', tier: 4, value: 680000 },
+    { item: 'Green Concrete', display: '显卡', cat: '电子情报', tier: 3, value: 220000 },
+    { item: 'Lime Concrete', display: '绿色电路板', cat: '电子情报', tier: 4, value: 120000 },
+    { item: 'Magenta Concrete', display: '超算单元', cat: '电子情报', tier: 4, value: 420000 },
+    { item: 'Orange Concrete', display: '等离子切割机', cat: '电子情报', tier: 4, value: 160000 },
+    { item: 'Pink Concrete', display: '粉色芯片', cat: '电子情报', tier: 3, value: 70000 },
+    { item: 'Purple Concrete', display: 'ECMO 模块', cat: '电子情报', tier: 4, value: 380000 },
+    { item: 'White Concrete', display: '复苏呼吸机', cat: '电子情报', tier: 4, value: 320000 },
+    { item: 'Yellow Concrete', display: '扫拖一体机器人', cat: '电子情报', tier: 4, value: 140000 },
 
-    /* ===== 陶瓦 Baked Clay (贵重装饰 — 三角洲黄金/珍品系列) ===== */
-    { item: 'Black Baked Clay', display: '黑曜陶瓷', cat: '装饰陶瓷', tier: 2, value: 120000 },
-    { item: 'Gray Baked Clay', display: '石墨陶板', cat: '装饰陶瓷', tier: 2, value: 100000 },
-    { item: 'Light Gray Baked Clay', display: '珍珠陶板', cat: '装饰陶瓷', tier: 2, value: 110000 },
-    { item: 'Brown Baked Clay', display: '紫檀陶板', cat: '装饰陶瓷', tier: 3, value: 180000 },
-    { item: 'Cyan Baked Clay', display: '青蓝陶板', cat: '装饰陶瓷', tier: 3, value: 220000 },
-    { item: 'Light Blue Baked Clay', display: '冰蓝陶板', cat: '装饰陶瓷', tier: 3, value: 250000 },
-    { item: 'Blue Baked Clay', display: '钴蓝陶板', cat: '装饰陶瓷', tier: 3, value: 280000 },
-    { item: 'Green Baked Clay', display: '翡翠陶板', cat: '装饰陶瓷', tier: 3, value: 180000 },
-    { item: 'Lime Baked Clay', display: '青柠陶板', cat: '装饰陶瓷', tier: 4, value: 150000 },
-    { item: 'Magenta Baked Clay', display: '品红陶板(曼德尔超算单元)', cat: '装饰陶瓷', tier: 4, value: 160000 },
-    { item: 'Orange Baked Clay', display: '琥珀陶板', cat: '装饰陶瓷', tier: 4, value: 140000 },
-    { item: 'Pink Baked Clay', display: '粉玉陶板', cat: '装饰陶瓷', tier: 3, value: 130000 },
-    { item: 'Purple Baked Clay', display: '紫晶陶板', cat: '装饰陶瓷', tier: 4, value: 220000 },
-    { item: 'Red Baked Clay', display: '丹砂陶板', cat: '装饰陶瓷', tier: 3, value: 200000 },
-    { item: 'White Baked Clay', display: '珍珠陶板(微型反应炉)', cat: '装饰陶瓷', tier: 5, value: 240000 },
-    { item: 'Yellow Baked Clay', display: '黄金陶板(曼德尔砖)', cat: '装饰陶瓷', tier: 6, value: 2600000 },
+    /* ===== 2. 贵重/黄金类 (陶瓦 Baked Clay) — 三角洲珍品 ===== */
+    { item: 'Yellow Baked Clay', display: '曼德尔砖', cat: '黄金珍品', tier: 6, value: 2600000 },
+    { item: 'White Baked Clay', display: '微型反应炉', cat: '黄金珍品', tier: 5, value: 240000 },
+    { item: 'Magenta Baked Clay', display: '超算核心', cat: '黄金珍品', tier: 4, value: 160000 },
+    { item: 'Purple Baked Clay', display: '紫晶陶瓷', cat: '黄金珍品', tier: 4, value: 220000 },
+    { item: 'Red Baked Clay', display: '丹砂陶板', cat: '黄金珍品', tier: 3, value: 200000 },
+    { item: 'Blue Baked Clay', display: '钴蓝陶板', cat: '黄金珍品', tier: 3, value: 280000 },
+    { item: 'Cyan Baked Clay', display: '青蓝陶板', cat: '黄金珍品', tier: 3, value: 220000 },
+    { item: 'Brown Baked Clay', display: '紫檀陶板', cat: '黄金珍品', tier: 3, value: 180000 },
+    { item: 'Black Baked Clay', display: '黑曜陶板', cat: '黄金珍品', tier: 2, value: 120000 },
 
-    /* ===== 木板 Planks (生活用品面板 — 三角洲日用品系列) ===== */
-    { item: 'White Planks', display: '古董钟面板', cat: '生活用品', tier: 2, value: 4200 },
-    { item: 'Orange Planks', display: '琥珀木面板', cat: '生活用品', tier: 4, value: 8800 },
-    { item: 'Magenta Planks', display: '精密电路板', cat: '生活用品', tier: 4, value: 12500 },
-    { item: 'Light Blue Planks', display: '冰蓝面板', cat: '生活用品', tier: 3, value: 6500 },
-    { item: 'Yellow Planks', display: '罐头包装箱', cat: '生活用品', tier: 4, value: 5000 },
-    { item: 'Lime Planks', display: '牙膏包装盒', cat: '生活用品', tier: 3, value: 4200 },
-    { item: 'Pink Planks', display: '肥皂盒', cat: '生活用品', tier: 3, value: 3000 },
-    { item: 'Gray Planks', display: '灰色面板', cat: '生活用品', tier: 2, value: 3800 },
-    { item: 'Light Gray Planks', display: '医疗包面板', cat: '生活用品', tier: 2, value: 2400 },
-    { item: 'Cyan Planks', display: '钢笔包装盒', cat: '生活用品', tier: 3, value: 3500 },
-    { item: 'Purple Planks', display: '打火机', cat: '生活用品', tier: 3, value: 2600 },
-    { item: 'Blue Planks', display: '蓝色面板', cat: '生活用品', tier: 3, value: 5200 },
-    { item: 'Brown Planks', display: '咖啡包装盒', cat: '生活用品', tier: 3, value: 9000 },
-    { item: 'Green Planks', display: '战术背包面板', cat: '生活用品', tier: 3, value: 2000 },
-    { item: 'Red Planks', display: '手术包面板', cat: '生活用品', tier: 3, value: 2800 },
-    { item: 'Black Planks', display: '防弹插板面板', cat: '生活用品', tier: 3, value: 3200 },
+    /* ===== 3. 玻璃/面板类 (Glass) — 三角洲精密器件 ===== */
+    { item: 'Yellow Glass', display: '金色滤镜', cat: '精密器件', tier: 5, value: 6800 },
+    { item: 'Purple Glass', display: '紫晶透镜', cat: '精密器件', tier: 4, value: 4200 },
+    { item: 'Magenta Glass', display: '品红透镜', cat: '精密器件', tier: 4, value: 3800 },
+    { item: 'Orange Glass', display: '琥珀透镜', cat: '精密器件', tier: 4, value: 3500 },
+    { item: 'Lime Glass', display: '青柠滤镜', cat: '精密器件', tier: 4, value: 3200 },
+    { item: 'Blue Glass', display: '钴蓝滤镜', cat: '精密器件', tier: 3, value: 2500 },
+    { item: 'Red Glass', display: '红色滤镜', cat: '精密器件', tier: 3, value: 2800 },
+    { item: 'Light Blue Glass', display: '冰蓝滤镜', cat: '精密器件', tier: 3, value: 2200 },
+    { item: 'Pink Glass', display: '粉色滤镜', cat: '精密器件', tier: 3, value: 2600 },
+    { item: 'Brown Glass', display: '棕色滤镜', cat: '精密器件', tier: 2, value: 1400 },
+    { item: 'Cyan Glass', display: '青色滤镜', cat: '精密器件', tier: 2, value: 1600 },
+    { item: 'Gray Glass', display: '灰色滤镜', cat: '精密器件', tier: 2, value: 1200 },
+    { item: 'White Glass', display: 'UV 滤镜', cat: '精密器件', tier: 2, value: 700 },
+    { item: 'Black Glass', display: '暗色滤镜', cat: '精密器件', tier: 1, value: 800 },
 
-    /* ===== 玻璃 Glass (装饰面板 — 三角洲情报/电子产品系列) ===== */
-    { item: 'Black Glass', display: '暗色玻璃窗', cat: '装饰面板', tier: 1, value: 800 },
-    { item: 'Gray Glass', display: '灰色玻璃', cat: '装饰面板', tier: 2, value: 1200 },
-    { item: 'Light Gray Glass', display: '浅灰玻璃', cat: '装饰面板', tier: 1, value: 900 },
-    { item: 'Brown Glass', display: '棕色玻璃', cat: '装饰面板', tier: 2, value: 1400 },
-    { item: 'Cyan Glass', display: '青色玻璃', cat: '装饰面板', tier: 2, value: 1600 },
-    { item: 'Light Blue Glass', display: '淡蓝玻璃', cat: '装饰面板', tier: 3, value: 2200 },
-    { item: 'Blue Glass', display: '钴蓝玻璃', cat: '装饰面板', tier: 3, value: 2500 },
-    { item: 'Green Glass', display: '酒盒玻璃', cat: '装饰面板', tier: 3, value: 600 },
-    { item: 'Lime Glass', display: '青柠玻璃', cat: '装饰面板', tier: 4, value: 3200 },
-    { item: 'Magenta Glass', display: '品红玻璃', cat: '装饰面板', tier: 4, value: 3800 },
-    { item: 'Orange Glass', display: '琥珀玻璃', cat: '装饰面板', tier: 4, value: 3500 },
-    { item: 'Pink Glass', display: '粉色玻璃', cat: '装饰面板', tier: 3, value: 2600 },
-    { item: 'Purple Glass', display: '紫晶玻璃', cat: '装饰面板', tier: 4, value: 4200 },
-    { item: 'Red Glass', display: '红色玻璃', cat: '装饰面板', tier: 3, value: 2800 },
-    { item: 'White Glass', display: '香烟盒玻璃', cat: '装饰面板', tier: 2, value: 700 },
-    { item: 'Yellow Glass', display: '金色玻璃', cat: '装饰面板', tier: 5, value: 6800 },
+    /* ===== 4. 石英/黑曜石/砖类 (Quartz/Obsidian/Bricks) — 三角洲核心战利品 ===== */
+    { item: 'Chiseled Block of Quartz', display: '克劳狄乌斯半身像', cat: '核心战利品', tier: 6, value: 1200000 },
+    { item: 'Block of Quartz', display: '石英面板', cat: '核心战利品', tier: 4, value: 800000 },
+    { item: 'Obsidian', display: '强化碳纤维板', cat: '核心战利品', tier: 5, value: 120000 },
+    { item: 'Ice Bricks', display: '冰晶石砖', cat: '核心战利品', tier: 5, value: 180000 },
+    { item: 'Green Bricks', display: '青砖瓦', cat: '核心战利品', tier: 3, value: 380 },
+    { item: 'Bricks', display: '红砖', cat: '核心战利品', tier: 1, value: 200 },
+    { item: 'Dark Red Brick', display: '暗红砖块', cat: '核心战利品', tier: 2, value: 350 },
+    { item: 'Stone Bricks', display: '石砖', cat: '核心战利品', tier: 1, value: 180 },
+    { item: 'Mossy Stone Bricks', display: '苔藓石砖', cat: '核心战利品', tier: 2, value: 320 },
+    { item: 'Cracked Stone Bricks', display: '裂纹石砖', cat: '核心战利品', tier: 2, value: 280 },
 
-    /* ===== 石材/砖块/石英/黑曜石 (稀有建材 — 三角洲贵重战利品) ===== */
-    { item: 'Chiseled Block of Quartz', display: '克劳狄乌斯半身像', cat: '贵重建材', tier: 6, value: 1200000 },
-    { item: 'Block of Quartz', display: '石英面板', cat: '贵重建材', tier: 4, value: 800000 },
-    { item: 'Obsidian', display: '强化碳纤维板', cat: '贵重建材', tier: 5, value: 120000 },
-    { item: 'Bricks', display: '红砖', cat: '建材', tier: 1, value: 200 },
-    { item: 'Stone Bricks', display: '石砖', cat: '建材', tier: 1, value: 180 },
-    { item: 'Dark Red Brick', display: '暗红砖块', cat: '建材', tier: 2, value: 350 },
-    { item: 'Green Bricks', display: '青砖瓦', cat: '建材', tier: 2, value: 380 },
-    { item: 'Granite', display: '花岗岩', cat: '建材', tier: 1, value: 150 },
-    { item: 'Smooth Granite', display: '抛光花岗岩', cat: '建材', tier: 2, value: 320 },
-    { item: 'Andesite', display: '安山岩', cat: '建材', tier: 1, value: 140 },
-    { item: 'Diorite', display: '闪长岩', cat: '建材', tier: 1, value: 130 },
-    { item: 'Smooth Diorite', display: '抛光闪长岩', cat: '建材', tier: 2, value: 300 },
-    { item: 'Sandstone', display: '砂岩', cat: '建材', tier: 1, value: 120 },
-    { item: 'Smooth Sandstone', display: '抛光砂岩', cat: '建材', tier: 2, value: 280 },
-    { item: 'Engraved Sandstone', display: '雕花砂岩', cat: '建材', tier: 3, value: 650 },
+    /* ===== 5. 石材/花岗岩/安山岩/闪长岩 — 三角洲地质标本 ===== */
+    { item: 'Smooth Stone', display: '抛光石板', cat: '地质标本', tier: 1, value: 100 },
+    { item: 'Granite', display: '花岗岩标本', cat: '地质标本', tier: 1, value: 150 },
+    { item: 'Smooth Granite', display: '抛光花岗岩', cat: '地质标本', tier: 2, value: 320 },
+    { item: 'Granite Bricks', display: '花岗岩砖', cat: '地质标本', tier: 3, value: 420 },
+    { item: 'Engraved Granite', display: '雕花花岗岩', cat: '地质标本', tier: 4, value: 680 },
+    { item: 'Andesite', display: '安山岩标本', cat: '地质标本', tier: 1, value: 140 },
+    { item: 'Smooth Andesite', display: '抛光安山岩', cat: '地质标本', tier: 2, value: 300 },
+    { item: 'Andesite Bricks', display: '安山岩砖', cat: '地质标本', tier: 3, value: 400 },
+    { item: 'Diorite', display: '闪长岩标本', cat: '地质标本', tier: 1, value: 130 },
+    { item: 'Smooth Diorite', display: '抛光闪长岩', cat: '地质标本', tier: 2, value: 280 },
+    { item: 'Diorite Bricks', display: '闪长岩砖', cat: '地质标本', tier: 3, value: 380 },
+
+    /* ===== 6. 砂岩/红砂岩 — 三角洲沙漠战区建材 ===== */
+    { item: 'Sandstone', display: '砂岩标本', cat: '沙漠建材', tier: 1, value: 120 },
+    { item: 'Smooth Sandstone', display: '抛光砂岩', cat: '沙漠建材', tier: 2, value: 260 },
+    { item: 'Sandstone Bricks', display: '砂岩砖', cat: '沙漠建材', tier: 3, value: 380 },
+    { item: 'Engraved Sandstone', display: '雕花砂岩', cat: '沙漠建材', tier: 3, value: 650 },
+    { item: 'Marked Sandstone', display: '标记砂岩', cat: '沙漠建材', tier: 2, value: 300 },
+    { item: 'Red Sandstone', display: '红砂岩标本', cat: '沙漠建材', tier: 2, value: 200 },
+    { item: 'Red Sandstone Bricks', display: '红砂岩砖', cat: '沙漠建材', tier: 3, value: 400 },
+    { item: 'Red Sand', display: '红色沙砾', cat: '沙漠建材', tier: 1, value: 80 },
+
+    /* ===== 7. 黏土/粗泥 — 三角洲战区土壤标本 ===== */
+    { item: 'Clay', display: '黏土标本', cat: '土壤标本', tier: 1, value: 50 },
+    { item: 'Rocky Dirt', display: '岩石土壤', cat: '土壤标本', tier: 1, value: 40 },
+    { item: 'Packed Snow', display: '压实积雪', cat: '土壤标本', tier: 1, value: 60 },
+    { item: 'Mossy Messy Stone', display: '苔藓石块', cat: '土壤标本', tier: 2, value: 220 },
+    { item: 'Snowy Messy Stone', display: '积雪石块', cat: '土壤标本', tier: 2, value: 240 },
 ];
 /* 各图摸金分区的稀有度上限(越大越可能出高级变卖物) */
 const SELL_TIER_CAP = { gt: 3, jianyu: 6, dam: 6 };   // 键必须与 MAPS 一致(已移除停用的 farm/mine/city)
