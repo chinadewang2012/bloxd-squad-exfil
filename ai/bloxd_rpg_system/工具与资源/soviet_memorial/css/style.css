@@ -1,0 +1,744 @@
+/* 复古苏联纪念网站样式 */
+
+/* 基础样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 复古纸张纹理背景 */
+:root {
+    --paper-bg: #f5f0e8;
+    --paper-dark: #e8e0d0;
+    --ink-black: #1a1a1a;
+    --soviet-red: #8B0000;
+    --soviet-red-light: #B22222;
+    --soviet-gold: #B8860B;
+    --soviet-gold-light: #DAA520;
+    --vintage-border: #8B7355;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background-color: var(--paper-bg);
+    background-image: 
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E"),
+        linear-gradient(to bottom, rgba(139,115,85,0.03) 1px, transparent 1px);
+    background-size: 200px 200px, 100% 24px;
+    color: var(--ink-black);
+    line-height: 1.8;
+    min-height: 100vh;
+}
+
+/* 顶部装饰条 */
+.top-bar {
+    background: var(--soviet-red);
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    border-bottom: 3px solid var(--soviet-gold);
+}
+
+.ornament {
+    width: 100px;
+    height: 2px;
+    background: var(--soviet-gold);
+    position: relative;
+}
+
+.ornament::before,
+.ornament::after {
+    content: '&#9830;';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--soviet-gold);
+    font-size: 12px;
+}
+
+.ornament::before { left: -15px; }
+.ornament::after { right: -15px; }
+
+.year-range {
+    color: var(--soviet-gold);
+    font-size: 14px;
+    letter-spacing: 8px;
+    font-weight: bold;
+}
+
+/* 导航 */
+.main-nav {
+    background: rgba(26, 26, 26, 0.95);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 2px solid var(--soviet-gold);
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    height: 70px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.logo .emblem {
+    font-size: 36px;
+    color: var(--soviet-red);
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--soviet-gold);
+    letter-spacing: 4px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+}
+
+.nav-links a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 15px;
+    letter-spacing: 2px;
+    transition: all 0.3s;
+    position: relative;
+    padding: 5px 0;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--soviet-gold);
+    transition: width 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--soviet-gold);
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 100%;
+}
+
+/* 主视觉区 */
+.hero {
+    min-height: calc(100vh - 110px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 80px 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(ellipse at top, rgba(139,0,0,0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at bottom, rgba(184,134,11,0.05) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+}
+
+.hero-badge {
+    display: inline-block;
+    border: 2px solid var(--soviet-gold);
+    padding: 8px 30px;
+    margin-bottom: 30px;
+}
+
+.badge-text {
+    color: var(--soviet-red);
+    font-size: 14px;
+    letter-spacing: 6px;
+}
+
+.hero-title {
+    margin-bottom: 20px;
+}
+
+.title-main {
+    display: block;
+    font-size: 80px;
+    font-weight: bold;
+    color: var(--soviet-red);
+    letter-spacing: 20px;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.title-sub {
+    display: block;
+    font-size: 28px;
+    color: var(--ink-black);
+    letter-spacing: 8px;
+    font-weight: normal;
+}
+
+.hero-subtitle {
+    font-size: 18px;
+    color: #666;
+    letter-spacing: 4px;
+    font-style: italic;
+    margin-bottom: 30px;
+}
+
+.hero-divider {
+    margin: 40px 0;
+}
+
+.diamond {
+    color: var(--soviet-gold);
+    font-size: 24px;
+}
+
+.hero-description {
+    font-size: 20px;
+    color: #444;
+    line-height: 2;
+    margin-bottom: 40px;
+}
+
+.cta-button {
+    display: inline-block;
+    background: var(--soviet-red);
+    color: white;
+    padding: 18px 50px;
+    text-decoration: none;
+    font-size: 16px;
+    letter-spacing: 4px;
+    border: 2px solid var(--soviet-red);
+    transition: all 0.3s;
+}
+
+.cta-button:hover {
+    background: transparent;
+    color: var(--soviet-red);
+}
+
+.hero-emblem-large {
+    position: absolute;
+    bottom: -100px;
+    right: -50px;
+    font-size: 400px;
+    color: rgba(139,0,0,0.03);
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* 通用容器 */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* 区块标题 */
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-label {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 6px;
+    color: var(--soviet-gold);
+    margin-bottom: 15px;
+}
+
+.section-title {
+    font-size: 42px;
+    color: var(--ink-black);
+    letter-spacing: 8px;
+    margin-bottom: 20px;
+}
+
+.section-line {
+    width: 80px;
+    height: 3px;
+    background: var(--soviet-red);
+    margin: 0 auto;
+}
+
+/* 简介区块 */
+.intro-section {
+    padding: 100px 0;
+    background: white;
+    border-top: 1px solid var(--paper-dark);
+    border-bottom: 1px solid var(--paper-dark);
+}
+
+.intro-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+}
+
+.intro-card {
+    text-align: center;
+    padding: 50px 30px;
+    border: 1px solid var(--paper-dark);
+    background: var(--paper-bg);
+    transition: all 0.3s;
+}
+
+.intro-card:hover {
+    border-color: var(--soviet-gold);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.card-icon {
+    font-size: 48px;
+    color: var(--soviet-red);
+    margin-bottom: 25px;
+}
+
+.intro-card h3 {
+    font-size: 24px;
+    color: var(--ink-black);
+    margin-bottom: 20px;
+    letter-spacing: 4px;
+}
+
+.intro-card p {
+    color: #666;
+    line-height: 1.8;
+    font-size: 15px;
+}
+
+/* 快速导航 */
+.quick-nav {
+    padding: 100px 0;
+}
+
+.nav-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.nav-card {
+    position: relative;
+    height: 280px;
+    text-decoration: none;
+    overflow: hidden;
+    border: 3px solid var(--vintage-border);
+}
+
+.nav-card-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.9;
+    transition: transform 0.5s;
+}
+
+.nav-card:hover .nav-card-bg {
+    transform: scale(1.1);
+}
+
+.nav-card-content {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px;
+    color: white;
+    background: rgba(0,0,0,0.2);
+}
+
+.nav-number {
+    font-size: 14px;
+    letter-spacing: 4px;
+    opacity: 0.8;
+    margin-bottom: 20px;
+}
+
+.nav-card h3 {
+    font-size: 32px;
+    letter-spacing: 6px;
+    margin-bottom: 15px;
+}
+
+.nav-card p {
+    font-size: 15px;
+    opacity: 0.9;
+    line-height: 1.6;
+}
+
+.nav-arrow {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    font-size: 32px;
+    transition: transform 0.3s;
+}
+
+.nav-card:hover .nav-arrow {
+    transform: translateX(10px);
+}
+
+/* 页脚 */
+.main-footer {
+    background: var(--ink-black);
+    color: #999;
+    padding: 80px 0 40px;
+}
+
+.footer-top {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.footer-emblem {
+    font-size: 60px;
+    color: var(--soviet-red);
+}
+
+.footer-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.footer-quote {
+    margin-bottom: 40px;
+}
+
+.footer-quote p {
+    font-size: 20px;
+    color: #ccc;
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+}
+
+.quote-trans {
+    font-size: 14px !important;
+    color: #666 !important;
+    font-style: italic;
+}
+
+.footer-nav {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #333;
+}
+
+.footer-nav a {
+    color: #888;
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 2px;
+    transition: color 0.3s;
+}
+
+.footer-nav a:hover {
+    color: var(--soviet-gold);
+}
+
+.copyright {
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: #555;
+}
+
+/* 页面标题通用样式 */
+.page-header {
+    background: linear-gradient(135deg, var(--soviet-red) 0%, #5c0000 100%);
+    padding: 120px 0 80px;
+    text-align: center;
+    color: white;
+    position: relative;
+}
+
+.page-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: var(--soviet-gold);
+}
+
+.page-title {
+    font-size: 56px;
+    letter-spacing: 16px;
+    margin-bottom: 20px;
+    font-weight: normal;
+}
+
+.page-subtitle {
+    font-size: 18px;
+    letter-spacing: 6px;
+    opacity: 0.8;
+    font-style: italic;
+}
+
+/* 内容区块 */
+.content-section {
+    padding: 80px 0;
+}
+
+.content-section:nth-child(even) {
+    background: white;
+}
+
+/* 时间线样式 */
+.timeline-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    padding: 40px 0;
+}
+
+.timeline-container::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--soviet-gold);
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    display: flex;
+    margin-bottom: 60px;
+    position: relative;
+}
+
+.timeline-item:nth-child(odd) {
+    flex-direction: row-reverse;
+    text-align: right;
+}
+
+.timeline-content {
+    width: 45%;
+    padding: 30px;
+    background: white;
+    border: 1px solid var(--paper-dark);
+    position: relative;
+}
+
+.timeline-content::before {
+    content: '';
+    position: absolute;
+    top: 30px;
+    width: 20px;
+    height: 20px;
+    background: var(--soviet-red);
+    border: 4px solid var(--soviet-gold);
+    border-radius: 50%;
+}
+
+.timeline-item:nth-child(odd) .timeline-content::before {
+    right: -60px;
+}
+
+.timeline-item:nth-child(even) .timeline-content::before {
+    left: -60px;
+}
+
+.timeline-year {
+    font-size: 14px;
+    color: var(--soviet-gold);
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+}
+
+.timeline-content h3 {
+    font-size: 24px;
+    color: var(--soviet-red);
+    margin-bottom: 15px;
+    letter-spacing: 4px;
+}
+
+.timeline-content p {
+    color: #555;
+    line-height: 1.8;
+}
+
+/* 人物卡片 */
+.figures-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+}
+
+.figure-card {
+    background: white;
+    border: 1px solid var(--paper-dark);
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.figure-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.figure-image {
+    height: 300px;
+    background: linear-gradient(135deg, #333 0%, #666 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 100px;
+    color: rgba(255,255,255,0.2);
+}
+
+.figure-info {
+    padding: 30px;
+}
+
+.figure-info h3 {
+    font-size: 24px;
+    color: var(--ink-black);
+    margin-bottom: 10px;
+    letter-spacing: 3px;
+}
+
+.figure-role {
+    color: var(--soviet-gold);
+    font-size: 14px;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+}
+
+.figure-info p {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+/* 响应式 */
+@media (max-width: 1024px) {
+    .nav-container {
+        flex-direction: column;
+        height: auto;
+        padding: 20px;
+    }
+    
+    .nav-links {
+        margin-top: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+    
+    .title-main {
+        font-size: 48px;
+        letter-spacing: 10px;
+    }
+    
+    .title-sub {
+        font-size: 20px;
+    }
+    
+    .intro-grid,
+    .figures-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .nav-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero-emblem-large {
+        display: none;
+    }
+    
+    .timeline-container::before {
+        left: 20px;
+    }
+    
+    .timeline-item,
+    .timeline-item:nth-child(odd) {
+        flex-direction: column;
+        text-align: left;
+    }
+    
+    .timeline-content {
+        width: calc(100% - 60px);
+        margin-left: 60px;
+    }
+    
+    .timeline-content::before,
+    .timeline-item:nth-child(odd) .timeline-content::before {
+        left: -50px;
+        right: auto;
+    }
+    
+    .page-title {
+        font-size: 36px;
+        letter-spacing: 8px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 20px;
+    }
+    
+    .title-main {
+        font-size: 36px;
+        letter-spacing: 6px;
+    }
+    
+    .section-title {
+        font-size: 28px;
+    }
+    
+    .footer-nav {
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+}

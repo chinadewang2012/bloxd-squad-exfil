@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>СССР | 纪念苏维埃</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --soviet-red: #cc0000;
+            --soviet-dark-red: #8b0000;
+            --soviet-gold: #ffd700;
+            --soviet-black: #0a0a0a;
+            --soviet-gray: #1a1a1a;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'SimHei', sans-serif;
+            background: var(--soviet-black);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* 主视觉区 */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: linear-gradient(135deg, var(--soviet-black) 0%, #1a0000 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 200%;
+            background: var(--soviet-red);
+            transform: rotate(-15deg);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .hero-emblem {
+            font-size: 15vw;
+            line-height: 1;
+            margin-bottom: 20px;
+            text-shadow: 0 0 50px rgba(204, 0, 0, 0.8);
+            animation: emblemPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes emblemPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero-title {
+            font-size: 4vw;
+            font-weight: 900;
+            letter-spacing: 20px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            color: white;
+            text-shadow: 4px 4px 0 var(--soviet-red);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5vw;
+            letter-spacing: 10px;
+            color: var(--soviet-gold);
+            font-weight: 700;
+        }
+
+        .hero-years {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 8vw;
+            font-weight: 900;
+            color: transparent;
+            -webkit-text-stroke: 2px var(--soviet-red);
+            z-index: 10;
+            letter-spacing: 30px;
+        }
+
+        /* 斜切分隔带 */
+        .diagonal-strip {
+            height: 150px;
+            background: var(--soviet-red);
+            transform: skewY(-3deg);
+            margin: -75px 0;
+            position: relative;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .diagonal-strip h2 {
+            transform: skewY(3deg);
+            font-size: 3em;
+            font-weight: 900;
+            letter-spacing: 15px;
+            color: white;
+        }
+
+        /* 时间线区块 */
+        .timeline-section {
+            padding: 150px 0 100px;
+            background: var(--soviet-black);
+            position: relative;
+        }
+
+        .timeline-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0;
+            position: relative;
+        }
+
+        .timeline-grid::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 5px;
+            background: var(--soviet-red);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            padding: 60px;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            text-align: right;
+            padding-right: 80px;
+        }
+
+        .timeline-item:nth-child(even) {
+            padding-left: 80px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: var(--soviet-gold);
+            border: 5px solid var(--soviet-red);
+            border-radius: 50%;
+            top: 60px;
+        }
+
+        .timeline-item:nth-child(odd)::before {
+            right: -15px;
+        }
+
+        .timeline-item:nth-child(even)::before {
+            left: -15px;
+        }
+
+        .timeline-year {
+            font-size: 5em;
+            font-weight: 900;
+            color: var(--soviet-red);
+            line-height: 1;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .timeline-title {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--soviet-gold);
+            letter-spacing: 3px;
+        }
+
+        .timeline-desc {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #aaa;
+        }
+
+        /* 成就展示 */
+        .achievements-section {
+            padding: 100px 0;
+            background: var(--soviet-gray);
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 4em;
+            font-weight: 900;
+            margin-bottom: 80px;
+            letter-spacing: 20px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: var(--soviet-red);
+        }
+
+        .achievements-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            padding: 0 40px;
+        }
+
+        .achievement-card {
+            background: var(--soviet-black);
+            padding: 50px 40px;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;
+            transition: all 0.4s;
+            cursor: pointer;
+        }
+
+        .achievement-card:nth-child(1) { border-color: var(--soviet-red); }
+        .achievement-card:nth-child(2) { border-color: var(--soviet-gold); }
+        .achievement-card:nth-child(3) { border-color: white; }
+        .achievement-card:nth-child(4) { border-color: var(--soviet-gold); }
+        .achievement-card:nth-child(5) { border-color: white; }
+        .achievement-card:nth-child(6) { border-color: var(--soviet-red); }
+
+        .achievement-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(204, 0, 0, 0.3);
+        }
+
+        .achievement-number {
+            font-size: 4em;
+            font-weight: 900;
+            color: var(--soviet-red);
+            opacity: 0.3;
+            position: absolute;
+            top: 20px;
+            right: 30px;
+        }
+
+        .achievement-icon {
+            font-size: 4em;
+            margin-bottom: 30px;
+        }
+
+        .achievement-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+        }
+
+        .achievement-desc {
+            color: #888;
+            line-height: 1.8;
+        }
+
+        /* 引言区块 */
+        .quote-section {
+            padding: 150px 40px;
+            background: var(--soviet-red);
+            position: relative;
+            text-align: center;
+        }
+
+        .quote-content {
+            position: relative;
+            z-index: 10;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .quote-text {
+            font-size: 2em;
+            font-weight: 700;
+            line-height: 1.8;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+        }
+
+        .quote-author {
+            font-size: 1.3em;
+            color: var(--soviet-gold);
+            letter-spacing: 5px;
+        }
+
+        /* 页脚 */
+        .footer {
+            background: var(--soviet-black);
+            padding: 100px 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--soviet-red), var(--soviet-gold), var(--soviet-red));
+        }
+
+        .footer-emblem {
+            font-size: 8em;
+            margin-bottom: 40px;
+            display: inline-block;
+            animation: rotateEmblem 20s linear infinite;
+        }
+
+        @keyframes rotateEmblem {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .footer-years {
+            font-size: 5em;
+            font-weight: 900;
+            letter-spacing: 30px;
+            margin-bottom: 40px;
+            color: var(--soviet-red);
+        }
+
+        .footer-text {
+            font-size: 1.2em;
+            color: #666;
+            letter-spacing: 5px;
+            line-height: 2;
+        }
+
+        /* 响应式 */
+        @media (max-width: 1024px) {
+            .timeline-grid {
+                grid-template-columns: 1fr;
+            }
+            .timeline-grid::before {
+                left: 40px;
+            }
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                text-align: left;
+                padding-left: 100px;
+                padding-right: 40px;
+            }
+            .timeline-item:nth-child(odd)::before,
+            .timeline-item:nth-child(even)::before {
+                left: 25px;
+            }
+            .achievements-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .hero-title {
+                font-size: 6vw;
+                letter-spacing: 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .achievements-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-emblem {
+                font-size: 25vw;
+            }
+            .hero-title {
+                font-size: 8vw;
+                letter-spacing: 5px;
+            }
+            .timeline-year {
+                font-size: 3em;
+            }
+            .section-title {
+                font-size: 2.5em;
+                letter-spacing: 10px;
+            }
+            .diagonal-strip h2 {
+                font-size: 1.8em;
+            }
+            .quote-text {
+                font-size: 1.3em;
+            }
+            .footer-years {
+                font-size: 3em;
+                letter-spacing: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 主视觉 -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-emblem">&#9773;</div>
+            <h1 class="hero-title">苏维埃</h1>
+            <p class="hero-subtitle">СОЮЗ СОВЕТСКИХ СОЦИАЛИСТИЧЕСКИХ РЕСПУБЛИК</p>
+        </div>
+        <div class="hero-years">1922—1991</div>
+    </section>
+
+    <!-- 斜切分隔 -->
+    <div class="diagonal-strip">
+        <h2>历 史 时 刻</h2>
+    </div>
+
+    <!-- 时间线 -->
+    <section class="timeline-section" id="timeline">
+        <div class="timeline-grid">
+            <div class="timeline-item">
+                <div class="timeline-year">1917</div>
+                <h3 class="timeline-title">十 月 革 命</h3>
+                <p class="timeline-desc">列宁领导的布尔什维克武装起义，推翻临时政府，建立世界上第一个社会主义国家，开创人类历史新纪元。</p>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">1922</div>
+                <h3 class="timeline-title">联 盟 成 立</h3>
+                <p class="timeline-desc">俄罗斯、乌克兰、白俄罗斯和外高加索联邦签署《苏联成立条约》，苏维埃社会主义共和国联盟正式诞生。</p>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">1941</div>
+                <h3 class="timeline-title">伟 大 卫 国 战 争</h3>
+                <p class="timeline-desc">纳粹德国入侵苏联，苏联人民开始了长达四年的艰苦抗战，最终付出巨大牺牲赢得胜利，拯救了世界文明。</p>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">1945</div>
+                <h3 class="timeline-title">战 胜 法 西 斯</h3>
+                <p class="timeline-desc">苏联红军攻克柏林，将胜利红旗插上国会大厦。苏联为二战胜利做出最大贡献，牺牲2700万生命。</p>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">1957</div>
+                <h3 class="timeline-title">太 空 时 代</h3>
+                <p class="timeline-desc">斯普特尼克1号发射成功，开启人类太空时代。1961年，加加林成为首位进入太空的人类。</p>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">1991</div>
+                <h3 class="timeline-title">历 史 谢 幕</h3>
+                <p class="timeline-desc">苏联最高苏维埃宣布联盟停止存在。这个曾经代表人类最崇高理想的国家，走入了历史的长河。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 斜切分隔 -->
+    <div class="diagonal-strip">
+        <h2>伟 大 成 就</h2>
+    </div>
+
+    <!-- 成就展示 -->
+    <section class="achievements-section">
+        <h2 class="section-title">不朽功勋</h2>
+        <div class="achievements-grid">
+            <div class="achievement-card">
+                <div class="achievement-number">01</div>
+                <div class="achievement-icon">&#128640;</div>
+                <h3 class="achievement-title">航天先驱</h3>
+                <p class="achievement-desc">首颗人造卫星、首位宇航员、首个空间站，苏联开启人类太空探索的新纪元。</p>
+            </div>
+
+            <div class="achievement-card">
+                <div class="achievement-number">02</div>
+                <div class="achievement-icon">&#9874;</div>
+                <h3 class="achievement-title">工业奇迹</h3>
+                <p class="achievement-desc">两个五年计划，将农业国转变为世界第二大工业强国，创造经济史上的奇迹。</p>
+            </div>
+
+            <div class="achievement-card">
+                <div class="achievement-number">03</div>
+                <div class="achievement-icon">&#9996;</div>
+                <h3 class="achievement-title">反法西斯胜利</h3>
+                <p class="achievement-desc">斯大林格勒战役、库尔斯克会战，苏联红军粉碎纳粹，拯救了世界。</p>
+            </div>
+
+            <div class="achievement-card">
+                <div class="achievement-number">04</div>
+                <div class="achievement-icon">&#128218;</div>
+                <h3 class="achievement-title">科教兴国</h3>
+                <p class="achievement-desc">消除文盲、普及高等教育，培养出大批诺贝尔奖得主和世界顶尖科学家。</p>
+            </div>
+
+            <div class="achievement-card">
+                <div class="achievement-number">05</div>
+                <div class="achievement-icon">&#9878;</div>
+                <h3 class="achievement-title">社会保障</h3>
+                <p class="achievement-desc">免费医疗、免费教育、充分就业、带薪休假，建立了完善的社会福利体系。</p>
+            </div>
+
+            <div class="achievement-card">
+                <div class="achievement-number">06</div>
+                <div class="achievement-icon">&#127912;</div>
+                <h3 class="achievement-title">文化辉煌</h3>
+                <p class="achievement-desc">苏联电影、芭蕾舞、文学、音乐在世界范围内产生深远影响，创作了众多经典。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 引言 -->
+    <section class="quote-section">
+        <div class="quote-content">
+            <p class="quote-text">
+                苏联虽已不复存在，<br>
+                但它在人类历史上留下了不可磨灭的印记。<br>
+                它证明了劳动人民可以掌握自己的命运，<br>
+                证明了另一个世界是可能的。
+            </p>
+            <p class="quote-author">— 纪念所有为理想奋斗的人们 —</p>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-emblem">&#9773;</div>
+        <div class="footer-years">1922—1991</div>
+        <div class="footer-text">
+            <p>ПРОЛЕТАРИИ ВСЕХ СТРАН, СОЕДИНЯЙТЕСЬ!</p>
+            <p>全世界无产者，联合起来！</p>
+        </div>
+    </footer>
+</body>
+</html>

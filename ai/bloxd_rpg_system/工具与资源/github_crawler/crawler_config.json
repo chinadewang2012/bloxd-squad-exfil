@@ -1,0 +1,31 @@
+{
+  "repositories": [
+    {
+      "owner": "Bloxdy",
+      "repo": "code-api",
+      "branch": "main",
+      "save_dir": "./downloaded_repos/code-api",
+      "description": "BloxD Code API 文档"
+    }
+  ],
+  "github_token": "",
+  "schedule": {
+    "enabled": true,
+    "interval_hours": 24,
+    "run_at_startup": true
+  },
+  "download": {
+    "use_zip": true,
+    "keep_zip": false,
+    "keep_history": true,
+    "max_history_versions": 5
+  },
+  "logging": {
+    "level": "INFO",
+    "log_file": "crawler.log"
+  },
+  "retry": {
+    "max_attempts": 3,
+    "delay_seconds": 5
+  }
+}

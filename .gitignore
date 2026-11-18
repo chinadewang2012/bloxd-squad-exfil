@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Backups & archives (keep versioned copies in backup/)
+*.bak
+*.bak-*
+*.zip
+
+# Cache
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp & diagnostics (archived to backup/diagnostic-archive/)
+_smoke_*.js
+_stat_*.js
+
+# Editor
+.vscode/
+.trae/
+
+# Large binary blueprints (too big for git LFS, keep locally in output/)
+*.bloxdschem
+*.litematic

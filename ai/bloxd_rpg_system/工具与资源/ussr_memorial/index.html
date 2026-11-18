@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>纪念苏维埃社会主义共和国联盟 | 1922-1991</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 150px 40px 80px;
+            background: linear-gradient(135deg, #1a0000 0%, #2a0000 50%, #1a0000 100%);
+            color: white;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            border: 2px solid var(--soviet-gold);
+            padding: 8px 30px;
+            margin-bottom: 30px;
+            color: var(--soviet-gold);
+            font-size: 14px;
+            letter-spacing: 6px;
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            letter-spacing: 20px;
+            margin-bottom: 20px;
+            color: var(--soviet-red-light);
+            text-shadow: 0 0 30px rgba(178, 34, 34, 0.5);
+        }
+
+        .hero .subtitle {
+            font-size: 28px;
+            color: #ccc;
+            letter-spacing: 8px;
+            margin-bottom: 15px;
+        }
+
+        .hero .russian {
+            font-size: 18px;
+            color: var(--soviet-gold);
+            letter-spacing: 4px;
+            font-style: italic;
+            margin-bottom: 40px;
+        }
+
+        .hero-divider {
+            width: 100px;
+            height: 3px;
+            background: var(--soviet-gold);
+            margin: 40px auto;
+        }
+
+        .hero-desc {
+            max-width: 800px;
+            font-size: 20px;
+            line-height: 2;
+            color: #aaa;
+            margin-bottom: 40px;
+        }
+
+        .hero-years {
+            font-size: 48px;
+            letter-spacing: 15px;
+            color: transparent;
+            -webkit-text-stroke: 2px var(--soviet-red);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--soviet-red);
+            color: white;
+            padding: 18px 50px;
+            text-decoration: none;
+            font-size: 16px;
+            letter-spacing: 4px;
+            border: 2px solid var(--soviet-red);
+            transition: all 0.3s;
+            margin-top: 40px;
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--soviet-red);
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部装饰 -->
+    <div class="top-bar">
+        <span>1922 — 1991 · СОЮЗ СОВЕТСКИХ СОЦИАЛИСТИЧЕСКИХ РЕСПУБЛИК</span>
+    </div>
+
+    <!-- 导航 -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="emblem">&#9773;</span>
+                <span class="logo-text">СССР</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">首页</a></li>
+                <li><a href="history/index.html">历史长河</a></li>
+                <li><a href="figures/index.html">伟人风采</a></li>
+                <li><a href="achievements/index.html">辉煌成就</a></li>
+                <li><a href="memory.html">永恒纪念</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主视觉 -->
+    <header class="hero">
+        <div class="hero-badge">MEMORIAL</div>
+        <h1>苏维埃</h1>
+        <p class="subtitle">社会主义共和国联盟</p>
+        <p class="russian">Союз Советских Социалистических Республик</p>
+        <div class="hero-divider"></div>
+        <p class="hero-desc">
+            一个曾经改变世界格局的伟大国家，一段值得铭记的理想主义时代。<br>
+            从十月革命的炮火中诞生，到1991年的历史谢幕，<br>
+            苏联在人类历史上留下了不可磨灭的印记。
+        </p>
+        <a href="history/index.html" class="cta-button">探索历史</a>
+        <div class="hero-years" style="margin-top: 60px;">1922 — 1991</div>
+    </header>
+
+    <!-- 快速导航 -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Navigation</span>
+                <h2 class="section-title">探索苏联</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="cards-grid">
+                <a href="history/index.html" class="card">
+                    <div class="icon">&#9733;</div>
+                    <h3>历史长河</h3>
+                    <p>从1917年十月革命到1991年解体，见证七十年沧桑巨变，了解苏联从诞生到谢幕的完整历程。</p>
+                    <span class="arrow">&rarr;</span>
+                </a>
+
+                <a href="figures/index.html" class="card">
+                    <div class="icon">&#9876;</div>
+                    <h3>伟人风采</h3>
+                    <p>列宁、斯大林、加加林等改变历史进程的领袖人物和英雄，了解他们的生平与贡献。</p>
+                    <span class="arrow">&rarr;</span>
+                </a>
+
+                <a href="achievements/index.html" class="card">
+                    <div class="icon">&#128640;</div>
+                    <h3>辉煌成就</h3>
+                    <p>航天、工业、军事、文化领域的卓越贡献，探索苏联如何开启人类太空时代。</p>
+                    <span class="arrow">&rarr;</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 简介 -->
+    <section class="section" style="background: white;">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Introduction</span>
+                <h2 class="section-title">联盟简介</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="content-block">
+                <h2>诞生与崛起</h2>
+                <p>苏维埃社会主义共和国联盟（俄语：Союз Советских Социалистических Республик），简称苏联，是一个存在于1922年至1991年的联邦制社会主义国家。它是世界上第一个社会主义国家，也是当时国土面积最大的国家，涵盖东欧和中亚的大部分地区，面积达到2240万平方公里。</p>
+                <p>苏联由15个权利平等的加盟共和国按照自愿联合的原则组成，首都为莫斯科。其领土涵盖东欧的大部分，以及几乎整个中亚和北亚；陆上与挪威、芬兰、波兰、捷克斯洛伐克、匈牙利、罗马尼亚、土耳其、伊朗、阿富汗、中国、蒙古及朝鲜接壤；与瑞典、日本、美国及加拿大隔海相望。</p>
+                <p>苏联是联合国创始会员国，是安全理事会常任理事国。在二战中，苏联是反法西斯同盟国中贡献最大的国家之一，以巨大的牺牲为代价击败了纳粹德国。战后，苏联与美国并列为世界超级大国，世界进入到两极格局。</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">69</div>
+                    <div class="stat-label">年存在</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">15</div>
+                    <div class="stat-label">加盟共和国</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2240万</div>
+                    <div class="stat-label">平方公里</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2.86亿</div>
+                    <div class="stat-label">人口（1991）</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="main-footer">
+        <div class="footer-emblem">&#9773;</div>
+        <div class="footer-quote">
+            <p>"全世界无产者，联合起来！"</p>
+            <p class="trans">Пролетарии всех стран, соединяйтесь!</p>
+        </div>
+        <div class="footer-nav">
+            <a href="index.html">首页</a>
+            <a href="history/index.html">历史</a>
+            <a href="figures/index.html">人物</a>
+            <a href="achievements/index.html">成就</a>
+            <a href="memory.html">纪念</a>
+        </div>
+        <div class="copyright">
+            纪念苏维埃社会主义共和国联盟 · 1922-1991
+        </div>
+    </footer>
+</body>
+</html>

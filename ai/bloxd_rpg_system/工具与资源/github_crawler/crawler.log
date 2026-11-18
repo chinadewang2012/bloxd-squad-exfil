@@ -1,0 +1,13 @@
+2026-05-07 21:22:10,225 - INFO - 启动定时爬取服务
+2026-05-07 21:22:10,225 - INFO - 开始批量爬取任务
+2026-05-07 21:22:10,225 - INFO - 开始爬取仓库: Bloxdy/code-api
+2026-05-07 21:22:11,126 - INFO - 仓库信息: None
+2026-05-07 21:22:11,126 - INFO - 最后更新: 2026-05-02T13:32:27Z
+2026-05-07 21:22:11,127 - INFO - 开始下载: Bloxdy/code-api (main)
+2026-05-07 21:22:11,482 - ERROR - 下载失败 (尝试 1/3): ('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None))
+2026-05-07 21:22:17,002 - ERROR - 下载失败 (尝试 2/3): ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-05-07 21:22:22,597 - ERROR - 下载失败 (尝试 3/3): ('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None))
+2026-05-07 21:22:22,606 - ERROR - 爬取失败 Bloxdy/code-api: ('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None))
+2026-05-07 21:22:24,607 - INFO - 批量爬取完成 - 成功: 0, 失败: 1
+2026-05-07 21:22:24,608 - INFO - 定时任务已设置 - 每 24 小时执行一次
+2026-05-07 21:22:46,841 - INFO - 定时服务已停止

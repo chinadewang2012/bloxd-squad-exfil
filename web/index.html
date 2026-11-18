@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>MCA → Bloxd 蓝图转换器</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, "Microsoft YaHei", sans-serif; background: #1a1a2e; color: #e0e0e0; margin: 0; padding: 20px; min-height: 100vh; }
+  .container { max-width: 720px; margin: 0 auto; }
+  h1 { text-align: center; margin-bottom: 8px; color: #4fc3f7; }
+  .subtitle { text-align: center; color: #888; margin-bottom: 24px; font-size: 14px; }
+  .card { background: #16213e; border-radius: 12px; padding: 24px; margin-bottom: 16px; border: 1px solid #0f3460; }
+  .card h2 { margin: 0 0 16px 0; font-size: 16px; color: #4fc3f7; }
+  label { display: block; margin-bottom: 6px; font-size: 14px; color: #aaa; }
+  input[type=text], input[type=number] { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #0f3460; background: #0f0f23; color: #e0e0e0; font-size: 14px; }
+  input:focus { outline: none; border-color: #4fc3f7; }
+  .row { display: flex; gap: 12px; }
+  .row > div { flex: 1; }
+  .upload-area { border: 2px dashed #0f3460; border-radius: 12px; padding: 40px 20px; text-align: center; cursor: pointer; transition: all .2s; }
+  .upload-area:hover { border-color: #4fc3f7; background: #0f3460; }
+  .upload-area.dragover { border-color: #4fc3f7; background: #0f3460; }
+  .upload-icon { font-size: 40px; margin-bottom: 8px; }
+  .file-list { margin-top: 12px; max-height: 150px; overflow-y: auto; }
+  .file-item { display: flex; justify-content: space-between; padding: 6px 10px; background: #0f0f23; border-radius: 6px; margin-bottom: 4px; font-size: 13px; }
+  .btn { width: 100%; padding: 12px; border-radius: 8px; border: none; font-size: 15px; cursor: pointer; font-weight: 600; }
+  .btn-primary { background: #4fc3f7; color: #0f0f23; }
+  .btn-primary:hover { background: #29b6f6; }
+  .btn-primary:disabled { background: #555; cursor: not-allowed; }
+  .progress-bar { width: 100%; height: 8px; background: #0f0f23; border-radius: 4px; overflow: hidden; margin-top: 12px; display: none; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #4fc3f7, #29b6f6); transition: width .2s; }
+  .status { text-align: center; margin-top: 12px; font-size: 14px; }
+  .status.error { color: #ef5350; }
+  .status.success { color: #66bb6a; }
+  .result-card { display: none; }
+  .download-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: #0f0f23; border-radius: 8px; margin-bottom: 8px; }
+  .download-item a { color: #4fc3f7; text-decoration: none; font-size: 14px; }
+  .download-item a:hover { text-decoration: underline; }
+  .tip { font-size: 12px; color: #666; margin-top: 6px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>MCA → Bloxd 蓝图转换器</h1>
+  <div class="subtitle">MC世界文件 → Bloxd .bloxdschem</div>
+
+  <div class="card">
+    <h2>1. 选择 MCA 文件</h2>
+    <div class="upload-area" id="dropZone">
+      <div class="upload-icon">📦</div>
+      <div>点击选择 或 拖放 .mca 文件</div>
+      <input type="file" id="fileInput" multiple accept=".mca" style="display:none">
+    </div>
+    <div class="file-list" id="fileList"></div>
+  </div>
+
+  <div class="card">
+    <h2>2. 配置</h2>
+    <label>输出前缀</label>
+    <input type="text" id="prefix" value="world" placeholder="输出文件名前缀">
+    <div class="row">
+      <div>
+        <label>最大蓝图大小 (KB)</label>
+        <input type="number" id="maxSize" value="100" min="10" max="5000">
+      </div>
+    </div>
+    <div class="tip">超过此大小自动拆分多个 .bloxdschem</div>
+  </div>
+
+  <div class="card">
+    <h2>3. 开始转换</h2>
+    <button class="btn btn-primary" id="convertBtn">转换</button>
+    <div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="status" id="status"></div>
+  </div>
+
+  <div class="card result-card" id="resultCard">
+    <h2>4. 转换结果</h2>
+    <div id="downloadList"></div>
+  </div>
+</div>
+
+<script>
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+const fileList = document.getElementById('fileList');
+const convertBtn = document.getElementById('convertBtn');
+const status = document.getElementById('status');
+const progressBar = document.getElementById('progressBar');
+const progressFill = document.getElementById('progressFill');
+const resultCard = document.getElementById('resultCard');
+const downloadList = document.getElementById('downloadList');
+
+let selectedFiles = [];
+
+dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('dragover');
+  addFiles(e.dataTransfer.files);
+});
+fileInput.addEventListener('change', e => addFiles(e.target.files));
+
+function addFiles(files) {
+  for (const f of files) {
+    if (f.name.endsWith('.mca') && !selectedFiles.find(x => x.name === f.name)) {
+      selectedFiles.push(f);
+    }
+  }
+  renderFileList();
+}
+
+function renderFileList() {
+  fileList.innerHTML = '';
+  selectedFiles.forEach(f => {
+    const div = document.createElement('div');
+    div.className = 'file-item';
+    div.innerHTML = `<span>${f.name}</span><span>${(f.size/1024).toFixed(1)} KB</span>`;
+    fileList.appendChild(div);
+  });
+}
+
+convertBtn.addEventListener('click', async () => {
+  if (selectedFiles.length === 0) {
+    status.textContent = '请先选择 MCA 文件';
+    status.className = 'status error';
+    return;
+  }
+  convertBtn.disabled = true;
+  status.className = 'status';
+  progressBar.style.display = 'block';
+  progressFill.style.width = '0%';
+  status.textContent = '上传中...';
+
+  const formData = new FormData();
+  selectedFiles.forEach(f => formData.append('files', f));
+  formData.append('prefix', document.getElementById('prefix').value);
+  formData.append('max_size', document.getElementById('maxSize').value);
+
+  try {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/convert', true);
+
+    xhr.upload.onprogress = e => {
+      status.textContent = `上传中... ${(e.loaded/e.total*100).toFixed(0)}%`;
+      progressFill.style.width = (e.loaded/e.total*50) + '%';
+    };
+
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        status.textContent = '转换完成!';
+        status.className = 'status success';
+        progressFill.style.width = '100%';
+        try {
+          const result = JSON.parse(xhr.responseText);
+          resultCard.style.display = 'block';
+          downloadList.innerHTML = '';
+          result.files.forEach(f => {
+            const div = document.createElement('div');
+            div.className = 'download-item';
+            div.innerHTML = `<a href="/download?name=${encodeURIComponent(f.name)}">${f.name}</a><span>${(f.size/1024).toFixed(1)} KB</span>`;
+            downloadList.appendChild(div);
+          });
+        } catch(e) { status.textContent = '解析响应失败'; }
+      } else {
+        status.textContent = '转换失败: ' + xhr.responseText;
+        status.className = 'status error';
+      }
+      convertBtn.disabled = false;
+    };
+
+    xhr.onerror = () => {
+      status.textContent = '网络错误, 请确认服务器已启动';
+      status.className = 'status error';
+      convertBtn.disabled = false;
+    };
+
+    xhr.send(formData);
+  } catch(e) {
+    status.textContent = e.message;
+    status.className = 'status error';
+    convertBtn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>

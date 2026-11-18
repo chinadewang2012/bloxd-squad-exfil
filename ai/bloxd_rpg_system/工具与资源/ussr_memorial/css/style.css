@@ -1,0 +1,714 @@
+/* 苏维埃纪念网站 - 公共样式 */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --soviet-red: #8B0000;
+    --soviet-red-light: #B22222;
+    --soviet-gold: #B8860B;
+    --soviet-gold-light: #DAA520;
+    --paper-bg: #f5f0e8;
+    --paper-dark: #e8e0d0;
+    --ink-black: #1a1a1a;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background-color: var(--paper-bg);
+    color: var(--ink-black);
+    line-height: 1.8;
+}
+
+/* 顶部装饰条 */
+.top-bar {
+    background: var(--soviet-red);
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 3px solid var(--soviet-gold);
+}
+
+.top-bar span {
+    color: var(--soviet-gold);
+    font-size: 14px;
+    letter-spacing: 8px;
+    font-weight: bold;
+}
+
+/* 导航 */
+.main-nav {
+    background: rgba(26, 26, 26, 0.98);
+    padding: 0;
+    border-bottom: 2px solid var(--soviet-gold);
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    height: 70px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.logo .emblem {
+    font-size: 36px;
+    color: var(--soviet-red);
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--soviet-gold);
+    letter-spacing: 4px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 2px;
+    transition: all 0.3s;
+    position: relative;
+    padding: 5px 0;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--soviet-gold);
+    transition: width 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--soviet-gold);
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 100%;
+}
+
+/* 页面标题 */
+.page-header {
+    background: linear-gradient(135deg, #1a0000 0%, #2a0000 50%, #1a0000 100%);
+    padding: 120px 40px 80px;
+    text-align: center;
+    color: white;
+}
+
+.page-header h1 {
+    font-size: 56px;
+    letter-spacing: 16px;
+    margin-bottom: 20px;
+    color: var(--soviet-red-light);
+}
+
+.page-header .subtitle {
+    font-size: 20px;
+    color: #ccc;
+    letter-spacing: 6px;
+}
+
+/* 通用容器 */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* 区块 */
+.section {
+    padding: 80px 0;
+}
+
+.section:nth-child(even) {
+    background: white;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-label {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 6px;
+    color: var(--soviet-gold);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.section-title {
+    font-size: 42px;
+    color: var(--ink-black);
+    letter-spacing: 8px;
+    margin-bottom: 20px;
+}
+
+.section-line {
+    width: 80px;
+    height: 3px;
+    background: var(--soviet-red);
+    margin: 0 auto;
+}
+
+/* 内容块 */
+.content-block {
+    background: white;
+    border: 1px solid var(--paper-dark);
+    padding: 40px;
+    margin-bottom: 30px;
+}
+
+.content-block h2 {
+    font-size: 28px;
+    color: var(--soviet-red);
+    margin-bottom: 20px;
+    letter-spacing: 4px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--soviet-gold);
+}
+
+.content-block h3 {
+    font-size: 22px;
+    color: var(--ink-black);
+    margin: 30px 0 15px;
+    letter-spacing: 3px;
+}
+
+.content-block p {
+    margin-bottom: 15px;
+    color: #444;
+    line-height: 2;
+}
+
+.content-block ul {
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
+
+.content-block li {
+    margin-bottom: 10px;
+    color: #555;
+    line-height: 1.8;
+}
+
+/* 卡片网格 */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.card {
+    background: white;
+    border: 1px solid var(--paper-dark);
+    padding: 40px 30px;
+    text-align: center;
+    transition: all 0.3s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.card:hover {
+    border-color: var(--soviet-gold);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.card .icon {
+    font-size: 48px;
+    color: var(--soviet-red);
+    margin-bottom: 20px;
+}
+
+.card h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    letter-spacing: 3px;
+}
+
+.card p {
+    color: #666;
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+.card .arrow {
+    display: inline-block;
+    margin-top: 20px;
+    color: var(--soviet-gold);
+    font-size: 20px;
+    transition: transform 0.3s;
+}
+
+.card:hover .arrow {
+    transform: translateX(10px);
+}
+
+/* 人物卡片 */
+.figure-card {
+    background: white;
+    border: 2px solid var(--paper-dark);
+    overflow: hidden;
+    display: flex;
+    transition: all 0.3s;
+    margin-bottom: 30px;
+}
+
+.figure-card:hover {
+    border-color: var(--soviet-gold);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.figure-image {
+    width: 250px;
+    min-height: 280px;
+    background: linear-gradient(135deg, #333 0%, #555 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+    color: rgba(255,255,255,0.2);
+    flex-shrink: 0;
+}
+
+.figure-info {
+    padding: 35px;
+    flex: 1;
+}
+
+.figure-info h3 {
+    font-size: 26px;
+    margin-bottom: 5px;
+    letter-spacing: 3px;
+}
+
+.figure-role {
+    color: var(--soviet-gold);
+    font-size: 14px;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.figure-period {
+    font-size: 13px;
+    color: #999;
+    margin-bottom: 15px;
+}
+
+.figure-info p {
+    color: #555;
+    line-height: 1.8;
+}
+
+.figure-info .detail-link {
+    display: inline-block;
+    margin-top: 15px;
+    color: var(--soviet-red);
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+.figure-info .detail-link:hover {
+    text-decoration: underline;
+}
+
+/* 时间线 */
+.timeline {
+    position: relative;
+    padding: 40px 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--soviet-gold);
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    display: flex;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.timeline-item:nth-child(odd) {
+    flex-direction: row-reverse;
+}
+
+.timeline-content {
+    width: 45%;
+    background: white;
+    border: 2px solid var(--paper-dark);
+    padding: 30px;
+    position: relative;
+}
+
+.timeline-content::before {
+    content: '';
+    position: absolute;
+    top: 30px;
+    width: 24px;
+    height: 24px;
+    background: var(--soviet-red);
+    border: 4px solid var(--soviet-gold);
+    border-radius: 50%;
+}
+
+.timeline-item:nth-child(odd) .timeline-content::before {
+    right: -62px;
+}
+
+.timeline-item:nth-child(even) .timeline-content::before {
+    left: -62px;
+}
+
+.timeline-year {
+    font-size: 14px;
+    color: var(--soviet-gold);
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+}
+
+.timeline-content h3 {
+    font-size: 22px;
+    color: var(--soviet-red);
+    margin-bottom: 15px;
+    letter-spacing: 3px;
+}
+
+.timeline-content p {
+    color: #555;
+    line-height: 1.8;
+}
+
+.timeline-content .detail {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px dashed var(--paper-dark);
+    font-size: 14px;
+    color: #777;
+}
+
+.timeline-content .read-more {
+    display: inline-block;
+    margin-top: 15px;
+    color: var(--soviet-red);
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+.timeline-content .read-more:hover {
+    text-decoration: underline;
+}
+
+/* 成就项 */
+.achievement-item {
+    background: white;
+    border-left: 4px solid var(--soviet-red);
+    padding: 30px;
+    margin-bottom: 25px;
+    transition: all 0.3s;
+}
+
+.achievement-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.achievement-item h3 {
+    font-size: 20px;
+    color: var(--soviet-red);
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.achievement-item .date {
+    font-size: 13px;
+    color: var(--soviet-gold);
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.achievement-item p {
+    color: #555;
+    line-height: 1.8;
+}
+
+.achievement-item .detail-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: var(--soviet-red);
+    text-decoration: none;
+    font-size: 13px;
+}
+
+/* 数据展示 */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin: 40px 0;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 40px 20px;
+    background: white;
+    border: 2px solid var(--paper-dark);
+}
+
+.stat-number {
+    font-size: 42px;
+    font-weight: bold;
+    color: var(--soviet-red);
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #666;
+    letter-spacing: 2px;
+}
+
+/* 子页面导航 */
+.sub-nav {
+    background: var(--paper-dark);
+    padding: 20px 0;
+    border-bottom: 1px solid var(--soviet-gold);
+}
+
+.sub-nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    gap: 30px;
+}
+
+.sub-nav a {
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 2px;
+    padding: 5px 15px;
+    border: 1px solid transparent;
+    transition: all 0.3s;
+}
+
+.sub-nav a:hover,
+.sub-nav a.active {
+    color: var(--soviet-red);
+    border-color: var(--soviet-gold);
+}
+
+/* 面包屑导航 */
+.breadcrumb {
+    background: var(--paper-dark);
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.breadcrumb-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.breadcrumb a {
+    color: #666;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.breadcrumb a:hover {
+    color: var(--soviet-red);
+}
+
+.breadcrumb span {
+    color: #999;
+    margin: 0 10px;
+}
+
+.breadcrumb .current {
+    color: var(--soviet-red);
+    font-size: 13px;
+}
+
+/* 页脚 */
+.main-footer {
+    background: var(--ink-black);
+    color: #999;
+    padding: 60px 0 30px;
+    text-align: center;
+}
+
+.footer-emblem {
+    font-size: 50px;
+    color: var(--soviet-red);
+    margin-bottom: 25px;
+}
+
+.footer-quote {
+    margin-bottom: 30px;
+}
+
+.footer-quote p {
+    font-size: 18px;
+    color: #ccc;
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+}
+
+.footer-quote .trans {
+    font-size: 13px;
+    color: #666;
+    font-style: italic;
+}
+
+.footer-nav {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #333;
+}
+
+.footer-nav a {
+    color: #888;
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 2px;
+    transition: color 0.3s;
+}
+
+.footer-nav a:hover {
+    color: var(--soviet-gold);
+}
+
+.copyright {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #555;
+}
+
+/* 返回按钮 */
+.back-link {
+    display: inline-block;
+    margin-bottom: 30px;
+    color: var(--soviet-red);
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* 响应式 */
+@media (max-width: 1024px) {
+    .nav-links {
+        display: none;
+    }
+    
+    .page-header h1 {
+        font-size: 40px;
+        letter-spacing: 10px;
+    }
+    
+    .cards-grid,
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .figure-card {
+        flex-direction: column;
+    }
+    
+    .figure-image {
+        width: 100%;
+        height: 200px;
+    }
+    
+    .timeline::before {
+        left: 20px;
+    }
+    
+    .timeline-item,
+    .timeline-item:nth-child(odd) {
+        flex-direction: column;
+    }
+    
+    .timeline-content {
+        width: calc(100% - 60px);
+        margin-left: 60px;
+    }
+    
+    .timeline-content::before,
+    .timeline-item:nth-child(odd) .timeline-content::before {
+        left: -50px;
+        right: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header h1 {
+        font-size: 32px;
+        letter-spacing: 6px;
+    }
+    
+    .section-title {
+        font-size: 28px;
+    }
+    
+    .cards-grid,
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .container {
+        padding: 0 20px;
+    }
+    
+    .nav-container {
+        padding: 0 20px;
+    }
+}

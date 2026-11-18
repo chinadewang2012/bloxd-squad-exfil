@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>纪念苏维埃社会主义共和国联盟 | 1922-1991</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --soviet-red: #8B0000;
+            --soviet-red-light: #B22222;
+            --soviet-gold: #B8860B;
+            --soviet-gold-light: #DAA520;
+            --paper-bg: #f5f0e8;
+            --paper-dark: #e8e0d0;
+            --ink-black: #1a1a1a;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background-color: var(--paper-bg);
+            color: var(--ink-black);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* 顶部装饰 */
+        .top-bar {
+            background: var(--soviet-red);
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 3px solid var(--soviet-gold);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+        }
+
+        .top-bar span {
+            color: var(--soviet-gold);
+            font-size: 14px;
+            letter-spacing: 8px;
+            font-weight: bold;
+        }
+
+        /* 导航 */
+        .main-nav {
+            background: rgba(26, 26, 26, 0.98);
+            padding: 0;
+            position: fixed;
+            top: 40px;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--soviet-gold);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo .emblem {
+            font-size: 36px;
+            color: var(--soviet-red);
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--soviet-gold);
+            letter-spacing: 4px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--soviet-gold);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--soviet-gold);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* 主视觉 */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 150px 40px 80px;
+            background: linear-gradient(135deg, #1a0000 0%, #2a0000 50%, #1a0000 100%);
+            color: white;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            border: 2px solid var(--soviet-gold);
+            padding: 8px 30px;
+            margin-bottom: 30px;
+            color: var(--soviet-gold);
+            font-size: 14px;
+            letter-spacing: 6px;
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            letter-spacing: 20px;
+            margin-bottom: 20px;
+            color: var(--soviet-red-light);
+            text-shadow: 0 0 30px rgba(178, 34, 34, 0.5);
+        }
+
+        .hero .subtitle {
+            font-size: 24px;
+            color: #ccc;
+            letter-spacing: 8px;
+            margin-bottom: 15px;
+        }
+
+        .hero .russian {
+            font-size: 18px;
+            color: var(--soviet-gold);
+            letter-spacing: 4px;
+            font-style: italic;
+            margin-bottom: 40px;
+        }
+
+        .hero-divider {
+            width: 100px;
+            height: 3px;
+            background: var(--soviet-gold);
+            margin: 40px auto;
+        }
+
+        .hero-desc {
+            max-width: 800px;
+            font-size: 20px;
+            line-height: 2;
+            color: #aaa;
+            margin-bottom: 40px;
+        }
+
+        .hero-years {
+            font-size: 48px;
+            letter-spacing: 15px;
+            color: transparent;
+            -webkit-text-stroke: 2px var(--soviet-red);
+        }
+
+        /* 通用区块 */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section:nth-child(even) {
+            background: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-label {
+            display: block;
+            font-size: 12px;
+            letter-spacing: 6px;
+            color: var(--soviet-gold);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            font-size: 48px;
+            color: var(--ink-black);
+            letter-spacing: 10px;
+            margin-bottom: 20px;
+        }
+
+        .section-line {
+            width: 80px;
+            height: 3px;
+            background: var(--soviet-red);
+            margin: 0 auto;
+        }
+
+        /* 简介卡片 */
+        .intro-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .intro-card {
+            background: var(--paper-bg);
+            border: 1px solid var(--paper-dark);
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .intro-card:hover {
+            border-color: var(--soviet-gold);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .intro-card .icon {
+            font-size: 48px;
+            color: var(--soviet-red);
+            margin-bottom: 20px;
+        }
+
+        .intro-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            letter-spacing: 4px;
+        }
+
+        .intro-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* 时间线 */
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--soviet-gold);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            width: 45%;
+            background: white;
+            border: 2px solid var(--paper-dark);
+            padding: 30px;
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            width: 24px;
+            height: 24px;
+            background: var(--soviet-red);
+            border: 4px solid var(--soviet-gold);
+            border-radius: 50%;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -62px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -62px;
+        }
+
+        .timeline-year {
+            font-size: 14px;
+            color: var(--soviet-gold);
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+        }
+
+        .timeline-content h3 {
+            font-size: 24px;
+            color: var(--soviet-red);
+            margin-bottom: 15px;
+            letter-spacing: 3px;
+        }
+
+        .timeline-content p {
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .timeline-content .detail {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed var(--paper-dark);
+            font-size: 14px;
+            color: #777;
+        }
+
+        /* 详细内容区块 */
+        .content-block {
+            background: white;
+            border: 1px solid var(--paper-dark);
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+
+        .content-block h3 {
+            font-size: 28px;
+            color: var(--soviet-red);
+            margin-bottom: 20px;
+            letter-spacing: 4px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--soviet-gold);
+        }
+
+        .content-block p {
+            margin-bottom: 15px;
+            color: #444;
+            line-height: 2;
+        }
+
+        .content-block ul {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        .content-block li {
+            margin-bottom: 10px;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        /* 人物卡片 */
+        .figures-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .figure-card {
+            background: white;
+            border: 2px solid var(--paper-dark);
+            overflow: hidden;
+            display: flex;
+            transition: all 0.3s;
+        }
+
+        .figure-card:hover {
+            border-color: var(--soviet-gold);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .figure-image {
+            width: 200px;
+            min-height: 250px;
+            background: linear-gradient(135deg, #333 0%, #555 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            color: rgba(255,255,255,0.2);
+            flex-shrink: 0;
+        }
+
+        .figure-info {
+            padding: 30px;
+            flex: 1;
+        }
+
+        .figure-info h4 {
+            font-size: 24px;
+            margin-bottom: 5px;
+            letter-spacing: 3px;
+        }
+
+        .figure-role {
+            color: var(--soviet-gold);
+            font-size: 13px;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .figure-period {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 15px;
+        }
+
+        .figure-info p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* 成就网格 */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .achievement-item {
+            background: white;
+            border-left: 4px solid var(--soviet-red);
+            padding: 30px;
+            transition: all 0.3s;
+        }
+
+        .achievement-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .achievement-item h4 {
+            font-size: 18px;
+            color: var(--soviet-red);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .achievement-item .date {
+            font-size: 12px;
+            color: var(--soviet-gold);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .achievement-item p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* 数据展示 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 40px 20px;
+            background: white;
+            border: 2px solid var(--paper-dark);
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: var(--soviet-red);
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            letter-spacing: 2px;
+        }
+
+        /* 名言区块 */
+        .quotes-section {
+            background: linear-gradient(135deg, var(--soviet-red) 0%, #5c0000 100%);
+            color: white;
+            padding: 100px 0;
+        }
+
+        .quotes-section .section-title {
+            color: white;
+        }
+
+        .quotes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .quote-item {
+            background: rgba(255,255,255,0.1);
+            padding: 40px;
+            border-left: 4px solid var(--soviet-gold);
+        }
+
+        .quote-item p {
+            font-size: 18px;
+            line-height: 1.8;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .quote-author {
+            color: var(--soviet-gold);
+            font-size: 14px;
+            letter-spacing: 3px;
+        }
+
+        /* 页脚 */
+        .main-footer {
+            background: var(--ink-black);
+            color: #999;
+            padding: 80px 0 40px;
+            text-align: center;
+        }
+
+        .footer-emblem {
+            font-size: 60px;
+            color: var(--soviet-red);
+            margin-bottom: 30px;
+        }
+
+        .footer-quote {
+            margin-bottom: 40px;
+        }
+
+        .footer-quote p {
+            font-size: 20px;
+            color: #ccc;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+        }
+
+        .footer-quote .trans {
+            font-size: 14px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .footer-nav {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #333;
+        }
+
+        .footer-nav a {
+            color: #888;
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 2px;
+            transition: color 0.3s;
+        }
+
+        .footer-nav a:hover {
+            color: var(--soviet-gold);
+        }
+
+        .copyright {
+            font-size: 13px;
+            letter-spacing: 2px;
+            color: #555;
+        }
+
+        /* 响应式 */
+        @media (max-width: 1024px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 48px;
+                letter-spacing: 10px;
+            }
+            
+            .intro-cards,
+            .achievements-grid,
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .figures-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .figure-card {
+                flex-direction: column;
+            }
+            
+            .figure-image {
+                width: 100%;
+                height: 200px;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item,
+            .timeline-item:nth-child(odd) {
+                flex-direction: column;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 60px;
+            }
+            
+            .timeline-content::before,
+            .timeline-item:nth-child(odd) .timeline-content::before {
+                left: -50px;
+                right: auto;
+            }
+            
+            .quotes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+                letter-spacing: 6px;
+            }
+            
+            .section-title {
+                font-size: 32px;
+            }
+            
+            .intro-cards,
+            .achievements-grid,
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 0 20px;
+            }
+        }
+
+        /* 返回顶部 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--soviet-red);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 999;
+            text-decoration: none;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        .back-to-top:hover {
+            background: var(--soviet-gold);
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部装饰 -->
+    <div class="top-bar">
+        <span>1922 — 1991 · СОЮЗ СОВЕТСКИХ СОЦИАЛИСТИЧЕСКИХ РЕСПУБЛИК</span>
+    </div>
+
+    <!-- 导航 -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <span class="emblem">&#9773;</span>
+                <span class="logo-text">СССР</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#intro">联盟简介</a></li>
+                <li><a href="#history">历史长河</a></li>
+                <li><a href="#figures">伟人风采</a></li>
+                <li><a href="#achievements">辉煌成就</a></li>
+                <li><a href="#memory">永恒纪念</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主视觉 -->
+    <header class="hero">
+        <div class="hero-badge">MEMORIAL</div>
+        <h1>苏维埃</h1>
+        <p class="subtitle">社会主义共和国联盟</p>
+        <p class="russian">Союз Советских Социалистических Республик</p>
+        <div class="hero-divider"></div>
+        <p class="hero-desc">
+            一个曾经改变世界格局的伟大国家，一段值得铭记的理想主义时代。<br>
+            从十月革命的炮火中诞生，到1991年的历史谢幕，<br>
+            苏联在人类历史上留下了不可磨灭的印记。
+        </p>
+        <div class="hero-years">1922 — 1991</div>
+    </header>
+
+    <!-- 联盟简介 -->
+    <section class="section" id="intro">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Introduction</span>
+                <h2 class="section-title">联盟简介</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="content-block">
+                <h3>诞生与崛起</h3>
+                <p>苏维埃社会主义共和国联盟（俄语：Союз Советских Социалистических Республик），简称苏联，是一个存在于1922年至1991年的联邦制社会主义国家。它是世界上第一个社会主义国家，也是当时国土面积最大的国家，涵盖东欧和中亚的大部分地区，面积达到2240万平方公里。</p>
+                <p>苏联由15个权利平等的加盟共和国按照自愿联合的原则组成，首都为莫斯科。其领土涵盖东欧的大部分，以及几乎整个中亚和北亚；陆上与挪威、芬兰、波兰、捷克斯洛伐克、匈牙利、罗马尼亚、土耳其、伊朗、阿富汗、中国、蒙古及朝鲜接壤；与瑞典、日本、美国及加拿大隔海相望。</p>
+                <p>苏联是联合国创始会员国，是安全理事会常任理事国。在二战中，苏联是反法西斯同盟国中贡献最大的国家之一，以巨大的牺牲为代价击败了纳粹德国。战后，苏联与美国并列为世界超级大国，世界进入到两极格局，苏联主张通过大力发展军事力量来同美国争夺世界霸权，即冷战。</p>
+            </div>
+
+            <div class="intro-cards">
+                <div class="intro-card">
+                    <div class="icon">&#9733;</div>
+                    <h3>建国初期</h3>
+                    <p>1922年12月30日，苏联正式成立。在列宁的领导下，新生的苏维埃政权战胜了国内外敌人的武装干涉，并开始实施新经济政策，为国家的工业化奠定了基础。</p>
+                </div>
+                <div class="intro-card">
+                    <div class="icon">&#9876;</div>
+                    <h3>超级大国</h3>
+                    <p>二战后，苏联成为与美国并驾齐驱的超级大国。在军事、航天、科技等领域达到世界领先水平，建立了庞大的社会主义阵营。</p>
+                </div>
+                <div class="intro-card">
+                    <div class="icon">&#9851;</div>
+                    <h3>历史遗产</h3>
+                    <p>1991年12月26日，苏联最高苏维埃宣布联盟停止存在。虽然联盟解散，但其留下的制度创新、科技进步和文化成就仍深刻影响着当今世界。</p>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">69</div>
+                    <div class="stat-label">年存在</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">15</div>
+                    <div class="stat-label">加盟共和国</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2240万</div>
+                    <div class="stat-label">平方公里</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2.86亿</div>
+                    <div class="stat-label">人口（1991）</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 历史长河 -->
+    <section class="section" id="history">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">History</span>
+                <h2 class="section-title">历史长河</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1917年11月7日</div>
+                        <h3>十月革命</h3>
+                        <p>列宁领导的布尔什维克党发动武装起义，推翻了资产阶级临时政府，建立了世界上第一个社会主义国家——苏维埃俄国。这是人类历史上第一次成功的社会主义革命，开创了人类历史的新纪元。</p>
+                        <div class="detail">
+                            <strong>关键事件：</strong>攻占冬宫、列宁发表《告工人、士兵和农民书》、成立人民委员会
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1918-1920年</div>
+                        <h3>内战时期</h3>
+                        <p>新生的苏维埃政权面临国内外敌人的武装干涉。在列宁和托洛茨基的领导下，红军战胜了白军和外国干涉军，保卫了革命果实。这一时期实施了"战时共产主义"政策。</p>
+                        <div class="detail">
+                            <strong>主要战役：</strong>察里津保卫战、喀琅施塔得起义、华沙战役
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1922年12月30日</div>
+                        <h3>苏联成立</h3>
+                        <p>俄罗斯联邦、乌克兰、白俄罗斯和外高加索联邦在莫斯科签署《苏联成立条约》，苏维埃社会主义共和国联盟正式成立。这标志着世界上第一个多民族社会主义联邦国家的诞生。</p>
+                        <div class="detail">
+                            <strong>创始成员：</strong>俄罗斯、乌克兰、白俄罗斯、外高加索联邦（格鲁吉亚、亚美尼亚、阿塞拜疆）
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1924年1月21日</div>
+                        <h3>列宁逝世</h3>
+                        <p>列宁在戈尔基村逝世，享年53岁。他的逝世标志着苏联一个时代的结束。列宁的遗体被安放在红场的列宁墓中供人瞻仰。随后斯大林开始掌握最高权力。</p>
+                        <div class="detail">
+                            <strong>遗嘱争议：</strong>列宁遗嘱中对斯大林的评价引发了党内权力斗争
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1928-1937年</div>
+                        <h3>工业化与集体化</h3>
+                        <p>苏联实施第一个和第二个五年计划，集中力量发展重工业。通过艰苦卓绝的努力，将一个落后的农业国迅速转变为世界第二大工业强国。同时推行农业集体化，但这一过程中也出现了严重的饥荒问题。</p>
+                        <div class="detail">
+                            <strong>成就：</strong>建设了马格尼托哥尔斯克钢铁厂、第聂伯河水电站等大型项目
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1941-1945年</div>
+                        <h3>伟大卫国战争</h3>
+                        <p>1941年6月22日，纳粹德国发动"巴巴罗萨计划"入侵苏联。苏联人民进行了长达四年的艰苦抗战。斯大林格勒战役成为二战转折点，苏联红军最终攻克柏林，为世界反法西斯战争胜利做出最大贡献，付出了2700万生命的惨重代价。</p>
+                        <div class="detail">
+                            <strong>关键战役：</strong>莫斯科保卫战、斯大林格勒战役、库尔斯克会战、柏林战役
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1953年3月5日</div>
+                        <h3>斯大林逝世</h3>
+                        <p>斯大林在莫斯科逝世，享年74岁。他在位近30年，领导苏联实现了工业化并战胜了纳粹德国，但也造成了大量人员的政治迫害。赫鲁晓夫随后上台，开始对斯大林模式进行批判和改革。</p>
+                        <div class="detail">
+                            <strong>评价争议：</strong>斯大林时期的工业化成就与政治清洗的惨痛代价
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1957年10月4日</div>
+                        <h3>太空时代开启</h3>
+                        <p>苏联成功发射人类历史上第一颗人造地球卫星"斯普特尼克1号"，开启了人类的太空时代。这一成就震惊了世界，标志着苏联在航天领域领先美国。</p>
+                        <div class="detail">
+                            <strong>历史意义：</strong>引发美苏太空竞赛，推动人类航天事业发展
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1961年4月12日</div>
+                        <h3>人类首次进入太空</h3>
+                        <p>27岁的苏联宇航员尤里·加加林乘坐"东方1号"飞船完成绕地飞行，成为人类历史上第一位进入太空的人。他在太空中停留了108分钟，这一壮举再次证明苏联在航天领域的领先地位。</p>
+                        <div class="detail">
+                            <strong>加加林名言：</strong>"我环顾四周，但并没有看见什么上帝和天使，只有山川和人民。"
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1991年12月26日</div>
+                        <h3>苏联解体</h3>
+                        <p>苏联最高苏维埃共和国院举行最后一次会议，宣布苏联停止存在。这个曾经是世界第二大超级大国的国家走入了历史。虽然联盟解散，但它在人类历史上留下的印记永远不会磨灭。</p>
+                        <div class="detail">
+                            <strong>原因分析：</strong>经济停滞、体制僵化、民族矛盾、改革失控等多重因素
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-block" style="margin-top: 60px;">
+                <h3>历史时期概览</h3>
+                <ul>
+                    <li><strong>列宁时期（1917-1924）：</strong>十月革命、内战、新经济政策、苏联建立。奠定了社会主义国家的基础。</li>
+                    <li><strong>斯大林时期（1924-1953）：</strong>快速工业化、农业集体化、大清洗、卫国战争、冷战开始。苏联成为超级大国。</li>
+                    <li><strong>赫鲁晓夫时期（1953-1964）：</strong>批判斯大林、解冻、太空竞赛、古巴导弹危机。改革与动荡并存。</li>
+                    <li><strong>勃列日涅夫时期（1964-1982）：</strong>停滞时代、军备竞赛、阿富汗战争。苏联国力达到顶峰但也埋下隐患。</li>
+                    <li><strong>安德罗波夫和契尔年科时期（1982-1985）：</strong>短暂的过渡期，试图改革但成效有限。</li>
+                    <li><strong>戈尔巴乔夫时期（1985-1991）：</strong>新思维、公开性、改革失控、苏联解体。</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 伟人风采 -->
+    <section class="section" id="figures">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Figures</span>
+                <h2 class="section-title">伟人风采</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <h3 style="font-size: 32px; margin-bottom: 40px; text-align: center; letter-spacing: 5px;">主要领导人</h3>
+
+            <div class="figures-grid">
+                <div class="figure-card">
+                    <div class="figure-image">&#9733;</div>
+                    <div class="figure-info">
+                        <h4>列宁</h4>
+                        <span class="figure-role">Владимир Ильич Ленин</span>
+                        <span class="figure-period">1870-1924 · 在位1917-1924</span>
+                        <p>原名弗拉基米尔·伊里奇·乌里扬诺夫，苏联的缔造者，十月革命的领导人，世界上第一个社会主义国家的创始人。他提出了"新经济政策"，为苏联的发展奠定了理论基础。列宁被全世界共产主义者普遍认同为"国际无产阶级革命的伟大导师和精神领袖"。</p>
+                    </div>
+                </div>
+
+                <div class="figure-card">
+                    <div class="figure-image">&#9876;</div>
+                    <div class="figure-info">
+                        <h4>斯大林</h4>
+                        <span class="figure-role">Иосиф Виссарионович Сталин</span>
+                        <span class="figure-period">1878-1953 · 在位1924-1953</span>
+                        <p>原名约瑟夫·维萨里奥诺维奇·朱加什维利，格鲁吉亚人。苏联执政时间最长的领导人，领导苏联实现工业化，战胜纳粹德国，使苏联成为超级大国。但在其统治时期也造成了大量人员伤亡和政治迫害，被称为"大清洗"时期。</p>
+                    </div>
+                </div>
+
+                <div class="figure-card">
+                    <div class="figure-image">&#9851;</div>
+                    <div class="figure-info">
+                        <h4>赫鲁晓夫</h4>
+                        <span class="figure-role">Никита Сергеевич Хрущёв</span>
+                        <span class="figure-period">1894-1971 · 在位1953-1964</span>
+                        <p>在苏共二十大上发表"秘密报告"，批判斯大林个人崇拜，推行一系列改革，在太空竞赛中取得重大成就。但其执政时期的政策摇摆不定，最终在1964年的政变中被迫下台。</p>
+                    </div>
+                </div>
+
+                <div class="figure-card">
+                    <div class="figure-image">&#9854;</div>
+                    <div class="figure-info">
+                        <h4>勃列日涅夫</h4>
+                        <span class="figure-role">Леонид Ильич Брежнев</span>
+                        <span class="figure-period">1906-1982 · 在位1964-1982</span>
+                        <p>执政18年，是苏联历史上在位时间第二长的领导人。在其执政期间，苏联国力达到顶峰，军事力量与美国平起平坐。但也因体制僵化、腐败滋生而被称为"停滞时代"。</p>
+                    </div>
+                </div>
+
+                <div class="figure-card">
+                    <div class="figure-image">&#9855;</div>
+                    <div class="figure-info">
+                        <h4>戈尔巴乔夫</h4>
+                        <span class="figure-role">Михаил Сергеевич Горбачёв</span>
+                        <span class="figure-period">1931-2022 · 在位1985-1991</span>
+                        <p>苏联最后一位领导人，推行"新思维"（Перестройка）和"公开性"（Гласность）改革，试图挽救苏联，但改革失控，最终导致苏联解体。1990年获得诺贝尔和平奖，是苏联历史上唯一一位在任期间获得该奖项的领导人。</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-size: 32px; margin: 80px 0 40px; text-align: center; letter-spacing: 5px;">英雄与杰出人物</h3>
+
+            <div class="intro-cards">
+                <div class="intro-card">
+                    <div class="icon">&#128640;</div>
+                    <h3>尤里·加加林</h3>
+                    <p>人类历史上第一位进入太空的宇航员。1961年4月12日，他乘坐"东方1号"飞船完成绕地飞行，成为人类航天史上的里程碑。他后来因飞机失事不幸遇难，年仅34岁。</p>
+                </div>
+                <div class="intro-card">
+                    <div class="icon">&#128640;</div>
+                    <h3>瓦莲京娜·捷列什科娃</h3>
+                    <p>世界上第一位女性宇航员。1963年6月16日，她独自驾驶"东方6号"飞船进入太空，绕地球飞行48圈，证明了女性在航天领域的能力。</p>
+                </div>
+                <div class="intro-card">
+                    <div class="icon">&#9996;</div>
+                    <h3>格奥尔吉·朱可夫</h3>
+                    <p>苏联著名军事家，二战中最杰出的将领之一，四次获得"苏联英雄"称号。指挥了莫斯科保卫战、斯大林格勒战役和柏林战役，被誉为"胜利元帅"。</p>
+                </div>
+                <div class="intro-card">
+                    <div class="icon">&#128218;</div>
+                    <h3>安德烈·萨哈罗夫</h3>
+                    <p>苏联著名核物理学家，被称为"苏联氢弹之父"。后来成为著名的人权活动家，1975年获得诺贝尔和平奖，被誉为"苏联的良心"。</p>
+                </div>
+                <div class="intro-card">
+                    <div class="icon">&#127912;</div>
+                    <h3>德米特里·肖斯塔科维奇</h3>
+                    <p>苏联最伟大的作曲家之一，20世纪最重要的古典音乐作曲家。其作品《第七交响曲》在列宁格勒围城期间演出，成为反抗法西斯的象征。</p>
+                </div>
+                <div class="intro-card">
+                    <div class="icon">&#127912;</div>
+                    <h3>谢尔盖·普罗科菲耶夫</h3>
+                    <p>世界级作曲家，创作了《彼得与狼》《罗密欧与朱丽叶》《灰姑娘》等传世名作。他的音乐至今仍在世界各地演出。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 辉煌成就 -->
+    <section class="section" id="achievements">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Achievements</span>
+                <h2 class="section-title">辉煌成就</h2>
+                <div class="section-line"></div>
+            </div>
+
+            <div class="content-block">
+                <h3>航天事业——开启人类太空时代</h3>
+                <p>苏联在航天领域创造了无数世界第一，开启了人类的太空时代。这些成就不仅证明了社会主义制度的优越性，也极大地推动了人类文明的进步。</p>
+            </div>
+
+            <div class="achievements-grid">
+                <div class="achievement-item">
+                    <h4>首颗人造卫星</h4>
+                    <div class="date">1957年10月4日</div>
+                    <p>"斯普特尼克1号"发射成功，这是人类历史上第一颗人造地球卫星，标志着太空时代的正式开启，震惊了整个世界。</p>
+                </div>
+                <div class="achievement-item">
+                    <h4>首位宇航员</h4>
+                    <div class="date">1961年4月12日</div>
+                    <p>尤里·加加林乘坐"东方1号"飞船完成绕地飞行，成为人类历史上第一位进入太空的宇航员。</p>
+                </div>
+                <div class="achievement-item">
+                    <h4>首位女宇航员</h4>
+                    <div class="date">1963年6月16日</div>
+                    <p>瓦莲京娜·捷列什科娃乘坐"东方6号"飞船进入太空，成为世界上第一位女性宇航员。</p>
+                </div>
+                <div class="achievement-item">
+                    <h4>人类首次太空行走</h4>
+                    <div class="date">1965年3月18日</div>
+                    <p>阿列克谢·列昂诺夫完成人类历史上第一次太空行走，在太空中停留了12分钟。</p>
+                </div>
+                <div class="achievement-item">
+                    <h4>首个空间站</h4>
+                    <div class="date">1971年4月19日</div>
+                    <p>"礼炮1号"发射成功，这是世界上第一个空间站，开启了人类长期驻留太空的新纪元。</p>
+                </div>
+                <div class="achievement-item">
+                    <h4>金星探测先驱</h4>
+                    <div class="date">1961-1984年</div>
+                    <p>苏联是金星探测的先驱，多次成功着陆金星表面，传回珍贵的科学数据。</p>
+                </div>
+            </div>
+
+            <div class="content-block" style="margin-top: 60px;">
+                <h3>工业与国防——世界第二大强国</h3>
+                <p>通过两个五年计划（1928-1937），苏联将农业国转变为世界第二大工业强国，工业产值增长了近5倍。这种速度在世界经济史上是前所未有的。</p>
+                <ul>
+                    <li><strong>工业化奇迹：</strong>建设了马格尼托哥尔斯克钢铁厂、库兹涅茨克钢铁联合企业、第聂伯河水电站等超大型工业项目</li>
+                    <li><strong>核技术突破：</strong>1949年8月29日，苏联成功试爆第一颗原子弹，打破了美国的核垄断</li>
+                    <li><strong>氢弹研发：</strong>1953年8月12日，苏联成功试爆第一颗氢弹</li>
+                    <li><strong>军事工业：</strong>建立了完整的军工体系，坦克、飞机、导弹等武器装备产量居世界前列</li>
+                </ul>
+            </div>
+
+            <div class="content-block">
+                <h3>反法西斯战争——拯救世界的贡献</h3>
+                <p>苏联为第二次世界大战的胜利做出了最大贡献，付出了最大牺牲。斯大林格勒战役成为二战的转折点，苏联红军解放了半个欧洲，最终攻克柏林。</p>
+                <ul>
+                    <li><strong>莫斯科保卫战（1941-1942）：</strong>打破了德军不可战胜的神话</li>
+                    <li><strong>斯大林格勒战役（1942-1943）：</strong>二战转折点，德军损失了150万人</li>
+                    <li><strong>库尔斯克会战（1943）：</strong>历史上最大规模的坦克战</li>
+                    <li><strong>柏林战役（1945）：</strong>苏军攻克柏林，将红旗插上国会大厦</li>
+                    <li><strong>巨大牺牲：</strong>2700万苏联军民在战争中丧生，占二战总死亡人数的一半以上</li>
+                </ul>
+            </div>
+
+            <div class="content-block">
+                <h3>科教文化——璀璨的文明成果</h3>
+                <p>苏联在科学、教育、文化等领域取得了辉煌成就，为人类文明的进步做出了重要贡献。</p>
+                <ul>
+                    <li><strong>扫盲运动：</strong>将识字率从革命前的28%提高到接近100%</li>
+                    <li><strong>高等教育：</strong>建立了完整的高等教育体系，培养了大批科学家和工程师</li>
+                    <li><strong>诺贝尔奖：</strong>苏联科学家获得诺贝尔奖的人数位居世界前列</li>
+                    <li><strong>数学物理：</strong>在数学、物理学等领域取得世界领先水平</li>
+                    <li><strong>文学艺术：</strong>《战争与和平》《静静的顿河》等文学巨著，以及苏联电影、芭蕾舞等在世界范围内产生深远影响</li>
+                </ul>
+            </div>
+
+            <div class="content-block">
+                <h3>社会保障——人类历史上的创举</h3>
+                <p>苏联建立了世界上第一个全面的社会保障体系，这一创举影响了整个世界的发展方向。</p>
+                <ul>
+                    <li><strong>免费医疗：</strong>所有公民享有免费医疗服务</li>
+                    <li><strong>免费教育：</strong>从幼儿园到大学的全民免费教育</li>
+                    <li><strong>充分就业：</strong>宪法规定公民有劳动的权利</li>
+                    <li><strong>带薪休假：</strong>每年至少两周的带薪假期</li>
+                    <li><strong>养老金制度：</strong>全民养老金保障</li>
+                    <li><strong>住房保障：</strong>国家提供廉价住房</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 名言 -->
+    <section class="quotes-section" id="memory">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">In Memory</span>
+                <h2 class="section-title">永恒纪念</h2>
+                <div class="section-line" style="background: var(--soviet-gold);"></div>
+            </div>
+
+            <div class="content-block" style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: white;">
+                <h3 style="color: var(--soviet-gold); border-color: rgba(255,255,255,0.3);">历史评价</h3>
+                <p style="color: #f0f0f0; font-size: 18px; line-height: 2;">苏联虽已不复存在，但它在人类历史上留下了不可磨灭的印记。它证明了劳动人民可以掌握自己的命运，证明了另一个世界是可能的。无论你对它的评价如何，它都是二十世纪最重要的历史现象之一。</p>
+                <p style="color: var(--soviet-gold); margin-top: 30px; text-align: right;">— 纪念所有为理想奋斗的人们</p>
+            </div>
+
+            <div class="quotes-grid" style="margin-top: 60px;">
+                <div class="quote-item">
+                    <p>"忘记过去的人注定会重蹈覆辙。"</p>
+                    <div class="quote-author">— 乔治·桑塔亚那</div>
+                </div>
+                <div class="quote-item">
+                    <p>"历史不会重复，但总是押着相似的韵脚。"</p>
+                    <div class="quote-author">— 马克·吐温</div>
+                </div>
+                <div class="quote-item">
+                    <p>"苏维埃政权加全国电气化就是共产主义。"</p>
+                    <div class="quote-author">— 列宁</div>
+                </div>
+                <div class="quote-item">
+                    <p>"苏联的解体是二十世纪最大的地缘政治灾难。"</p>
+                    <div class="quote-author">— 普京</div>
+                </div>
+            </div>
+
+            <div class="stats-grid" style="margin-top: 80px;">
+                <div class="stat-item" style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2);">
+                    <div class="stat-number" style="color: var(--soviet-gold);">69</div>
+                    <div class="stat-label" style="color: #ccc;">年存在</div>
+                </div>
+                <div class="stat-item" style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2);">
+                    <div class="stat-number" style="color: var(--soviet-gold);">15</div>
+                    <div class="stat-label" style="color: #ccc;">加盟共和国</div>
+                </div>
+                <div class="stat-item" style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2);">
+                    <div class="stat-number" style="color: var(--soviet-gold);">2700万</div>
+                    <div class="stat-label" style="color: #ccc;">二战牺牲</div>
+                </div>
+                <div class="stat-item" style="background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2);">
+                    <div class="stat-number" style="color: var(--soviet-gold);">100+</div>
+                    <div class="stat-label" style="color: #ccc;">民族</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="main-footer">
+        <div class="footer-emblem">&#9773;</div>
+        <div class="footer-quote">
+            <p>"全世界无产者，联合起来！"</p>
+            <p class="trans">Пролетарии всех стран, соединяйтесь!</p>
+        </div>
+        <div class="footer-nav">
+            <a href="#intro">联盟简介</a>
+            <a href="#history">历史长河</a>
+            <a href="#figures">伟人风采</a>
+            <a href="#achievements">辉煌成就</a>
+            <a href="#memory">永恒纪念</a>
+        </div>
+        <div class="copyright">
+            纪念苏维埃社会主义共和国联盟 · 1922-1991
+        </div>
+    </footer>
+
+    <!-- 返回顶部 -->
+    <a href="#" class="back-to-top" id="backToTop">&#9650;</a>
+
+    <script>
+        // 返回顶部按钮显示/隐藏
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
