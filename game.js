@@ -90,6 +90,13 @@ let G = {
   players: new Map(),   // pId -> PlayerState
 };
 
+/* Bloxd 代码块引擎兼容: Set/Map 无 Symbol.iterator, 必须用原型方法 */
+const setToArray = (s) => { const a = []; s.forEach(v => a.push(v)); return a; };
+const mapKeys = (m) => { const a = []; m.forEach((_, k) => a.push(k)); return a; };
+const mapEntries = (m) => { const a = []; m.forEach((v, k) => a.push([k, v])); return a; };
+/* unique: 替代 [...new Set(arr)] 惯用写法, 因为 Set 不可迭代 */
+const unique = (arr) => { const seen = {}; const a = []; arr.forEach(v => { if (!seen[v]) { seen[v] = 1; a.push(v); } }); return a; };
+
 const createPlayerState = () => ({
   inRaid: false, alive: false, timeLeft: 0,
   loot: 0, kills: 0,
@@ -127,18 +134,18 @@ globalThis.__getPlayerMapKey = getPlayerMapKey;
 
 const countRaiders = () => {
   let n = 0;
-  for (const [, d] of G.players) if (d.inRaid) n++;
+  G.players.forEach((d) => { if (d.inRaid) n++; });
   return n;
 };
 
 /* 当前有玩家行动中的地图集合(按图独立刷怪) */
 const activeMapKeys = () => {
   const set = new Set();
-  for (const [pId, d] of G.players) {
-    if (!d.inRaid) continue;
+  G.players.forEach((d, pId) => {
+    if (!d.inRaid) return;
     const mk = getPlayerMapKey(pId);
     if (mk) set.add(mk);
-  }
+  });
   return set;
 };
 
@@ -148,18 +155,18 @@ const activeMapKeys = () => {
 const markerMaps = new Set();
 const syncExtractMarkers = () => {
   const active = activeMapKeys();
-  for (const mk of active) {
+  active.forEach((mk) => {
     if (!markerMaps.has(mk)) {
       createExtractMarkers(mk);
       markerMaps.add(mk);
     }
-  }
-  for (const mk of [...markerMaps]) {
+  });
+  setToArray(markerMaps).forEach((mk) => {
     if (!active.has(mk)) {
       removeExtractMarkers(mk);
       markerMaps.delete(mk);
     }
-  }
+  });
 };
 
 /* 服主检测(含 zhongmo_xinhao48) */
@@ -567,7 +574,7 @@ const enterRaid = (pId) => {
   syncExtractMarkers();   // 撤离点光点立即点亮(幂等)
   try {
     const exfilInfo = (map.exfils
-      ? `本图 ${map.exfils.length} 处撤离点: ${[...new Set(map.exfils.map(e => e.type))].join('/')}` +
+      ? `本图 ${map.exfils.length} 处撤离点: ${unique(map.exfils.map(e => e.type)).join('/')}` +
         (d.openRandomKey ? ` | 本局随机点: ${map.exfils.find(e => e.key === d.openRandomKey).name}` : '') + '\n'
       : '') + `撤离读条: 绿羊毛 ${EXTRACT.readSec.green}秒 | 红羊毛 ${EXTRACT.readSec.red}秒 | 黑羊毛需先拉闸\n`;
     api.sendMessage(pId, [
@@ -925,7 +932,7 @@ const runContrabandScan = () => {
     if (!(d && d.inRaid) && scanRound % 5 !== 1) continue;   // 大厅玩家: 每5轮扫1轮
     const cleared = scanContraband(pId);
     if (cleared.length > 0) {
-      const names = [...new Set(cleared.map(c => c.name))].slice(0, 5).join(', ');
+      const names = unique(cleared.map(c => c.name)).slice(0, 5).join(', ');
       try {
         api.sendFlyingMiddleMessage(pId, [
           {str:`🚫 清除违禁品 x${cleared.length}`, style:{color:'#FF0000',fontWeight:'bold',fontSize:'1.3rem'}},
@@ -1019,8 +1026,8 @@ const onTick = () => {
     try { fittings.tickFittings(pId); } catch(e) {}
   }
   /* 撤离读条: 每tick推进(20tick=1秒);读到0才结算撤离 */
-  for (const [pId, d] of G.players) {
-    if (!d.inRaid || !d.alive || !d.extracting) continue;
+  G.players.forEach((d, pId) => {
+    if (!d.inRaid || !d.alive || !d.extracting) return;
     const need = Math.max(1, d.extTotal) * 20;
     d.extTime++;
     if (d.extTime >= need) {
@@ -1032,25 +1039,25 @@ const onTick = () => {
           if (!checkMoney(pId, cost)) {
             cancelExtract(d);
             warnExfil(pId, d, `💵 金币不足,「${ex.name}」撤离中断`);
-            continue;
+            return;
           }
           db.subMoney(pId, cost);
           try { updatePlayerBoard(pId); } catch(e) {}
         }
       }
       exitRaid(pId, 'extract');
-      continue;
+      return;
     }
     if (G.tick % 4 === 0) {   // 200ms 一次(API 建议下限,避免排队跳过)
       try { api.progressBarUpdate(pId, Math.min(1, d.extTime / need), 200); } catch(e) {}
     }
-  }
+  });
   if (G.tick % 20 === 0) {
-    for (const [pId, d] of G.players) {
-      if (!d.inRaid) continue;
+    G.players.forEach((d, pId) => {
+      if (!d.inRaid) return;
       d.timeLeft--;
       if (d.timeLeft <= 0) exitRaid(pId, 'timeout');
-    }
+    });
   }
   if (G.tick % 10 === 0) checkZones();
   if (G.tick % 40 === 0) runContrabandScan();
@@ -1328,12 +1335,12 @@ const onWorldSpawnMob = (mobType, x, y, z) => {
 const applyMobNerf = () => {
   const nerf = CONST.mobNerf || {};
   let n = 0;
-  for (const type of SPAWNABLE_MOBS) {
-    for (const [k, v] of Object.entries(nerf)) {
-      try { api.setDefaultMobSetting(type, k, v); n++; } catch(e) {}
-    }
-  }
-  try { console.log(`[搜打撤] 小怪削弱已应用: ${n}项 (${[...SPAWNABLE_MOBS].join(', ')})`); } catch(e) {}
+  SPAWNABLE_MOBS.forEach((type) => {
+    Object.keys(nerf).forEach((k) => {
+      try { api.setDefaultMobSetting(type, k, nerf[k]); n++; } catch(e) {}
+    });
+  });
+  try { console.log(`[搜打撤] 小怪削弱已应用: ${n}项 (${setToArray(SPAWNABLE_MOBS).join(', ')})`); } catch(e) {}
   return n;
 };
 
@@ -1395,21 +1402,23 @@ const unmuteByName = (name) => {
   if (!mutedPlayers.has(key)) return { ok:false, msg:`${key} 未被禁言` };
   mutedPlayers.delete(key); saveMutedList(); return { ok:true, name:key };
 };
-const getMutedList = () => [...mutedPlayers.keys()];
-const getMutedEntries = () => [...mutedPlayers.entries()];
+const getMutedList = () => mapKeys(mutedPlayers);
+const getMutedEntries = () => mapEntries(mutedPlayers);
 /* 清理已到期禁言(到期自动解禁)并通知在线玩家 */
 const sweepExpiredMutes = () => {
   const now = Date.now(); let changed = false;
-  for (const [name, exp] of mutedPlayers) {
+  const toDelete = [];
+  mutedPlayers.forEach((exp, name) => {
     if (now >= exp) {
-      mutedPlayers.delete(name); changed = true;
+      toDelete.push(name); changed = true;
       try {
         for (const id of api.getPlayerIds()) {
           try { if (String(api.getEntityName(id)) === name) { api.sendMessage(id, [{str:'🔊 你的禁言已到期,自动解除', style:{color:'#00FF00'}}]); break; } } catch(e) {}
         }
       } catch(e) {}
     }
-  }
+  });
+  toDelete.forEach((n) => mutedPlayers.delete(n));
   if (changed) saveMutedList();
 };
 

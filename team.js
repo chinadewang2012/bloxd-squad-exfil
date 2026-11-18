@@ -10,6 +10,10 @@ const teams = new Map();
 let teamCounter = 0;
 const pendingInvites = new Map();
 
+/* Bloxd 代码块引擎兼容: Set/Map 无 Symbol.iterator, 必须用原型方法 */
+const setToArray = (s) => { const a = []; s.forEach(v => a.push(v)); return a; };
+const mapKeys = (m) => { const a = []; m.forEach((_, k) => a.push(k)); return a; };
+
 const createTeam = (pId) => {
   leaveTeam(pId);
   const teamId = `t${++teamCounter}`;
@@ -84,7 +88,8 @@ const leaveTeam = (pId) => {
   db.setTeam(pId, '');
   db.setTeamLead(pId, false);
   if (team.leader === pId) {
-    const newLeader = team.members.values().next().value;
+    const membersArr = setToArray(team.members);
+    const newLeader = membersArr[0];
     if (newLeader) {
       team.leader = newLeader;
       db.setTeamLead(newLeader, true);
@@ -111,7 +116,7 @@ const kickMember = (leaderId, targetId) => {
 };
 
 const setupTeamFriendlyFire = (team) => {
-  const members = [...team.members];
+  const members = setToArray(team.members);
   for (const pId of members) {
     for (const otherId of members) {
       if (pId !== otherId) try { api.setOtherEntitySetting(pId, otherId, 'canAttack', false); } catch(e) {}
@@ -138,7 +143,7 @@ const getTeammates = (pId) => {
   const teamId = db.getTeam(pId);
   if (!teamId || !teams.has(teamId)) return [];
   const team = teams.get(teamId);
-  return [...team.members].filter(id => id !== pId);
+  return setToArray(team.members).filter(id => id !== pId);
 };
 
 /* 同队判定: 必须内存中队伍仍然存在(防重启后db残留旧teamId导致陌生玩家互免伤) */
@@ -152,19 +157,21 @@ const getTeamInfo = (pId) => {
   const teamId = db.getTeam(pId);
   if (!teamId || !teams.has(teamId)) return null;
   const team = teams.get(teamId);
-  const members = [...team.members].map(id => { try { return { id, name: api.getEntityName(id) }; } catch(e) { return { id, name: '?' }; } });
+  const members = setToArray(team.members).map(id => { try { return { id, name: api.getEntityName(id) }; } catch(e) { return { id, name: '?' }; } });
   return { teamId, leader: team.leader, members, size: team.members.size };
 };
 
 const cleanExpiredInvites = () => {
   const now = Date.now();
-  for (const [pId, invite] of pendingInvites) {
-    if (now > invite.expire) pendingInvites.delete(pId);
-  }
+  const toDelete = [];
+  pendingInvites.forEach((invite, pId) => {
+    if (now > invite.expire) toDelete.push(pId);
+  });
+  toDelete.forEach((pId) => pendingInvites.delete(pId));
 };
 
 const broadcastToTeam = (team, message) => {
-  for (const pId of team.members) try { api.sendMessage(pId, message); } catch(e) {}
+  team.members.forEach((pId) => { try { api.sendMessage(pId, message); } catch(e) {} });
 };
 
 const clearPlayerTeam = (pId) => {
