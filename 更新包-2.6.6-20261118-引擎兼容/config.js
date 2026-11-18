@@ -250,61 +250,73 @@ const RARITY = {
     6: { name: '红', color: '#FF4444' },
 };
 const SELL_CATALOG = [
-    /* ===== 三角洲行动「危险行动」变卖物目录 (2026-11-18 修正版 — 全部用 ITEM_NAMES.txt 真实物品) =====
-     * 旧版大量物品名在 Bloxd 里不存在 (Block of XXX / Concrete / Planks / Carpet 都是方块, 不可拾取)
-     * 本版全部替换为 ITEM_NAMES.txt 里真实存在的可拾取物品
-     * tier 稀有度: 红(6) > 金(5) > 紫(4) > 蓝(3) > 绿(2) > 白(1) */
-    /* 稀有矿石碎片 (贵重物品) */
-    { item: 'Moonstone Fragment', display: '月光精华碎片', cat: '贵重物品', tier: 6, value: 350000 },
-    { item: 'Diamond Fragment', display: '钻石碎晶', cat: '贵重物品', tier: 5, value: 180000 },
-    { item: 'Gold Fragment', display: '黄金碎屑', cat: '贵重物品', tier: 4, value: 60000 },
-    { item: 'Iron Fragment', display: '精密零件', cat: '贵重物品', tier: 3, value: 12000 },
-    /* 金属锭 */
-    { item: 'Gold Bar', display: '金条', cat: '贵重物品', tier: 5, value: 95000 },
-    { item: 'Iron Bar', display: '铁锭', cat: '工业材料', tier: 2, value: 1200 },
-    /* 原矿/原材料 */
-    { item: 'Raw Gold', display: '金矿石', cat: '工业材料', tier: 3, value: 38000 },
-    { item: 'Raw Iron', display: '铁矿石', cat: '工业材料', tier: 1, value: 420 },
-    { item: 'Coal', display: '煤炭', cat: '工业材料', tier: 1, value: 80 },
-    { item: 'Stick', display: '木棍', cat: '工业材料', tier: 1, value: 25 },
-    { item: 'Leather', display: '皮革', cat: '工业材料', tier: 1, value: 180 },
-    { item: 'Bone', display: '兽骨', cat: '工业材料', tier: 1, value: 120 },
-    { item: 'Bone Meal', display: '骨粉', cat: '工业材料', tier: 1, value: 60 },
-    { item: 'Fertiliser', display: '肥料', cat: '工业材料', tier: 1, value: 45 },
-    /* 金币类 */
-    { item: 'Gold Coin', display: '金币', cat: '货币', tier: 1, value: 1 },
-    /* 食物/稀有食材 */
-    { item: 'Truffle', display: '松露', cat: '稀有食材', tier: 5, value: 160000 },
-    { item: 'Truffle Oil', display: '松露油', cat: '稀有食材', tier: 5, value: 220000 },
-    { item: 'Acorn', display: '橡果', cat: '稀有食材', tier: 2, value: 280 },
-    { item: 'Acorn Jelly', display: '橡果冻', cat: '稀有食材', tier: 2, value: 450 },
-    { item: 'Cow\'s Milk', display: '牛奶', cat: '日用品', tier: 1, value: 90 },
-    { item: 'Cheese', display: '奶酪', cat: '日用品', tier: 2, value: 320 },
-    { item: 'Sheep\'s Milk', display: '羊奶', cat: '日用品', tier: 2, value: 180 },
-    { item: 'Yoghurt Pot', display: '酸奶杯', cat: '日用品', tier: 1, value: 120 },
-    { item: 'Oats', display: '燕麦', cat: '日用品', tier: 1, value: 35 },
-    { item: 'Porridge', display: '粥', cat: '日用品', tier: 1, value: 55 },
-    /* 医疗物资 */
-    { item: 'Medkit', display: '医疗包', cat: '医疗物资', tier: 3, value: 1200 },
-    /* 装饰类 (气球/烟花 — 多颜色, 按稀有度分) */
+    /* ===== 三角洲行动「危险行动」变卖物目录 (2026-11-18 v2 修正版 — 纯装饰 + 三角洲官方风格) =====
+     * 【硬规则】变卖物 = ITEM_NAMES.txt 存在 + 纯装饰无使用价值 + 不被 loot.js FUNCTIONAL_ITEM_PATTERNS 拦截
+     * 颜色稀有度: 彩虹(6) > 金/黄(5) > 紫/品红/橙(4) > 蓝/绿/粉(3) > 红/青/灰/棕(2) > 黑/白/浅灰(1)
+     * 价值逻辑: 颜色越稀有越贵, 彩虹金 = 最稀有, 黑白 = 最普通 */
+
+    /* ===== 气球类 (低价值收集品) ===== */
     { item: 'Black Balloon', display: '黑色气球', cat: '装饰品', tier: 1, value: 150 },
-    { item: 'Gray Balloon', display: '灰色气球', cat: '装饰品', tier: 1, value: 150 },
     { item: 'White Balloon', display: '白色气球', cat: '装饰品', tier: 1, value: 150 },
-    { item: 'Red Balloon', display: '红色气球', cat: '装饰品', tier: 2, value: 380 },
-    { item: 'Blue Balloon', display: '蓝色气球', cat: '装饰品', tier: 2, value: 380 },
-    { item: 'Green Balloon', display: '绿色气球', cat: '装饰品', tier: 2, value: 380 },
-    { item: 'Purple Balloon', display: '紫色气球', cat: '装饰品', tier: 3, value: 780 },
-    { item: 'Pink Balloon', display: '粉色气球', cat: '装饰品', tier: 3, value: 780 },
-    { item: 'Magenta Balloon', display: '品红气球', cat: '装饰品', tier: 4, value: 1500 },
-    { item: 'Orange Balloon', display: '橙色气球', cat: '装饰品', tier: 4, value: 1500 },
-    { item: 'Yellow Balloon', display: '金色气球', cat: '装饰品', tier: 5, value: 3000 },
-    /* 烟花 (高价值装饰) */
-    { item: 'Firecracker', display: '鞭炮', cat: '烟花', tier: 3, value: 520 },
+    { item: 'Light Gray Balloon', display: '浅灰气球', cat: '装饰品', tier: 1, value: 180 },
+    { item: 'Gray Balloon', display: '灰色气球', cat: '装饰品', tier: 2, value: 280 },
+    { item: 'Brown Balloon', display: '棕色气球', cat: '装饰品', tier: 2, value: 320 },
+    { item: 'Cyan Balloon', display: '青色气球', cat: '装饰品', tier: 2, value: 380 },
+    { item: 'Red Balloon', display: '红色气球', cat: '装饰品', tier: 2, value: 450 },
+    { item: 'Green Balloon', display: '绿色气球', cat: '装饰品', tier: 3, value: 580 },
+    { item: 'Blue Balloon', display: '蓝色气球', cat: '装饰品', tier: 3, value: 620 },
+    { item: 'Pink Balloon', display: '粉色气球', cat: '装饰品', tier: 3, value: 720 },
+    { item: 'Light Blue Balloon', display: '淡蓝气球', cat: '装饰品', tier: 3, value: 780 },
+    { item: 'Purple Balloon', display: '紫色气球', cat: '装饰品', tier: 4, value: 980 },
+    { item: 'Lime Balloon', display: '青柠气球', cat: '装饰品', tier: 4, value: 1020 },
+    { item: 'Magenta Balloon', display: '品红气球', cat: '装饰品', tier: 4, value: 1150 },
+    { item: 'Orange Balloon', display: '橙色气球', cat: '装饰品', tier: 4, value: 1250 },
+    { item: 'Yellow Balloon', display: '金色气球', cat: '装饰品', tier: 5, value: 2800 },
+
+    /* ===== 烟花类 (中等价值收集品) ===== */
+    { item: 'Black Firecracker', display: '黑色烟花', cat: '烟花', tier: 2, value: 320 },
+    { item: 'Gray Firecracker', display: '灰色烟花', cat: '烟花', tier: 2, value: 380 },
+    { item: 'Red Firecracker', display: '红色烟花', cat: '烟花', tier: 3, value: 680 },
+    { item: 'Blue Firecracker', display: '蓝色烟花', cat: '烟花', tier: 3, value: 720 },
+    { item: 'Green Firecracker', display: '绿色烟花', cat: '烟花', tier: 3, value: 780 },
+    { item: 'Pink Firecracker', display: '粉色烟花', cat: '烟花', tier: 4, value: 1100 },
+    { item: 'Magenta Firecracker', display: '品红烟花', cat: '烟花', tier: 4, value: 1250 },
+    { item: 'Orange Firecracker', display: '橙色烟花', cat: '烟花', tier: 4, value: 1380 },
+    { item: 'Purple Firecracker', display: '紫色烟花', cat: '烟花', tier: 4, value: 1500 },
+    { item: 'Firecracker', display: '鞭炮', cat: '烟花', tier: 4, value: 880 },
+    { item: 'Yellow Firecracker', display: '金色烟花', cat: '烟花', tier: 5, value: 3200 },
     { item: 'Rainbow Firecracker', display: '彩虹烟花', cat: '烟花', tier: 6, value: 28000 },
-    { item: 'Black Firecracker', display: '黑色烟花', cat: '烟花', tier: 2, value: 220 },
-    { item: 'Red Firecracker', display: '红色烟花', cat: '烟花', tier: 4, value: 1200 },
-    { item: 'Blue Firecracker', display: '蓝色烟花', cat: '烟花', tier: 4, value: 1200 },
-    { item: 'Yellow Firecracker', display: '金色烟花', cat: '烟花', tier: 5, value: 2800 },
+
+    /* ===== 烟花 Pebble 类 (小型烟花弹) ===== */
+    { item: 'Firecracker Pebble', display: '鞭炮弹', cat: '烟花', tier: 3, value: 580 },
+    { item: 'Rainbow Firecracker Pebble', display: '彩虹烟花弹', cat: '烟花', tier: 6, value: 18000 },
+
+    /* ===== 生物召唤球 (高价值 — 三角洲稀有收藏品) ===== */
+    { item: 'Pig Spawn Orb', display: '野猪能量球', cat: '稀有收集品', tier: 2, value: 650 },
+    { item: 'Cow Spawn Orb', display: '野牛能量球', cat: '稀有收集品', tier: 2, value: 720 },
+    { item: 'Sheep Spawn Orb', display: '公羊能量球', cat: '稀有收集品', tier: 2, value: 580 },
+    { item: 'Horse Spawn Orb', display: '战马能量球', cat: '稀有收集品', tier: 3, value: 1400 },
+    { item: 'Deer Spawn Orb', display: '白鹿能量球', cat: '稀有收集品', tier: 3, value: 1500 },
+    { item: 'Wolf Spawn Orb', display: '灰狼能量球', cat: '稀有收集品', tier: 4, value: 2800 },
+    { item: 'Wildcat Spawn Orb', display: '野猫能量球', cat: '稀有收集品', tier: 4, value: 2600 },
+    { item: 'Bear Spawn Orb', display: '巨熊能量球', cat: '稀有收集品', tier: 4, value: 3200 },
+    { item: 'Stag Spawn Orb', display: '麋鹿能量球', cat: '稀有收集品', tier: 4, value: 3000 },
+    { item: 'Gorilla Spawn Orb', display: '银背能量球', cat: '稀有收集品', tier: 5, value: 6800 },
+    { item: 'Cave Golem Spawn Orb', display: '洞穴魔像能量球', cat: '稀有收集品', tier: 5, value: 8200 },
+    { item: 'Frost Golem Spawn Orb', display: '霜寒魔像能量球', cat: '稀有收集品', tier: 6, value: 18000 },
+    { item: 'Magma Golem Spawn Orb', display: '熔岩魔像能量球', cat: '稀有收集品', tier: 6, value: 22000 },
+    { item: 'Gold Watermelon Stag Spawn Orb', display: '黄金水鹿能量球', cat: '稀有收集品', tier: 6, value: 35000 },
+
+    /* ===== 捕获生物凭证 (三角洲黑市收藏品) ===== */
+    { item: 'Mob Catcher', display: '生物捕获器', cat: '黑市凭证', tier: 3, value: 1200 },
+    { item: 'Caught Mob Pig Default', display: '捕获野猪', cat: '黑市凭证', tier: 2, value: 820 },
+    { item: 'Caught Mob Horse Default', display: '捕获战马', cat: '黑市凭证', tier: 3, value: 1600 },
+    { item: 'Caught Mob Deer Default', display: '捕获白鹿', cat: '黑市凭证', tier: 3, value: 1700 },
+    { item: 'Caught Mob Wolf Default', display: '捕获灰狼', cat: '黑市凭证', tier: 4, value: 3000 },
+    { item: 'Caught Mob Bear Default', display: '捕获巨熊', cat: '黑市凭证', tier: 4, value: 3500 },
+    { item: 'Caught Mob Wildcat Leopard', display: '捕获花豹', cat: '黑市凭证', tier: 5, value: 7200 },
+    { item: 'Caught Mob Wolf Spectral', display: '幽灵之狼凭证', cat: '黑市凭证', tier: 6, value: 26000 },
+    { item: 'Caught Mob Draugr Knight Default', display: '死灵骑士凭证', cat: '黑市凭证', tier: 5, value: 9800 },
 ];
 /* 各图摸金分区的稀有度上限(越大越可能出高级变卖物) */
 const SELL_TIER_CAP = { gt: 3, jianyu: 6, dam: 6 };   // 键必须与 MAPS 一致(已移除停用的 farm/mine/city)
